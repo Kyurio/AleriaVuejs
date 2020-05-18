@@ -42,7 +42,7 @@
       <div class="container">
         <div class="row">
           <div  class="col-sm-4 mb-4">
-            <a href="asdasdasd">
+            <a href="">
               <div class="card">
                 <img src="https://thefashionguilty.files.wordpress.com/2016/02/color_gris.jpg"  class="img-fluid" alt="">
                 <div class="card-body">
