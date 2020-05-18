@@ -41,12 +41,12 @@
     <section class=" mb-5 py-4">
       <div class="container">
         <div class="row">
-          <div  v-for="item in ProductosRecuperados" class="col-sm-4 mb-4">
-            <a href="">
+          <div  class="col-sm-4 mb-4">
+            <a href="asdasdasd">
               <div class="card">
                 <img src="https://thefashionguilty.files.wordpress.com/2016/02/color_gris.jpg"  class="img-fluid" alt="">
                 <div class="card-body">
-                  <h4>{{ item.Nombre_Producto }}</h4>
+                  <h4></h4>
                   <p>$945</p>
                 </div>
               </div>

@@ -1,4 +1,4 @@
-Vue.component('paginate', VuejsPaginate)
+
 var app = new Vue({
 
   el: '#app',
