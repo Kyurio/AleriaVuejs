@@ -1,0 +1,228 @@
+@import url("https://fonts.googleapis.com/css?family=PT+Sans+Narrow&display=swap");
+/*--------------------------------------------------------
+navbar
+--------------------------------------------------------*/
+.bg-dark {
+  background-color: #17a2b8 !important;
+  color: #ffff !important;
+}
+
+/*--------------------------------------------------------
+overly detalle
+--------------------------------------------------------*/
+.kt-blog-grid-v2 .kt-blog-grid-v2__body .kt-blog-grid-v2__date a {
+  color: #ffffff;
+  margin-bottom: 1.5rem;
+  font-weight: 400;
+}
+.kt-blog-grid-v2 .kt-blog-grid-v2__body .kt-blog-grid-v2__date a .kt-blog-grid-v2 .kt-blog-grid-v2__body .kt-blog-grid-v2__link .kt-blog-grid-v2__title {
+  font-weight: 700;
+  margin: 0;
+}
+.kt-blog-grid-v2 .kt-blog-grid-v2__body .kt-blog-grid-v2__date a .kt-blog-grid-v2 .kt-blog-grid-v2__body .kt-blog-grid-v2__link {
+  color: #ffffff !important;
+}
+
+.kt-blog-grid-v2 {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 33rem;
+  padding: 3.5rem;
+  position: relative;
+}
+
+*, ::before, ::after {
+  box-sizing: border-box;
+}
+
+/*--------------------------------------------------------
+configuracion de botones
+--------------------------------------------------------*/
+.btn-dark {
+  background-color: #17a2b8 !important;
+  border-radius: 0 !important;
+  height: 8vh;
+  width: 120px;
+}
+
+.btn-main {
+  background-color: #4476dc !important;
+  border-radius: 0 !important;
+  height: 8vh;
+  width: 120px;
+}
+
+.bg-light-y {
+  background-color: #4476dc !important;
+}
+
+/*--------------------------------------------------------
+configuracion de error page
+--------------------------------------------------------*/
+.middle-content {
+  padding: 10rem 0rem;
+}
+
+/*--------------------------------------------------------
+cards
+--------------------------------------------------------*/
+.card {
+  padding: 15px 20px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  border-radius: 4px 4px 0 0;
+  position: relative;
+  overflow: hidden;
+  background-color: #17a2b8;
+  border: none;
+  border-radius: 0px;
+  color: #fff;
+}
+
+.widget {
+  display: block;
+  font-size: 14px;
+  text-transform: uppercase;
+  background: #17a2b8;
+  margin: 0.5rem;
+  padding: 0.5rem;
+  color: #FFF;
+}
+
+/*--------------------------------------------------------
+tablas
+--------------------------------------------------------*/
+.table_color td, .table_color tr {
+  color: #FFFF !important;
+}
+
+.table-responsive {
+  width: 100%;
+}
+
+.my-custom-scrollbar {
+  position: relative;
+  height: 345px;
+  overflow: auto;
+  margin: 20px auto;
+}
+
+.table-wrapper-scroll-y {
+  display: block;
+}
+
+/*--------------------------------------------------------
+graficos
+--------------------------------------------------------*/
+.grafico {
+  padding: 10px 0px;
+}
+
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  background-color: #fafafa;
+  color: #636b6f;
+  font-family: "PT Sans Narrow", "sans-serif";
+  min-height: 100vh !important;
+  min-height: 100%;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.5;
+  /* 1 */
+  -webkit-text-size-adjust: 100%;
+  /* 2 */
+}
+
+article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
+  display: block;
+}
+
+section {
+  padding: 50px 0;
+}
+
+a {
+  padding: 0 25px;
+  text-decoration: none !important;
+}
+
+.form-signin {
+  width: 100%;
+  max-width: 330px;
+  padding: 15px;
+  margin: auto;
+}
+
+.form-signin .form-control {
+  position: relative;
+  box-sizing: border-box;
+  height: auto;
+  padding: 5px;
+}
+
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+
+.form-signin input[type=email] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.form-signin input[type=password] {
+  margin-bottom: 5px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+/*-------------------------------------------------
+forms - generales
+-------------------------------------------------*/
+.formBox h1 {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  margin-bottom: 50px;
+  text-transform: uppercase;
+}
+
+.inputBox {
+  position: relative;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
+.inputBox .inputText {
+  position: absolute;
+  line-height: 10px;
+  transition: 0.5s;
+  opacity: 0.5;
+}
+
+.inputBox .input {
+  position: relative;
+  width: 100%;
+  height: 50px;
+  background: transparent;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.focus .inputText {
+  transform: translateY(-30px);
+  opacity: 1;
+  color: #00bcd4;
+}
+
+textarea {
+  height: 100px !important;
+}
