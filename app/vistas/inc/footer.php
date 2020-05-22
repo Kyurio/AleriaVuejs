@@ -48,11 +48,10 @@
     <a href="#" class="text-light"> </a>
   </div>
 </footer>
-<!-- VueJS -->
+<!-- vuejs -->
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <!-- axios -->
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 <!-- jsdelivr -->
@@ -61,11 +60,6 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 <!-- sweetalert -->
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
-
-<!-- List js -->
-<script src="https://unpkg.com/vuetable-2@next"></script>
-
 <!-- config -->
 <script src="<?php echo RUTA_URL; ?>public/js/app.js"></script>
 

@@ -61,20 +61,7 @@
                       </tr>
                     </thead>
                     <tbody class="list">
-                      <tr v-for="item in ProductosRecuperados">
-                        <td>{{ item.name }}</td>
-                        <td>{{ item.created_at }}</td>
-                        <td>
-                          <span v-if="item.is_active == 1" class="badge badge-success">Activo</span>
-                          <span v-else="item.is_active == 0" class="badge badge-danger">Inactivo</span>
-                        </td>
-                        <td>{{ item.inventary_min }}</td>
-                        <td>
-                          <button type="button" title="Editar"   @click="" class="btn btn-sm btn-info"><i    class="fas fa-pen"></i></i></button>
-                          <button type="button" title="Cancelar" @click=""   class="btn btn-sm btn-warning"><i class="fas fa-ban"></i></button>
-                          <button type="button" title="Eliminar" @click=""   class="btn btn-sm btn-danger"><i  class="fas fa-trash"></i></button>
-                        </td>
-                      </tr>
+
                     </tbody>
                   </table>
 
@@ -128,9 +115,9 @@
                       <td><a href=""></a></td>
                       <td></td>
                       <td>
-                        <button type="button" title="Pausar"    @click="" class="btn btn-sm btn-warning"><i class="fas fa-pause-circle"></i></button>
-                        <button type="button" title="continiar" @click=""   class="btn btn-sm btn-info"><i class="fas fa-play-circle"></i></button>
-                        <button type="button" title="finalizar" @click=""   class="btn btn-sm btn-success"><i class="fas fa-check"></i></button>
+                        <button type="button" title="Pausar"     class="btn btn-sm btn-warning"><i class="fas fa-pause-circle"></i></button>
+                        <button type="button" title="continiar"  class="btn btn-sm btn-info"><i class="fas fa-play-circle"></i></button>
+                        <button type="button" title="finalizar"  class="btn btn-sm btn-success"><i class="fas fa-check"></i></button>
                       </td>
                     </tr>
                   </tbody>
@@ -202,9 +189,9 @@
                         <td><a href=""></a></td>
                         <td><a href=""></a></td>
                         <td>
-                          <button type="button" title="Editar"   @click=""  class="btn btn-sm btn-info"><i class="fas fa-pencil-alt"></i></button>
-                          <button type="button" title="Cancelar" @click="" class="btn btn-sm btn-warning"><i class="fas fa-ban"></i></button>
-                          <button type="button" title="Eliminar" @click=""   class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                          <button type="button" title="Editar"    class="btn btn-sm btn-info"><i class="fas fa-pencil-alt"></i></button>
+                          <button type="button" title="Cancelar"  class="btn btn-sm btn-warning"><i class="fas fa-ban"></i></button>
+                          <button type="button" title="Eliminar"  class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
                         </td>
                       </tr>
                     </tbody>
@@ -216,8 +203,8 @@
           </div>
 
           <!-- mensajes -->
-          <div class="tab-pane fade shadow" id="mensajes" role="tabpanel" aria-labelledby="mensajes">
-            <div class="card">
+          <div class="tab-pane fade" id="mensajes" role="tabpanel" aria-labelledby="mensajes">
+            <div class="card shadow">
               <div class="card-body">
                 <div class="d-flex justify-content-between">
                   <h3>Mensajes</h3>
@@ -240,17 +227,20 @@
 
               </div>
             </div>
-            <div class="card mt-4">
-              <div class="card-body">
-                <div class="d-flex justify-content-between">
-                  <h3>titulo</h3>
-                  <div class="d-flex flex-row-reverse bd-highlight">
-                    <button type="button" title="Eliminar" class="btn btn-sm btn-danger ml-1" ><i class="fas fa-trash"></i></button>
-                    <button type="button" title="Spam" class="btn btn-sm btn-warning ml-1" ><i class="fas fa-envelope-open"></i></button>
+            <div v-for="item in msg">
+              <div class="card shadow mt-4 mb-4">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between">
+                    <h3>de: {{item.Name}}</h3>
+                    <div class="d-flex flex-row-reverse bd-highlight">
+                      <button type="button" title="Eliminar" class="btn btn-sm btn-danger ml-1" ><i class="fas fa-trash"></i></button>
+                      <button type="button" title="Spam" class="btn btn-sm btn-warning ml-1" ><i class="fas fa-envelope-open"></i></button>
+                    </div>
                   </div>
-                </div>
-                <div class="mt-2">
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                  <div class="mt-2" v-for="item in msg  ">
+                    <h5>Asunto: {{item.Subjet}}</h5>
+                    <p>{{item.Content}}</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -340,27 +330,9 @@
                 </div>
                 <!-- end buscador con botones -->
 
-                <div>
-                  <table class="table table-hover">
-                    <thead>
-                      <tr>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">direccion</th>
-                        <th scope="col">Telefono</th>
-                        <th scope="col">Tipo</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr v-for="item in Clients">
-                        <td >{{ item.name }}</td>
-                        <td >{{ item.address1 }}</td>
-                        <td >{{ item.phone1 }}</td>
-                        <td >{{ item.kind }}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  <ul class="pagination"></ul>
-                </div>
+
+
+
 
 
               </div>
@@ -377,103 +349,21 @@
                 </div>
                 <div class="mt-1 mb-4 d-flex justify-content-end">
 
-                  <ul class="nav nav-tabs" id="myTab" role="tablist">
-                    <l1 class="nav-item" ><a type="button" id="home-tab" data-toggle="tab" href="#banners"   title="Banners"              class="btn btn-dark ml-1"> <i class="far fa-images"></i></a></li>
-                      <l1 class="nav-item" ><a type="button" id="home-tab" data-toggle="tab" href="#Social"    title="Redes Sociales"       class="btn btn-dark ml-1"> <i class="fas fa-hashtag"></i></a></li>
-                        <l1 class="nav-item" ><a type="button" id="home-tab" data-toggle="tab" href="#Preguntas" title="Preguntas Frecuentes" class="btn btn-dark ml-1"> <i class="fas fa-question-circle"></i></button></li>
-                          <l1 class="nav-item" ><a type="button" id="home-tab" data-toggle="tab" href="#Mapas"     title="Mapas"                class="btn btn-dark ml-1"> <i class="fas fa-map-marked-alt"></i></a></li>
-                            <l1 class="nav-item" ><a type="button" id="home-tab" data-toggle="tab" href="#Contacto"  title="Contacto"             class="btn btn-dark ml-1"> <i class="fas fa-envelope-open"></i></a></li>
-                              <l1 class="nav-item" ><a type="button" id="home-tab" data-toggle="tab" href="#Estilos"   title="Estilo"               class="btn btn-dark ml-1"> <i class="fas fa-wrench"></i></a></li>
-                              </ul>
 
-                            </div>
-                          </div>
-                        </div>
-
-                        <div class="card mt-4">
-                          <div class="card-body">
-                            <div class="tab-content" id="myTabContent">
-                              <div class="tab-pane fade" id="banners"   role="tabpanel" aria-labelledby="banners-tab">
-                                <h3>Banner principal</h3>
-
-                              </div>
-                              <div class="tab-pane fade" id="Social"    role="tabpanel" aria-labelledby="social-tab">
-                                <h3>Redes Sociales</h3>
-
-                              </div>
-                              <div class="tab-pane fade" id="Preguntas" role="tabpanel" aria-labelledby="preguntas-tab">
-                                <h3>Preguntas Frecuentes</h3>
-
-
-                              </div>
-                              <div class="tab-pane fade" id="Mapas"     role="tabpanel" aria-labelledby="mapas-tab">
-                                <h3>Mapas</h3>
-
-                              </div>
-                              <div class="tab-pane fade" id="Contacto"  role="tabpanel" aria-labelledby="contactos-tab">
-                                <h3>Informacion de contacto</h3>
-
-
-                              </div>
-                              <div class="tab-pane fade" id="Estilos"   role="tabpanel" aria-labelledby="estilos-tab">
-                                <h3>Estilos y diseños</h3>
-                                <small>Configura las fuentes. colores, tamaños y diseños</small>
-
-
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                      </div>
-
-
-                    </div>
-
-                  </main>
                 </div>
               </div>
-
-              <!-- modal de nuevo producto -->
-              <div class="modal fade bd-example-modal-lg" id="AgregarProducto" tabindex="-1" role="dialog" aria-labelledby="AgregarProducto" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">Nueva Venta</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-
-                    </div>
-                    <div class="modal-footer">
-                      <button @click="" class="btn btn-primary">Publicar</button>
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- modal de nuevo banner -->
-              <div class="modal fade bd-example-modal-lg" id="AgregarBanner" tabindex="-1" role="dialog" aria-labelledby="AgregarBanner" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">Nuevo Banner</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" @click="" class="btn btn-primary">Grabar</button>
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- modal clientes -->
             </div>
-            <?php require_once RUTA_APP . '/vistas/inc/footer.php';?>
+
+
+
+          </div>
+
+
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+</div>
+<?php require_once RUTA_APP . '/vistas/inc/footer.php';?>

@@ -11,33 +11,36 @@
 
               <h3>Contactanos</h3>
               <br>
+              <p v-if="errors.length">
+                <b>Por favor corriga los siguientes erroes:</b>
+                <ul>
+                  <li v-for="error in errors" class="text-danger">{{ error }}</li>
+                </ul>
+              </p>
 
+              <form id="app" @submit="checkForm" method="post" novalidate="true">
+                <div class="form-group">
+                  <label for="">Nombre</label>
+                  <input v-model="name_msg"  type="text" placeholder="Nombre" maxlength="60" name="name_msg" class="form-control" id="exampleInputEmail1" required aria-describedby="emailHelp">
+                </div>
+                <div class="form-group">
+                  <label for="">asunto</label>
+                  <input v-model="subjet_msg"  type="text" placeholder="Asunto" maxlength="60" name="subjet_msg" class="form-control" id="exampleInputEmail1" required aria-describedby="emailHelp">
+                </div>
+                <div class="form-group">
+                  <label for="">Correo</label>
+                  <input type="email" :state="false" name="email_msg" v-model="email_msg"  placeholder="Correo" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                </div>
+                <div class="form-group">
+                  <label for="">Mensaje</label>
+                  <textarea  v-model="content_msg" class="form-control" placeholder="Mensaje" maxlength="1500" name="content_msg" id="exampleFormControlTextarea1" rows="3"></textarea>
+                </div>
 
-              <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
-                </div>
-                <input type="text" class="form-control"  v-model="Nombre_Contacto"  placeholder="Nombre" aria-label="Nombre" aria-describedby="basic-addon1">
+                <button type="submit" class="btn btn-dark" name="button">Enviar</button>
               </div>
-              <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" id="basic-addon1"><i class="fas fa-envelope"></i></span>
-                </div>
-                <input type="text" class="form-control"  v-model="Correo_Contacto"  placeholder="Correo" aria-label="Correo" aria-describedby="basic-addon1">
-              </div>
-              <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" id="basic-addon1"><i class="fas fa-grip-horizontal"></i></span>
-                </div>
-                <input type="text" class="form-control"  v-model="Asunto_Contacto"  placeholder="Asunto" aria-label="Asunto" aria-describedby="basic-addon1">
-              </div>
-              <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" id="basic-addon1"><i class="fas fa-grip-horizontal"></i></span>
-                </div>
-                <textarea class="form-control"  v-model="Mensaje_Contacto"  placeholder="Mensaje" rows="6" cols="80"></textarea>
-              </div>
-              <button type="button"   @click="GrabarMensaje" class="btn btn-dark" >Enviar</button>
+              <div class="col-md-6">
+              </form>
+
             </div>
           </div>
         </div>

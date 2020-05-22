@@ -102,22 +102,27 @@ class pages extends control{
     echo json_encode($clients);
   }
 
+  public function SelectMail(){
+    $mails = $this->ConfigModelo->select('message', '', '');
+    echo json_encode($mails);
+  }
+
   public function Mail(){
     $data = json_decode(file_get_contents("php://input"), true);
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       $formMail = [
-        'name' => $data['Nombre_Contacto'],
-        'email' => $data['Correo_Contacto'],
-        'subjet' => $data['Asunto_Contacto'],
-        'content' => $data['Mensaje_Contacto'],
+        'name' => $data['name'],
+        'email' => $data['email'],
+        'subjet' => $data['subjet'],
+        'content' => $data['content'],
       ];
 
       //ejecyta la insercion
       if($this->ConfigModelo->InsertMail($formMail)){
-        echo true;
+        echo json_encode(true); //true
       }else{
-        echo false;
+        echo json_encode(false); //false
       }
 
     }else{

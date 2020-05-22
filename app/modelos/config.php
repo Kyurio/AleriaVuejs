@@ -110,13 +110,13 @@ class config{
   ----------------------------------------------------------------------------*/
   public function InsertMail($datos){
     try {
-      $this->bd->query("INSERT INTO message(Name, Email, Subjet, Content) VALUES (:Name, :Email, :Subjet, :Content) ");
+      $this->bd->query("INSERT INTO message(Name, Email, Subjet, Content) VALUES (:name, :email, :subjet, :content) ");
 
-      //otorgar valores
-      $this->bd->bind(':Name', $datos['Name']);
-      $this->bd->bind(':Email', $datos['Email']);
-      $this->bd->bind(':Subjet', $datos['Subjet']);
-      $this->bd->bind(':Content', $datos['Content']);
+      //otorgar
+      $this->bd->bind(':name', $datos['name']);
+      $this->bd->bind(':email', $datos['email']);
+      $this->bd->bind(':subjet', $datos['subjet']);
+      $this->bd->bind(':content', $datos['content']);
       //ejecutar consulta
       if($this->bd->execute()){
         return true;
@@ -125,7 +125,8 @@ class config{
       }
 
     } catch (PDOException $e) {
-      header('location: ' . RUTA_URL . 'pages/error/500');
+      //header('location: ' . RUTA_URL . 'pages/error/500');
+      echo json_encode($e);
     }
   }
 
