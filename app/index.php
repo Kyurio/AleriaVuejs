@@ -1,7 +1,7 @@
 <?php
 
 // Motrar todos los errores de PHP
-// error_reporting(-1);
+//error_reporting(-1);
 // // No mostrar los errores de PHP
 // error_reporting(0);
 // // Motrar todos los errores de PHP
@@ -13,8 +13,6 @@
 
 require_once 'config/config.php';
 require_once 'helpers/url_helper.php';
-require_once 'helpers/printer.php';
-require_once 'helpers/motor.php';
 
 //auto load php
 spl_autoload_register(function($nombreClase){

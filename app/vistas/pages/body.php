@@ -37,8 +37,7 @@
       <h3>Ultimos productos</h3>
       <hr>
     </div>
-    <!-- end carousel -->
-     <h1>batmen</h1>
+    <!-- end carousel -->>
     <section class=" mb-5 py-4">
       <div class="container">
         <div class="row">

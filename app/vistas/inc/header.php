@@ -9,12 +9,12 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 
 
-  <link rel="stylesheet" href="<?php write(RUTA_URL) ?>public/css/style.css">
-  <title><?php write( NOMBRE_SITIO ); ?></title>
+  <link rel="stylesheet" href="<?php echo RUTA_URL ?>public/css/style.css">
+  <title><?php echo NOMBRE_SITIO  ?></title>
 </head>
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark  fixed-top">
-    <a class="navbar-brand" href="#"><?php write(NOMBRE_SITIO) ?></a>
+    <a class="navbar-brand" href="#"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>

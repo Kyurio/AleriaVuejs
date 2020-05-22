@@ -38,7 +38,7 @@
                       <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-search"></i></span>
                       </div>
-                      <input type="text" class="form-control search" placeholder="Username" aria-label="Username" aria-describedby="Username" v-model="name">
+                      <input type="text" class="form-control search" placeholder="Username" aria-label="Username" aria-describedby="Username" >
                     </div>
                   </div>
                   <div class="col-sm-6">
@@ -78,7 +78,7 @@
                     </tbody>
                   </table>
 
-              
+
 
                 </div>
 
@@ -340,7 +340,7 @@
                 </div>
                 <!-- end buscador con botones -->
 
-                <div id="listId">
+                <div>
                   <table class="table table-hover">
                     <thead>
                       <tr>
@@ -350,12 +350,12 @@
                         <th scope="col">Tipo</th>
                       </tr>
                     </thead>
-                    <tbody id="list">
+                    <tbody>
                       <tr v-for="item in Clients">
-                        <td class="name">{{ item.name }}</td>
-                        <td class="name">{{ item.address1 }}</td>
-                        <td class="name">{{ item.phone1 }}</td>
-                        <td class="name">{{ item.kind }}</td>
+                        <td >{{ item.name }}</td>
+                        <td >{{ item.address1 }}</td>
+                        <td >{{ item.phone1 }}</td>
+                        <td >{{ item.kind }}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -376,6 +376,7 @@
                   <h3>configuracion</h3>
                 </div>
                 <div class="mt-1 mb-4 d-flex justify-content-end">
+
                   <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <l1 class="nav-item" ><a type="button" id="home-tab" data-toggle="tab" href="#banners"   title="Banners"              class="btn btn-dark ml-1"> <i class="far fa-images"></i></a></li>
                       <l1 class="nav-item" ><a type="button" id="home-tab" data-toggle="tab" href="#Social"    title="Redes Sociales"       class="btn btn-dark ml-1"> <i class="fas fa-hashtag"></i></a></li>
@@ -384,6 +385,7 @@
                             <l1 class="nav-item" ><a type="button" id="home-tab" data-toggle="tab" href="#Contacto"  title="Contacto"             class="btn btn-dark ml-1"> <i class="fas fa-envelope-open"></i></a></li>
                               <l1 class="nav-item" ><a type="button" id="home-tab" data-toggle="tab" href="#Estilos"   title="Estilo"               class="btn btn-dark ml-1"> <i class="fas fa-wrench"></i></a></li>
                               </ul>
+
                             </div>
                           </div>
                         </div>
@@ -443,38 +445,7 @@
                       </button>
                     </div>
                     <div class="modal-body">
-                      <label>Nombre producto</label>
-                      <div class="input-group mb-3">
-                        <input type="text" v-model="Nombre_Producto" class="form-control"  placeholder="Nombre producto" aria-label="producto" aria-describedby="basic-addon1" required>
-                      </div>
-                      <div class="row">
-                        <div class="col-4">
-                          <label>Valor producto</label>
-                          <div class="input-group mb-3">
-                            <input type="number" v-model="Valor_Producto" class="form-control"   placeholder="Precio" aria-label="precio" aria-describedby="basic-addon1" min="1" required>
-                          </div>
-                        </div>
-                        <div class="col-4">
-                          <label>Valor oferta</label>
-                          <div class="input-group mb-3">
-                            <input type="number" v-model="Valor_Oferta" class="form-control" placeholder="Oferta" aria-label="oferta" aria-describedby="basic-addon1" min="1" required>
-                          </div>
-                        </div>
-                        <div class="col-4">
-                          <label>Fecha de publicacion</label>
-                          <div class="input-group mb-3">
-                            <input type="date" v-model="Fecha_Publicacion" class="form-control" aria-label="Fecha_Publicacion" aria-describedby="basic-addon1" required>
-                          </div>
-                        </div>
-                      </div>
-                      <label>Descripcion</label>
-                      <div class="input-group mb-3">
-                        <textarea v-model="Descripcion" class="form-control" aria-label="descripcion" rows="4" cols="80" required></textarea>
-                      </div>
-                      <label>Archivos</label>
-                      <div class="input-group mb-3">
-                        <input type="file" class="form-control" aria-label="Fecha_Publicacion" aria-describedby="basic-addon1" required>
-                      </div>
+
                     </div>
                     <div class="modal-footer">
                       <button @click="" class="btn btn-primary">Publicar</button>
@@ -494,22 +465,7 @@
                       </button>
                     </div>
                     <div class="modal-body">
-                      <div class="form-group">
-                        <label for="evento">Titulo</label>
-                        <input v-model="Titulo_Banner" class="form-control" type="text" placeholder="marron 5 gira south america comunista">
-                      </div>
-                      <div class="form-group">
-                        <label for="evento">Fecha publicacion</label>
-                        <input v-model="Fecha_Publicacion_Banner" class="form-control" type="date">
-                      </div>
-                      <div class="form-group">
-                        <label for="evento">Descripcion</label>
-                        <textarea v-model="Descripcion_Banner"  class="form-control" rows="4" cols="80" placeholder="Descripcion de el evento"></textarea>
-                      </div>
-                      <div class="form-group">
-                        <label for="evento">Descripcion</label>
-                        <input v-model="Imagen_Banner"  class="form-control" type="text" placeholder="marron 5">
-                      </div>
+
                     </div>
                     <div class="modal-footer">
                       <button type="button" @click="" class="btn btn-primary">Grabar</button>

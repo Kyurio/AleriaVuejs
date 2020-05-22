@@ -6,7 +6,7 @@ class pages extends control{
   public function __construct(){
     //configuracion incial
     $this->ConfigModelo = $this->modelo('config');
-    $this->SessionModelo = $this->modelo('start');
+    $this->SessionModelo = $this->modelo('session');
   }
   /*--------------------------------------------------------
   paginas principales

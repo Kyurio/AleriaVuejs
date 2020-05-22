@@ -3,7 +3,7 @@
     <div class="container-fluid text-center text-md-left">
       <div class="row">
         <div class="col-md-6 mt-md-0 mt-3">
-          <h5 class="text-uppercase text-light"><?php write(NOMBRE_SITIO) ?></h5>
+          <h5 class="text-uppercase text-light"><?php echo NOMBRE_SITIO ?></h5>
           <p class="text-light">Here you can use rows and columns to organize your footer content.</p>
         </div>
         <hr class="clearfix w-100 d-md-none pb-3">
@@ -45,9 +45,14 @@
     </div>
   </div>
   <div class="footer-copyright text-center py-3">© <?php echo date("Y"); ?> Copyright:
-    <a href="#" class="text-light"> <?php write(NOMBRE_SITIO) ?></a>
+    <a href="#" class="text-light"> </a>
   </div>
 </footer>
+<!-- VueJS -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<!-- axios -->
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 <!-- jsdelivr -->
@@ -56,10 +61,8 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 <!-- sweetalert -->
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<!-- VueJS -->
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<!-- axios -->
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+
 <!-- List js -->
 <script src="https://unpkg.com/vuetable-2@next"></script>
 

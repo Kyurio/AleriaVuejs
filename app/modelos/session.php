@@ -1,8 +1,8 @@
 <?php
 
-Class start{
+Class session{
 
-  public function start(){
+  public function start_session(){
     session_start();
   }
 
