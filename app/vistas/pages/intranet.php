@@ -22,6 +22,7 @@
       <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4 mt-2">
 
         <div class="tab-content mt-2">
+
           <!-- ventas -->
           <div class="tab-pane fade shadow" id="ventas" role="tabpanel" aria-labelledby="producto">
             <div class="card mb-4">
@@ -49,7 +50,7 @@
                   </div>
                 </div>
                 <!-- end buscador con botones -->
-                <div id="test-list">
+                <div>
                   <table class="table table-hover text-center">
                     <thead>
                       <tr>
@@ -60,15 +61,24 @@
                         <th scope="col">Accion</th>
                       </tr>
                     </thead>
-                    <tbody class="list">
-
+                    <tbody>
+                      <tr v-for="item in products">
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.created_at }}</td>
+                        <td>
+                          <div v-if="item.is_active == 1">
+                            <span class="badge badge-success">Activo</span>
+                          </div>
+                          <div v-else>
+                            <span class="badge badge-danger">Inactivo</span>
+                          </div>
+                        </td>
+                        <td>{{ item.inventary_min }}</td>
+                        <td> <b0utton type="button" name="button"></button> </td>
+                      </tr>
                     </tbody>
                   </table>
-
-
-
                 </div>
-
               </div>
             </div>
           </div>
@@ -137,6 +147,22 @@
 
                 <!-- grafico -->
 
+                <div class="row">
+                  <div class="col-xl-6">
+                    <div class="card mb-2 mt-2">
+                      <div class="card-header">
+                        <h5>Estadisticas Clientes</h5>
+                      </div>
+
+                      <div class="card-body">
+
+
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+
 
                 <!-- end grafico -->
 
@@ -144,7 +170,7 @@
             </div>
           </div>
 
-          <!-- banners -->
+          <!-- blogs -->
           <div class="tab-pane fade shadow" id="blog" role="tabpanel" aria-labelledby="banners">
 
             <div class="card">
@@ -173,30 +199,26 @@
                 </div>
                 <!-- end buscador con botones -->
 
-                <div class="table-responsive text-center">
-                  <table class="table table-hover ">
-                    <thead>
-                      <tr>
-                        <th>Titulo</th>
-                        <th>Descripcion</th>
-                        <th>Fecha Publicacion</th>
-                        <th>Accion</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr >
-                        <td><a href=""></a></td>
-                        <td><a href=""></a></td>
-                        <td><a href=""></a></td>
-                        <td>
-                          <button type="button" title="Editar"    class="btn btn-sm btn-info"><i class="fas fa-pencil-alt"></i></button>
-                          <button type="button" title="Cancelar"  class="btn btn-sm btn-warning"><i class="fas fa-ban"></i></button>
-                          <button type="button" title="Eliminar"  class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+                <!-- blog -->
+                <div v-for="item in blogs">
+                  <div class="card shadow mt-4 mb-4">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between">
+                        <h3>de: {{item.Name}}</h3>
+                        <div class="d-flex flex-row-reverse bd-highlight">
+                          <button type="button" title="Eliminar" class="btn btn-sm btn-danger ml-1" ><i class="fas fa-trash"></i></button>
+                          <button type="button" title="Spam" class="btn btn-sm btn-warning ml-1" ><i class="fas fa-envelope-open"></i></button>
+                        </div>
+                      </div>
+                      <div class="mt-2">
+                        <h5>Asunto: {{item.Subjet}}</h5>
+                        <p>{{item.Content}}</p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
+                <!-- end blog -->
+
               </div>
             </div>
 
@@ -237,7 +259,7 @@
                       <button type="button" title="Spam" class="btn btn-sm btn-warning ml-1" ><i class="fas fa-envelope-open"></i></button>
                     </div>
                   </div>
-                  <div class="mt-2" v-for="item in msg  ">
+                  <div class="mt-2">
                     <h5>Asunto: {{item.Subjet}}</h5>
                     <p>{{item.Content}}</p>
                   </div>

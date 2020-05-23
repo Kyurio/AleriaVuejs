@@ -1,5 +1,6 @@
 
 var app = new Vue({
+
   el: '#app',
   data: {
 
@@ -10,17 +11,14 @@ var app = new Vue({
     // mail send
     //--------------------------------------------------------------------------
     msg: {},
+    blogs: {},
+    products: {},
 
     id_msg: '',
     name_msg: '',
     email_msg: '',
     subjet_msg: '',
     content_msg: '',
-
-    //--------------------------------------------------------------------------
-    // blog
-    //--------------------------------------------------------------------------
-    BlogPublicados: {},
 
     id_blog: '',
     titulo: '',
@@ -32,17 +30,15 @@ var app = new Vue({
   // ejecuta funciones que se deben cargar automaticas como los select
   //--------------------------------------------------------------------------
   mounted: function(){
-
+    this.mantenerTabs();
+    this.ConsultarProducts();
     this.ConsultarMensajes();
     this.ConsultaBlogs();
+    this.ChartMsg();
 
   },
 
   methods: {
-
-    //--------------------------------------------------------------------------
-    // funciones externas
-    //--------------------------------------------------------------------------
 
     editarBlog: function() {},
 
@@ -81,13 +77,20 @@ var app = new Vue({
 
     },
 
+    ConsultarProducts: function(){
+      capturador = this;
+      axios.get('/aleriaVue/pages/SelectProduct', {
+      }).then(function (response) {
+        capturador.products = response.data;
+      });
+    },
+
     ConsultaBlogs: function() {
       capturador = this;
-      axios.get('/app/pagina/blog', {
+      axios.get('/aleriaVue/pages/blog', {
       }).then(function (response) {
         capturador.BlogPublicados = response.data;
       });
-
     },
 
     GrabarMensaje: function(){
@@ -159,7 +162,22 @@ var app = new Vue({
       });
     },
 
-    checkForm: function (e) {
+    ChartMsg: function(){
+
+
+
+
+    },
+
+    Detalle: function(id){
+      url = "/aleriaVue/pages/detalle/"+id;
+      window.location.replace(url);
+
+      console.log(url);
+    },
+    // funciones adicionales
+
+    checkForm: function (e){
       this.errors = [];
 
       if (!this.email_msg) {
@@ -175,10 +193,22 @@ var app = new Vue({
       e.preventDefault();
     },
 
-    validEmail: function (email) {
+    validEmail: function (email){
       var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(email);
     },
+
+    mantenerTabs: function(){
+      $(document).ready(function(){
+        $('a[data-toggle="tab"]').on('show.bs.tab', function(e) {
+          localStorage.setItem('activeTab', $(e.target).attr('href'));
+        });
+        var activeTab = localStorage.getItem('activeTab');
+        if(activeTab){
+          $('#myTab a[href="' + activeTab + '"]').tab('show');
+        }
+      });
+    }
 
 
   }//end methods

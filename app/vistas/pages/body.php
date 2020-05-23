@@ -1,7 +1,6 @@
 
 <main>
   <div id="app">
-
     <!-- crousel -->
     <div class="contenedor">
       <div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel">
@@ -37,21 +36,26 @@
       <h3>Ultimos productos</h3>
       <hr>
     </div>
-    <!-- end carousel -->>
+    <!-- end carousel -->
     <section class=" mb-5 py-4">
       <div class="container">
         <div class="row">
-          <div  class="col-sm-4 mb-4">
-            <a href="">
-              <div class="card">
-                <img src="https://thefashionguilty.files.wordpress.com/2016/02/color_gris.jpg"  class="img-fluid" alt="">
-                <div class="card-body">
-                  <h4></h4>
-                  <p>$945</p>
+
+          <div v-for="item in products">
+            <div  class="col-xl-4 mb-4">
+              <a @click="Detalle(item.id)">
+                <div class="card">
+                  <img src="https://www.elangreen.com/blog/wp-content/uploads/2015/12/marmande.jpg"  class="img-fluid" alt="">
+                  <div class="card-body">
+                    <h4>{{ item.price_in }}</h4>
+                    <p>$945</p>
+                    <small>stock: {{item.inventary_min}}</small>
+                  </div>
                 </div>
-              </div>
-            </a>
+              </a>
+            </div>
           </div>
+
         </div>
       </div>
     </section>

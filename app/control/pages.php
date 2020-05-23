@@ -107,6 +107,11 @@ class pages extends control{
     echo json_encode($mails);
   }
 
+  public function SelectBlog(){
+    $mails = $this->ConfigModelo->select('blog', '', '');
+    echo json_encode($mails);
+  }
+
   public function Mail(){
     $data = json_decode(file_get_contents("php://input"), true);
 
