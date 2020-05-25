@@ -142,6 +142,29 @@ class pages extends control{
     }
   }
 
+  public function Details(){
+
+    $data = json_decode(file_get_contents("php://input"), true);
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+      $tabla = $data['table'];
+      $id = $data['id'];
+
+      echo json_encode($id);
+      //ejecyta la insercion
+      if($details = $this->ConfigModelo->select($tabla, 'id', $id)){
+
+        echo json_encode($details);
+
+      }else {
+
+      }
+    }else{
+      echo "404 lo rompiste tonto culiao";
+    }
+  }
+
   /*--------------------------------------------------------
   funciones bases --logout --errorpage
   --------------------------------------------------------*/

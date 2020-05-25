@@ -4,7 +4,7 @@
     <div class="row">
 
       <!-- sidebar -->
-      <nav class="col-md-2 shadow d-none d-md-block bg-light sidebar">
+      <nav class="col-md-2 z-depth-5 d-none d-md-block bg-light sidebar">
         <ul class="nav flex-column nav-pills" id="myTab" role="tablist" aria-orientation="vertical">
           <li> <a class="nav-link" id="v-pills-ventas-tab" data-toggle="tab" href="#ventas" role="tab" aria-controls="v-pills-home" aria-selected="true"><i class="fas fa-shopping-cart"></i> Ventas</a></li>
           <li> <a class="nav-link" id="v-pills-banners-tab" data-toggle="tab" href="#blog" role="tab" aria-controls="v-pills-profile" aria-selected="false"><i class="fas fa-blog"></i> Blog</a></li>
@@ -74,7 +74,7 @@
                           </div>
                         </td>
                         <td>{{ item.inventary_min }}</td>
-                        <td> <b0utton type="button" name="button"></button> </td>
+                        <td> <button type="button" name="button"></button> </td>
                       </tr>
                     </tbody>
                   </table>
@@ -353,39 +353,65 @@
                 <!-- end buscador con botones -->
 
 
+                <!-- card clientes -->
+                <div class="row">
+
+                  <div v-for="item in clients">
+                    <div class="col-sm-4 mb-1">
+                      <div class="card card-cascade shadow">
+                        <div class="view view-cascade overlay">
+                          <a>
+                            <div class="mask rgba-white-slight"></div>
+                          </a>
+                        </div>
+                        <div class="card-body card-body-cascade text-center">
+                          <h4 class="card-title"><strong>{{item.name}}</strong></h4>
+                          <h6 class="font-weight-bold indigo-text py-2">{{irem.company}}</h6>
+                          <p class="card-text">
+                            <i class="fas fa-phone"></i>:
+                          </p>
+                            <a type="button" class="btn-floating btn-small btn-fb"><i class="fab fa-facebook-f"></i>
+                            <a type="button" class="btn-floating btn-small btn-tw"><i class="fab fa-twitter"></i></a>
+                            <a type="button" class="btn-floating btn-small btn-dribbble"><i class="fab fa-dribbble"></i></a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                  <!-- card clientes -->
 
 
 
-
+                </div>
               </div>
             </div>
-          </div>
 
-          <!-- Configuraciones -->
-          <div class="tab-pane fade shadow" id="configuracion" role="tabpanel" aria-labelledby="configuracion">
+            <!-- Configuraciones -->
+            <div class="tab-pane fade shadow" id="configuracion" role="tabpanel" aria-labelledby="configuracion">
 
-            <div class="card">
-              <div class="card-body">
-                <div class="d-flex justify-content-between">
-                  <h3>configuracion</h3>
-                </div>
-                <div class="mt-1 mb-4 d-flex justify-content-end">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between">
+                    <h3>configuracion</h3>
+                  </div>
+                  <div class="mt-1 mb-4 d-flex justify-content-end">
 
 
+                  </div>
                 </div>
               </div>
+
+
+
             </div>
 
 
-
           </div>
 
-
-        </div>
-
-      </main>
+        </main>
+      </div>
     </div>
-  </div>
 
-</div>
-<?php require_once RUTA_APP . '/vistas/inc/footer.php';?>
+  </div>
+  <?php require_once RUTA_APP . '/vistas/inc/footer.php';?>

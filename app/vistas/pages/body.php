@@ -47,8 +47,8 @@
                 <div class="card">
                   <img src="https://www.elangreen.com/blog/wp-content/uploads/2015/12/marmande.jpg"  class="img-fluid" alt="">
                   <div class="card-body">
-                    <h4>{{ item.price_in }}</h4>
-                    <p>$945</p>
+                    <h4>{{ item.name }}</h4>
+                    <p>{{ item.price_in }}</p>
                     <small>stock: {{item.inventary_min}}</small>
                   </div>
                 </div>

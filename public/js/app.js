@@ -13,6 +13,8 @@ var app = new Vue({
     msg: {},
     blogs: {},
     products: {},
+    details: {},
+    clients: {},
 
     id_msg: '',
     name_msg: '',
@@ -31,6 +33,7 @@ var app = new Vue({
   //--------------------------------------------------------------------------
   mounted: function(){
     this.mantenerTabs();
+    this.ConsultarClients();
     this.ConsultarProducts();
     this.ConsultarMensajes();
     this.ConsultaBlogs();
@@ -129,6 +132,15 @@ var app = new Vue({
       });
     },
 
+    ConsultarClients: function(){
+      capturador = this;
+      axios.get('/aleriaVue/pages/SelectClients', {
+      }).then(function (response) {
+        capturador.clients = response.data;
+        console.log(response.data);
+      });
+    },
+
     EliminarMensaje: function(id){
       swal({
         title: "¿Estas seguro de Eliminar el registro?",
@@ -170,12 +182,25 @@ var app = new Vue({
     },
 
     Detalle: function(id){
-      url = "/aleriaVue/pages/detalle/"+id;
-      window.location.replace(url);
 
-      console.log(url);
+      var filtro = id;
+      axios({
+        method: 'POST',
+        url: '/aleriaVue/pages/details',
+        data: {
+          table: 'product',
+          id: this.filtro,
+        }
+
+      }).then(function (response) {
+        // handle success
+        this.details = response.data;
+
+      });
+
+      var url = "/aleriaVue/pages/detalle/"+filtro;
+      window.location.replace(url);
     },
-    // funciones adicionales
 
     checkForm: function (e){
       this.errors = [];
