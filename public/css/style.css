@@ -8,6 +8,10 @@ input, textarea{
   background-color: #f9fcfb !important;
 }
 
+.card-cascade{
+  min-width: 200px;
+}
+
 .carousel-inner img {
   width: 100%;
   max-height: 460px;

@@ -112,6 +112,11 @@ class pages extends control{
     echo json_encode($mails);
   }
 
+  public function SelectUser(){
+    $user = $this->ConfigModelo->select('user', '', '');
+    echo json_encode($user);
+  }
+
   public function Mail(){
     $data = json_decode(file_get_contents("php://input"), true);
 

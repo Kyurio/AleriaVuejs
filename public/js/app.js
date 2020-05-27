@@ -15,6 +15,7 @@ var app = new Vue({
     products: {},
     details: {},
     clients: {},
+    users: {},
 
     id_msg: '',
     name_msg: '',
@@ -36,6 +37,7 @@ var app = new Vue({
     this.ConsultarClients();
     this.ConsultarProducts();
     this.ConsultarMensajes();
+    this.ConsultarUsers();
     this.ConsultaBlogs();
     this.ChartMsg();
 
@@ -88,6 +90,14 @@ var app = new Vue({
       });
     },
 
+    ConsultarUsers: function(){
+      capturador = this;
+      axios.get('/aleriaVue/pages/SelectUser', {
+      }).then(function (response) {
+        capturador.users = response.data;
+      });
+    },
+
     ConsultaBlogs: function() {
       capturador = this;
       axios.get('/aleriaVue/pages/blog', {
@@ -134,10 +144,9 @@ var app = new Vue({
 
     ConsultarClients: function(){
       capturador = this;
-      axios.get('/aleriaVue/pages/SelectClients', {
+      axios.get('/aleriaVue/pages/SelectClient', {
       }).then(function (response) {
         capturador.clients = response.data;
-        console.log(response.data);
       });
     },
 

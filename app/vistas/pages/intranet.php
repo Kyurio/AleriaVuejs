@@ -7,7 +7,7 @@
       <nav class="col-md-2 z-depth-5 d-none d-md-block bg-light sidebar">
         <ul class="nav flex-column nav-pills" id="myTab" role="tablist" aria-orientation="vertical">
           <li> <a class="nav-link" id="v-pills-ventas-tab" data-toggle="tab" href="#ventas" role="tab" aria-controls="v-pills-home" aria-selected="true"><i class="fas fa-shopping-cart"></i> Ventas</a></li>
-          <li> <a class="nav-link" id="v-pills-banners-tab" data-toggle="tab" href="#blog" role="tab" aria-controls="v-pills-profile" aria-selected="false"><i class="fas fa-blog"></i> Blog</a></li>
+          <li> <a class="nav-link" id="v-pills-banners-tab" data-toggle="tab" href="#blog" role="tab" aria-controls="v-pills-profile" aria-selected="false"><i class="fas fa-feather-alt"></i> Blog</a></li>
           <li> <a class="nav-link" id="v-pills-mensajes-tab" data-toggle="tab" href="#mensajes" role="tab" aria-controls="v-pills-profile" aria-selected="false"><i class="fas fa-envelope"></i> Mensajes</a></li>
           <li> <a class="nav-link" id="v-pills-usuarios-tab" data-toggle="tab" href="#usuarios" role="tab" aria-controls="v-pills-profile" aria-selected="false"><i class="fas fa-user"></i> Usuarios</a></li>
           <li> <a class="nav-link" id="v-pills-tareas-tab" data-toggle="tab" href="#tareas" role="tab" aria-controls="v-pills-profile" aria-selected="false"><i class="fas fa-thumbtack"></i> Tareas</a></li>
@@ -272,6 +272,7 @@
           <div class="tab-pane fade shadow" id="usuarios" role="tabpanel" aria-labelledby="usuarios">
             <div class="card">
               <div class="card-body">
+
                 <div class="mt-1 mb-4 d-flex justify-content-between">
                   <h3>Usuarios</h3>
                 </div>
@@ -295,29 +296,36 @@
                     </div>
                   </div>
                 </div>
-                <!-- end buscador con botones -->
+                <!-- end buscadores -->
 
-                <table class="table table-hover">
-                  <thead>
-                    <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">Usuario</th>
-                      <th scope="col">Estado</th>
-                      <th scope="col">Permiso</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <th scope="row">1</th>
-                      <td><a href="">Mark</a></td>
-                      <td><a href="">Otto</a></td>
-                      <td><a href="">@mdo</a></td>
-                    </tr>
-                  </tbody>
-                </table>
-                <!-- paginador -->
+                <!-- card usuarios -->
+                <div class="container">
+                  <div class="row">
+                    <!-- for -->
+                    <div v-for="item in users">
+                      <div class="col-md-4 mb-1">
+                        <div class="card card-cascade mb-4 " width="100">
+                          <div class="view view-cascade overlay">
+                            <div class="mask rgba-white-slight"></div>
+                          </div>
+                          <div class="card-body card-body-cascade text-center">
+                            <h4 class="card-title"><strong>{{item.name}}</strong></h4>
+                            <div v-if="item.is_active == 0">
+                              <span class="badge badge-danger">Inactivo</span>
+                            </div>
+                            <div v-else>
+                              <span class="badge badge-success">Activo</span>
+                            </div>
+                            <p class="card-text"><i class="far fa-envelope"></i> {{ item.email}}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- end for -->
+                  </div>
+                  <!-- card clientes -->
+                </div>
 
-                <!-- end paginador -->
               </div>
             </div>
           </div>
@@ -343,10 +351,8 @@
                   </div>
                   <div class="col-sm-6">
                     <div class="mt-1 mb-4 d-flex justify-content-end">
-                      <button type="button" title="Agregar" class="btn btn-dark mr-1" data-toggle="modal" data-target="#AgregarBanner"><i class="fas fa-plus"></i></button>
+                      <button type="button" title="Agregar" class="btn btn-success mr-1" data-toggle="modal" data-target="#AgregarBanner"><i class="fas fa-plus"></i></button>
                       <button type="button" title="Enviar Correo" class="btn btn-dark mr-1" data-toggle="modal" data-target="#AgregarBanner"><i class="fas fa-envelope"></i></button>
-                      <button type="button" title="Llamar a skype" class="btn btn-dark mr-1" data-toggle="modal" data-target="#AgregarBanner"><i class="fab fa-skype"></i></button>
-                      <button type="button" title="Mensaje a whatsapp" class="btn btn-dark mr-1" data-toggle="modal" data-target="#AgregarBanner"><i class="fab fa-whatsapp"></i></button>
                     </div>
                   </div>
                 </div>
@@ -354,64 +360,81 @@
 
 
                 <!-- card clientes -->
-                <div class="row">
+                <div class="container">
+                  <div class="row">
+                    <!-- for -->
+                    <div v-for="item in clients">
 
-                  <div v-for="item in clients">
-                    <div class="col-sm-4 mb-1">
-                      <div class="card card-cascade shadow">
-                        <div class="view view-cascade overlay">
-                          <a>
+                      <div class="col-md-4 mb-1">
+                        <!-- Card Regular -->
+                        <div class="card card-cascade mb-4 " width="100">
+                          <!-- Card image -->
+                          <div class="view view-cascade overlay">
                             <div class="mask rgba-white-slight"></div>
-                          </a>
-                        </div>
-                        <div class="card-body card-body-cascade text-center">
-                          <h4 class="card-title"><strong>{{item.name}}</strong></h4>
-                          <h6 class="font-weight-bold indigo-text py-2">{{irem.company}}</h6>
-                          <p class="card-text">
-                            <i class="fas fa-phone"></i>:
-                          </p>
-                            <a type="button" class="btn-floating btn-small btn-fb"><i class="fab fa-facebook-f"></i>
+
+                          </div>
+
+                          <!-- Card content -->
+                          <div class="card-body card-body-cascade text-center">
+
+                            <!-- Title -->
+                            <h4 class="card-title"><strong>{{item.name}}</strong></h4>
+                            <!-- Subtitle -->
+                            <h6 class="font-weight-bold indigo-text py-2">{{item.company}}</h6>
+                            <!-- Text -->
+                            <p class="card-text"><i class="fas fa-map-marker-alt"></i> {{ item.address1 }}</p>
+                            <p class="card-text"><i class="far fa-envelope"></i> {{ item.email1 }}</p>
+                            <p class="card-text"><i class="fas fa-phone"></i> {{ item.phone1 }}</p>
+
+                            <!-- Facebook -->
+                            <a type="button" class="btn-floating btn-small btn-fb"><i class="fab fa-facebook-f"></i></a>
+                            <!-- Twitter -->
                             <a type="button" class="btn-floating btn-small btn-tw"><i class="fab fa-twitter"></i></a>
+                            <!-- Google + -->
                             <a type="button" class="btn-floating btn-small btn-dribbble"><i class="fab fa-dribbble"></i></a>
                           </div>
-                        </div>
-                      </div>
-                    </div>
 
+                        </div>
+                        <!-- Card Regular -->
+                      </div>
+
+                    </div>
+                    <!-- end for -->
                   </div>
                   <!-- card clientes -->
 
+                </div>
+
+
+              </div>
+            </div>
+          </div>
+
+          <!-- Configuraciones -->
+          <div class="tab-pane fade shadow" id="configuracion" role="tabpanel" aria-labelledby="configuracion">
+
+            <div class="card">
+              <div class="card-body">
+                <div class="d-flex justify-content-between">
+                  <h3>configuracion</h3>
+                </div>
+                <div class="mt-1 mb-4 d-flex justify-content-end">
 
 
                 </div>
               </div>
             </div>
 
-            <!-- Configuraciones -->
-            <div class="tab-pane fade shadow" id="configuracion" role="tabpanel" aria-labelledby="configuracion">
-
-              <div class="card">
-                <div class="card-body">
-                  <div class="d-flex justify-content-between">
-                    <h3>configuracion</h3>
-                  </div>
-                  <div class="mt-1 mb-4 d-flex justify-content-end">
-
-
-                  </div>
-                </div>
-              </div>
-
-
-
-            </div>
 
 
           </div>
 
-        </main>
-      </div>
-    </div>
 
+        </div>
+
+      </main>
+    </div>
   </div>
-  <?php require_once RUTA_APP . '/vistas/inc/footer.php';?>
+
+</div>
+<?php require_once RUTA_APP . '/vistas/inc/footer.php';?>
