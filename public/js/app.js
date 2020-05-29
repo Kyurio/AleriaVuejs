@@ -1,5 +1,7 @@
-
+Vue.component('paginador-nav', ('@/components/paginador-nav.vue').default);
+//import paginador from './components/paginador'
 var app = new Vue({
+
 
   el: '#app',
   data: {

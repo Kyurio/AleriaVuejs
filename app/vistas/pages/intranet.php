@@ -74,7 +74,10 @@
                           </div>
                         </td>
                         <td>{{ item.inventary_min }}</td>
-                        <td> <button type="button" name="button"></button> </td>
+                        <td>
+                          <button type="button" name="button" class="btn btn-danger btn-sm" title="Eliminar"><i class="fas fa-trash"></i></button>
+                          <button type="button" name="button" class="btn btn-warning btn-sm" title="Editar"><i class="fas fa-pen"></i></button>
+                        </td>
                       </tr>
                     </tbody>
                   </table>
@@ -334,7 +337,7 @@
           <div class="tab-pane fade shadow" id="clientes" role="tabpanel" aria-labelledby="clientes">
             <div class="card">
               <div class="card-body">
-                <div class="mt-1 mb-4 d-flex justify-content-between">
+                <div class=" d-flex justify-content-between">
                   <h3>Clientes</h3>
                 </div>
                 <!-- buscador con botones -->
@@ -351,60 +354,68 @@
                   </div>
                   <div class="col-sm-6">
                     <div class="mt-1 mb-4 d-flex justify-content-end">
-                      <button type="button" title="Agregar" class="btn btn-success mr-1" data-toggle="modal" data-target="#AgregarBanner"><i class="fas fa-plus"></i></button>
+                      <button type="button" title="Agregar" class="btn btn-dark mr-1" data-toggle="modal" data-target="#AgregarBanner"><i class="fas fa-plus"></i></button>
                       <button type="button" title="Enviar Correo" class="btn btn-dark mr-1" data-toggle="modal" data-target="#AgregarBanner"><i class="fas fa-envelope"></i></button>
+                      <button type="button" title="Estadisticas" class="btn btn-dark mr-1" data-toggle="modal" data-target="#AgregarBanner"><i class="far fa-chart-bar"></i></button>
                     </div>
                   </div>
                 </div>
                 <!-- end buscador con botones -->
 
-
                 <!-- card clientes -->
                 <div class="container">
-                  <div class="row">
-                    <!-- for -->
-                    <div v-for="item in clients">
+                  <div class="d-flex justify-content-center py-5 mb-4 ">
+                    <div class="row">
+                      <div v-for="item in clients">
+                        <div class="col-md-4">
+                          <div class="card card-cascade mb-4 py-4" >
+                            <div class="view view-cascade overlay">
+                              <div class="d-flex justify-content-end">
+                                <button type="button" class="btn btn-sm ">
+                                  <i class="fas fa-trash"></i>
+                                </button>
+                                <button type="button" class="btn btn-sm ">
+                                  <i class="fas fa-pen"></i>
+                                </button>
+                              </div>
+                            </div>
+                            <div class="card-body card-body-cascade text-center">
 
-                      <div class="col-md-4 mb-1">
-                        <!-- Card Regular -->
-                        <div class="card card-cascade mb-4 " width="100">
-                          <!-- Card image -->
-                          <div class="view view-cascade overlay">
-                            <div class="mask rgba-white-slight"></div>
+                              <!-- Title -->
+                              <h4 class="card-title"><strong>{{item.name}}</strong></h4>
+                              <!-- Subtitle -->
+                              <h6 class="font-weight-bold indigo-text py-2">{{item.company}}</h6>
+                              <!-- Text -->
+                              <p class="card-text"><i class="fas fa-map-marker-alt"></i> {{ item.address1 }}</p>
+                              <p class="card-text"><i class="far fa-envelope"></i> {{ item.email1 }}</p>
+                              <p class="card-text"><i class="fas fa-phone"></i> {{ item.phone1 }}</p>
 
+                              <div class="d-flex justify-content-center">
+                                <!-- Facebook -->
+                                <button type="button" class="btn btn-sm btn-primary">
+                                  <i class="fab fa-facebook-f"></i>
+                                </button>
+                                <!-- Twitter -->
+                                <button type="button" class="btn btn-sm btn-info">
+                                  <i class="fab fa-twitter"></i>
+                                </button>
+                                <!-- Google + -->
+                                <button type="button" class="btn btn-sm btn-secondary">
+                                  <i class="fab fa-instagram"></i>
+                                </button>
+                              </div>
+
+                            </div>
                           </div>
-
-                          <!-- Card content -->
-                          <div class="card-body card-body-cascade text-center">
-
-                            <!-- Title -->
-                            <h4 class="card-title"><strong>{{item.name}}</strong></h4>
-                            <!-- Subtitle -->
-                            <h6 class="font-weight-bold indigo-text py-2">{{item.company}}</h6>
-                            <!-- Text -->
-                            <p class="card-text"><i class="fas fa-map-marker-alt"></i> {{ item.address1 }}</p>
-                            <p class="card-text"><i class="far fa-envelope"></i> {{ item.email1 }}</p>
-                            <p class="card-text"><i class="fas fa-phone"></i> {{ item.phone1 }}</p>
-
-                            <!-- Facebook -->
-                            <a type="button" class="btn-floating btn-small btn-fb"><i class="fab fa-facebook-f"></i></a>
-                            <!-- Twitter -->
-                            <a type="button" class="btn-floating btn-small btn-tw"><i class="fab fa-twitter"></i></a>
-                            <!-- Google + -->
-                            <a type="button" class="btn-floating btn-small btn-dribbble"><i class="fab fa-dribbble"></i></a>
-                          </div>
-
                         </div>
-                        <!-- Card Regular -->
                       </div>
-
                     </div>
-                    <!-- end for -->
                   </div>
-                  <!-- card clientes -->
-
                 </div>
+                <!-- end card -->
 
+                <!-- pagination -->
+                <paginador-nav></paginador-nav>
 
               </div>
             </div>
