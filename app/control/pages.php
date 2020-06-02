@@ -171,6 +171,16 @@ class pages extends control{
   }
 
   /*--------------------------------------------------------
+  funciones chart
+  --------------------------------------------------------*/
+  public function chartCls(){
+    $clients = $this->ConfigModelo->select('person', '', '', 'id','created_at');
+    echo json_encode($clients);
+
+
+  }
+
+  /*--------------------------------------------------------
   funciones bases --logout --errorpage
   --------------------------------------------------------*/
   public function Logout(){

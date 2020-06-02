@@ -1,5 +1,4 @@
-Vue.component('paginador-nav', ('@/components/paginador-nav.vue').default);
-//import paginador from './components/paginador'
+
 var app = new Vue({
 
 
@@ -18,6 +17,8 @@ var app = new Vue({
     details: {},
     clients: {},
     users: {},
+
+    chartclsData: {},
 
     id_msg: '',
     name_msg: '',
@@ -42,6 +43,7 @@ var app = new Vue({
     this.ConsultarUsers();
     this.ConsultaBlogs();
     this.ChartMsg();
+    this.ChartCls();
 
   },
 
@@ -187,8 +189,58 @@ var app = new Vue({
 
     ChartMsg: function(){
 
+      var ctx = document.getElementById('ChartMsg').getContext('2d');
+      var chart = new Chart(ctx, {
+        // The type of chart we want to create
+        type: 'line',
+
+        // The data for our dataset
+        data: {
+          labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sept', 'Oct', 'Nov', 'Dic'],
+          datasets: [{
+            label: 'Tràfico de correos',
+            backgroundColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(255, 99, 132)',
+            data: [0, 10, 5, 2, 20, 30, 45, 0, 0, 1, 4, 34]
+          }]
+        },
+
+        // Configuration options go here
+        options: {}
+      });
 
 
+    },
+
+    ChartCls: function(){
+      //consulta los datos
+      capturador = this;
+      axios.get('/aleriaVue/pages/chartCls', {
+      }).then(function (response) {
+        capturador.chartclsData = response.data;
+        console.log(response.data)
+      });
+
+
+      var ctx = document.getElementById('ChartCls').getContext('2d');
+      var chart = new Chart(ctx, {
+        // The type of chart we want to create
+        type: 'line',
+
+        // The data for our dataset
+        data: {
+          labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sept', 'Oct', 'Nov', 'Dic'],
+          datasets: [{
+            label: 'Tràfico de clientes',
+            backgroundColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(255, 99, 132)',
+            data: this.chartclsData,
+          }]
+        },
+
+        // Configuration options go here
+        options: {}
+      });
 
     },
 

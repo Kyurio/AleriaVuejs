@@ -10,12 +10,16 @@ class config{
   /*----------------------------------------------------------------------------
   consultas select
   ----------------------------------------------------------------------------*/
-  public function select($tabla, $condicion, $filtro){
+  public function select($tabla, $condicion, $filtro, $count, $groupby){
     try{
-
+      //reemplazar por un case
       //consulta
-      if (!isset($condicion)) {
-        $this->bd->query("SELECT * FROM $tabla WHERE $condicionn = $filtro");
+      if (!empty($condicion)) {
+        $this->bd->query("SELECT * FROM $tabla WHERE $condicion = $filtro");
+      }elseif(!empty($groupby)){
+        $this->bd->query("SELECT * FROM $tabla  GROUP BY $groupby");
+      }elseif(!empty($count) and !empty($groupby)  ){
+        $this->bd->query("SELECT *, count($count)AS total FROM $tabla GROUP BY $groupby");
       }else{
         $this->bd->query("SELECT * FROM $tabla ");
       }
@@ -108,126 +112,7 @@ class config{
   /*----------------------------------------------------------------------------
   consultasperonsalizadas
   ----------------------------------------------------------------------------*/
-  public function InsertMail($datos){
-    try {
-      $this->bd->query("INSERT INTO message(Name, Email, Subjet, Content) VALUES (:name, :email, :subjet, :content) ");
 
-      //otorgar
-      $this->bd->bind(':name', $datos['name']);
-      $this->bd->bind(':email', $datos['email']);
-      $this->bd->bind(':subjet', $datos['subjet']);
-      $this->bd->bind(':content', $datos['content']);
-      //ejecutar consulta
-      if($this->bd->execute()){
-        return true;
-      }else{
-        return false;
-      }
-
-    } catch (PDOException $e) {
-      //header('location: ' . RUTA_URL . 'pages/error/500');
-      echo json_encode($e);
-    }
-  }
-
-  public function InsertNuevoProducto($datos){
-    try {
-      $this->bd->query("INSERT INTO producto(Nombre_producto, Descripcion, Precio, Oferta, Estado, Fecha_Publicacion, Fecha_Creacion) VALUES (:Nombre_Producto, :Descripcion, :Precio, :Oferta, :Estado, :Fecha_Publicacion, :Fecha_Creacion) ");
-
-      //otorgar valores
-      $this->bd->bind(':Nombre_Producto', $datos['Nombre_Producto']);
-      $this->bd->bind(':Descripcion', $datos['Descripcion']);
-      $this->bd->bind(':Estado', $datos['Estado']);
-      $this->bd->bind(':Precio', $datos['Precio']);
-      $this->bd->bind(':Oferta', $datos['Oferta']);
-      $this->bd->bind(':Fecha_Publicacion', $datos['Fecha_Publicacion']);
-      $this->bd->bind(':Fecha_Creacion', $datos['Fecha_Creacion']);
-
-      //ejecutar consulta
-      if($this->bd->execute()){
-        return true;
-      }else{
-        return false;
-      }
-
-    } catch (PDOException $e) {
-      //header('location: ' . RUTA_URL . 'pages/error/500');
-      echo $e;
-    }
-  }
-
-  public function InsertarRedesSociales($datos){
-    try {
-      $this->bd->query("INSERT INTO social( Id_empresa, Facebook, Twitter, Instagram, Youtube, Correo) VALUES ( :Id_empresa, :Facebook, :Twitter, :Instagram, :Youtube, :Correo) ");
-
-      //otorgar valores
-      $this->bd->bind(':Facebook', $datos['Facebook']);
-      $this->bd->bind(':Twitter', $datos['Twitter']);
-      $this->bd->bind(':Instagram', $datos['Instagram']);
-      $this->bd->bind(':Youtube', $datos['Youtube']);
-      $this->bd->bind(':Correo', $datos['Correo']);
-      $this->bd->bind(':Id_empresa', $datos['Id_empresa']);
-      //ejecutar consulta
-      if($this->bd->execute()){
-        return true;
-      }else{
-        return false;
-      }
-
-    } catch (PDOException $e) {
-      //header('location: ' . RUTA_URL . 'pages/error/500');
-      echo $e;
-    }
-  }
-
-  public function AddBanners($datos){
-    try {
-      $this->bd->query("INSERT INTO banner(Titulo, Fecha_creacion, Fecha_edicion, Fecha_publicacion, Descripcion, Imagen) VALUES ( :Titulo, :Fecha_creacion, :Fecha_edicion, :Fecha_publicacion, :Descripcion, :Imagen ) ");
-
-      //otorgar valores
-      $this->bd->bind(':Titulo', $datos['Titulo_Banner']);
-      $this->bd->bind(':Fecha_creacion', $datos['Fecha_Creacion']);
-      $this->bd->bind(':Fecha_edicion', $datos['Fecha_Edicion']);
-      $this->bd->bind(':Fecha_publicacion', $datos['Fecha_Publicacion_Banner']);
-      $this->bd->bind(':Descripcion', $datos['Descripcion_Banner']);
-      $this->bd->bind(':Imagen', $datos['Imagen_Banner']);
-
-      //ejecutar consulta
-      if($this->bd->execute()){
-        return true;
-      }else{
-        return false;
-      }
-
-    } catch (PDOException $e) {
-
-      echo $e;
-      //header('location: ' . RUTA_URL . 'pages/error/500');
-
-    }
-  }
-
-  public function InsertarMensajes($datos){
-
-    try {
-      $this->bd->query("INSERT INTO Mensajes(Nombre, Correo, Asunto, Mensaje) VALUES ( :Nombre, :Correo, :Asunto, :Mensaje ) ");
-      //otorgar valores
-      $this->bd->bind(':Nombre',  $datos['Nombre']);
-      $this->bd->bind(':Correo',  $datos['Correo']);
-      $this->bd->bind(':Asunto',  $datos['Asunto']);
-      $this->bd->bind(':Mensaje', $datos['Mensaje']);
-      //ejecutar consulta
-      if($this->bd->execute()){
-        return true;
-      }else{
-        return false;
-      }
-    } catch (PDOException $e) {
-      echo $e;
-      //header('location: ' . RUTA_URL . 'pages/error/500');
-    }
-
-  }
 
 }
 ?>
