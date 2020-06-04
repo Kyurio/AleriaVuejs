@@ -1,4 +1,3 @@
-
 var app = new Vue({
 
 
@@ -151,6 +150,7 @@ var app = new Vue({
       axios.get('/aleriaVue/pages/SelectClient', {
       }).then(function (response) {
         capturador.clients = response.data;
+        console.log(response.data);
       });
     },
 
@@ -234,7 +234,7 @@ var app = new Vue({
             label: 'Tràfico de clientes',
             backgroundColor: 'rgb(255, 99, 132)',
             borderColor: 'rgb(255, 99, 132)',
-            data: this.chartclsData,
+            data: [33,55,78,94]
           }]
         },
 

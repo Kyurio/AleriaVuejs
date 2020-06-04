@@ -10,21 +10,34 @@ class config{
   /*----------------------------------------------------------------------------
   consultas select
   ----------------------------------------------------------------------------*/
-  public function select($tabla, $condicion, $filtro, $count, $groupby){
+  public function select($option, $tabla, $condicion, $filtro, $count, $groupby){
     try{
-      //reemplazar por un case
-      //consulta
-      if (!empty($condicion)) {
-        $this->bd->query("SELECT * FROM $tabla WHERE $condicion = $filtro");
-      }elseif(!empty($groupby)){
-        $this->bd->query("SELECT * FROM $tabla  GROUP BY $groupby");
-      }elseif(!empty($count) and !empty($groupby)  ){
-        $this->bd->query("SELECT *, count($count)AS total FROM $tabla GROUP BY $groupby");
-      }else{
-        $this->bd->query("SELECT * FROM $tabla ");
-      }
+      //reemplazar por un case;
+      switch ($option) {
 
-      return $this->bd->registros();
+        case "filtro":
+        $this->bd->query("SELECT * FROM $tabla WHERE $condicion = $filtro");
+        return $this->bd->registros();
+        break;
+
+        case "groupby":
+        $this->bd->query("SELECT * FROM $tabla  GROUP BY $groupby");
+        return $this->bd->registros();
+        break;
+
+        case "count":
+        $this->bd->query("SELECT *, count($count)AS total FROM $tabla GROUP BY $groupby");
+        return $this->bd->registros();
+
+        case "select":
+        $this->bd->query("SELECT * FROM $tabla");
+        return $this->bd->registros();
+        break;
+
+        default:
+        echo "default";
+        break;
+      }
 
     }catch(PDOException $e){
       echo $e;

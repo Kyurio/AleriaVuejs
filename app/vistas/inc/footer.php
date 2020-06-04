@@ -1,9 +1,12 @@
-<footer class="footer mt-auto py-3 pt-4 page-footer font-small bg-dark text-ligh ">
+
+
+
+<!--<footer class="footer mt-auto py-3 pt-4 page-footer font-small bg-dark text-ligh ">
   <div class="container">
     <div class="container-fluid text-center text-md-left">
       <div class="row">
         <div class="col-md-6 mt-md-0 mt-3">
-          <h5 class="text-uppercase text-light"><?php echo NOMBRE_SITIO ?></h5>
+          <h5 class="text-uppercase text-light"></h5>
           <p class="text-light">Here you can use rows and columns to organize your footer content.</p>
         </div>
         <hr class="clearfix w-100 d-md-none pb-3">
@@ -44,10 +47,14 @@
       </div>
     </div>
   </div>
-  <div class="footer-copyright text-center py-3">© <?php echo date("Y"); ?> Copyright:
+  <div class="footer-copyright text-center py-3">© Copyright:
     <a href="#" class="text-light"> </a>
   </div>
 </footer>
+
+
+-->
+
 <!-- vuejs -->
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <!-- axios -->

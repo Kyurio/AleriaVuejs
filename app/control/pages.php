@@ -93,27 +93,27 @@ class pages extends control{
 
   public function SelectProduct(){
 
-    $product = $this->ConfigModelo->select('product', '', '');
+    $product = $this->ConfigModelo->select('select', 'product', '', '', '', '');
     echo json_encode($product);
   }
 
   public function SelectClient(){
-    $clients = $this->ConfigModelo->select('person', '', '');
+    $clients = $this->ConfigModelo->select('select', 'person', '', '', '', '');
     echo json_encode($clients);
   }
 
   public function SelectMail(){
-    $mails = $this->ConfigModelo->select('message', '', '');
+    $clients = $this->ConfigModelo->select('select', 'message', '', '', '', '');
     echo json_encode($mails);
   }
 
   public function SelectBlog(){
-    $mails = $this->ConfigModelo->select('blog', '', '');
+    $mails = $this->ConfigModelo->select('select', 'blog', '', '', '', '');
     echo json_encode($mails);
   }
 
   public function SelectUser(){
-    $user = $this->ConfigModelo->select('user', '', '');
+    $user = $this->ConfigModelo->select('select', 'user', '', '', '', '');
     echo json_encode($user);
   }
 
@@ -174,7 +174,7 @@ class pages extends control{
   funciones chart
   --------------------------------------------------------*/
   public function chartCls(){
-    $clients = $this->ConfigModelo->select('person', '', '', 'id','created_at');
+    $clients = $this->ConfigModelo->select('groupby','person', '', '', 'id','created_at');
     echo json_encode($clients);
 
 
