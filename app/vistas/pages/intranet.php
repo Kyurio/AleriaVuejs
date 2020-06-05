@@ -107,34 +107,73 @@
                   </div>
                   <div class="col-sm-6">
                     <div class="mt-1 mb-4 d-flex justify-content-end">
-                      <button type="button" title="Agregar" class="btn btn-dark" data-toggle="modal" data-target="#AgregarProducto"><i class="fas fa-plus"></i></button>
+                      <ul class="nav" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                          <button type="button" title="Agregar" class="btn btn-dark" data-target="#task" id="" data-toggle="tab" href="#tasl" role="tab" aria-selected="true" ><i class="fas fa-plus"></i></button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                          <button type="button" title="Listado de tareas" class="btn btn-dark" data-target="#list" id="" data-toggle="tab" href="#list" role="tab" aria-selected="true" ><i class="far fa-list-alt"></i></button>
+                        </li>
+                      </ul>
                     </div>
                   </div>
                 </div>
                 <!-- end buscador con botones -->
+                <!-- contenido de el tab -->
 
-                <table class="table table-hover text-center">
-                  <thead>
-                    <tr>
-                      <th>Tarea</th>
-                      <th>Descripcion</th>
-                      <th>Fecha termino</th>
-                      <th>Accion</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td><a href=""></a></td>
-                      <td><a href=""></a></td>
-                      <td></td>
-                      <td>
-                        <button type="button" title="Pausar"     class="btn btn-sm btn-warning"><i class="fas fa-pause-circle"></i></button>
-                        <button type="button" title="continiar"  class="btn btn-sm btn-info"><i class="fas fa-play-circle"></i></button>
-                        <button type="button" title="finalizar"  class="btn btn-sm btn-success"><i class="fas fa-check"></i></button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                <div class="tab-content" id="myTabContent">
+                  <div class="tab-pane fade show active" id="list" role="tabpanel" aria-labelledby="profile-tab">
+                    <ul class="list-group">
+                      <li class="list-group-item">
+
+                        <div class="d-flex flex-row-reverse bd-highlight">
+                          <a href="" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></a>
+                          <a href="" class="btn btn-sm btn-warning"><i class="fas fa-pen"></i></a>
+                        </div>
+
+                        Cras justo odio
+
+
+                      </li>
+                      <li class="list-group-item">Dapibus ac facilisis in</li>
+                      <li class="list-group-item">Morbi leo risus</li>
+                      <li class="list-group-item">Porta ac consectetur ac</li>
+                      <li class="list-group-item">Vestibulum at eros</li>
+                    </ul>
+                  </div>
+                  <div class="tab-pane fade" id="task" role="tabpanel" aria-labelledby="task">
+                    <div class="card">
+                      <div class="card-body">
+
+                        <h3>agregar tareas</h3>
+                        <div class="col-md-6">
+                          <form id="app" @submit="checkForm" method="post" novalidate="true">
+                            <div class="form-group">
+                              <label for="">Titulo</label>
+                              <input v-model="title_task"  type="text" placeholder="Titulo tarea" maxlength="60" name="title_task" class="form-control" id="exampleInputEmail1" required aria-describedby="emailHelp">
+                            </div>
+                            <div class="form-group">
+                              <label for="">Descripcion</label>
+                              <input v-model="subjet_msg"  type="text" placeholder="Descripcion tareas" maxlength="400" name="description_task" class="form-control" id="exampleInputEmail1" required aria-describedby="emailHelp">
+                            </div>
+                            <div class="form-group">
+                              <label for="">Fecha de inicio</label>
+                              <input type="date" name="date_task" v-model="date_task"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                            </div>
+                            <div class="form-group">
+                              <label for="">Fecha de termino</label>
+                              <input type="date" name="date_end_task" v-model="date_end_task"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                            </div>
+                            <button type="submit" class="btn btn-dark" name="button">Enviar</button>
+                          </form>
+                        </div>
+                      </div>
+
+                      
+                    </div>
+                  </div>
+                </div>
+                <!-- end contenido tabs -->
               </div>
             </div>
           </div>
@@ -421,7 +460,7 @@
                   </div>
                 </div>
                 <!-- end card -->
-                            
+
 
               </div>
             </div>
