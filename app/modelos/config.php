@@ -124,8 +124,28 @@ class config{
 
   /*----------------------------------------------------------------------------
   consultasperonsalizadas
-  ----------------------------------------------------------------------------*/
+  ----------------------------------------------------------------------- -----*/
+  public function InsertNuevaCategoria($datos){
+    try {
+      //consulta sql
+      $this->bd->query("INSERT INTO category (name, description) VALUES (:name, :description)");
+      //valores de consulta
+      $this->bd->bind(':name', $datos['name']);
+      $this->bd->bind(':description', $datos['description']);
+      //valores a ingresar
+      //ejecutar consulta
+      if($this->bd->execute()){
+        return json_encode(true);
+      }else{
+        return json_encode(false);
+      }
+      
+    } catch (\Exception $e) {
+      echo $e;
+    }
 
+
+  }
 
 }
 ?>

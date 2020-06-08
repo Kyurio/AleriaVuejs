@@ -32,6 +32,32 @@ class pages extends control{
   /*--------------------------------------------------------
   funciones insert --update deleted
   --------------------------------------------------------*/
+  public function InsertCategory(){
+
+    $data = json_decode(file_get_contents("php://input"), true);
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+      $formNuevaCategoria = [
+        'name' => $data['name'],
+        'description' => $data['description'],
+      ];
+      //ejecyta la insercion
+      if($this->ConfigModelo->InsertNuevaCategoria($formNuevaCategoria) == true){
+        echo json_encode(true);
+      }else{
+        echo json_encode(false);
+      }
+
+    }else{
+
+      $formNuevaVenta = [
+        'name_category' => '',
+        'description_category' => '',
+      ];
+
+    }
+  }
+
 
   //-- productos
   public function InsertProducto(){
@@ -40,13 +66,13 @@ class pages extends control{
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       $formNuevaVenta = [
-        'Nombre_Producto' => $data['Nombre_Producto'],
-        'Fecha_Publicacion' => $data['Fecha_Publicacion'],
-        'Descripcion' => $data['Descripcion'],
-        'Precio' => $data['Valor_Producto'],
-        'Oferta' => $data['Valor_Oferta'],
-        'Estado' => 1,
-        'Fecha_Creacion' => date('Y-m-d'),
+        'name_product' => $data['Nombre_Producto'],
+        'description_product' => $data['Fecha_Publicacion'],
+        'inventary_min_product' => $data['Descripcion'],
+        'price_in_product' => $data['Valor_Producto'],
+        'price_out_prouct' => $data['Valor_Oferta'],
+        'is_active_product' => 1,
+        'categoriy_product' => date('Y-m-d'),
       ];
 
       //ejecyta la insercion
@@ -103,7 +129,7 @@ class pages extends control{
   }
 
   public function SelectMail(){
-    $clients = $this->ConfigModelo->select('select', 'message', '', '', '', '');
+    $mails = $this->ConfigModelo->select('select', 'message', '', '', '', '');
     echo json_encode($mails);
   }
 
@@ -115,6 +141,11 @@ class pages extends control{
   public function SelectUser(){
     $user = $this->ConfigModelo->select('select', 'user', '', '', '', '');
     echo json_encode($user);
+  }
+
+  public function SelectCategorys(){
+    $categorys = $this->ConfigModelo->select('select', 'category', '', '', '', '');
+    echo json_encode($categorys);
   }
 
   public function Mail(){

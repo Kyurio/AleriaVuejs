@@ -4,7 +4,7 @@
     <div class="row">
 
       <!-- sidebar -->
-      <nav class="col-md-2 z-depth-3 d-none d-md-block bg-light sidebar">
+      <nav id="sidebarMenu" class="col-md-2 z-depth-3 d-none d-md-block bg-light sidebar">
         <ul class="nav flex-column nav-pills" id="myTab" role="tablist" aria-orientation="vertical">
           <li> <a class="nav-link" id="v-pills-ventas-tab" data-toggle="tab" href="#ventas" role="tab" aria-controls="v-pills-home" aria-selected="true"><i class="fas fa-shopping-cart"></i> Ventas</a></li>
           <li> <a class="nav-link" id="v-pills-banners-tab" data-toggle="tab" href="#blog" role="tab" aria-controls="v-pills-profile" aria-selected="false"><i class="fas fa-feather-alt"></i> Blog</a></li>
@@ -19,7 +19,7 @@
       <!-- end sidebar -->
 
 
-      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4 mt-2">
+      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4 mt-3 py-5">
 
         <div class="tab-content mt-2">
 
@@ -43,44 +43,125 @@
                     </div>
                   </div>
                   <div class="col-sm-6">
-                    <div class="mt-1 mb-2 d-flex justify-content-end">
-                      <button type="button" title="Stock" class="btn btn-dark mr-1" data-toggle="modal" data-target="#AgregarProducto"><i class="fas fa-boxes"></i></button>
-                      <button type="button" title="Agregar" class="btn btn-dark" data-toggle="modal" data-target="#AgregarProducto"><i class="fas fa-plus"></i></button>
+                    <div class="mt-1 mb-4 d-flex justify-content-end">
+                      <ul class="nav" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                          <button type="button" title="Agregar" class="btn btn-dark" data-target="#product" id="" data-toggle="tab" href="#tasl" role="tab" aria-selected="true" ><i class="fas fa-plus"></i></button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                          <button type="button" title="Listado" class="btn btn-dark" data-target="#list_product" id="" data-toggle="tab" href="#list" role="tab" aria-selected="true" ><i class="far fa-list-alt"></i></button>
+                        </li>
+                      </ul>
                     </div>
                   </div>
                 </div>
                 <!-- end buscador con botones -->
                 <div>
-                  <table class="table table-hover text-center">
-                    <thead>
-                      <tr>
-                        <th scope="col">Producto</th>
-                        <th scope="col">Fecha publicacion</th>
-                        <th scope="col">Estado</th>
-                        <th scope="col">Estock</th>
-                        <th scope="col">Accion</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr v-for="item in products">
-                        <td>{{ item.name }}</td>
-                        <td>{{ item.created_at }}</td>
-                        <td>
-                          <div v-if="item.is_active == 1">
-                            <span class="badge badge-success">Activo</span>
+                  <!-- contenido de el tab -->
+
+                  <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="list_product" role="tabpanel" aria-labelledby="profile-tab">
+                      <!-- table -->
+                      <table class="table table-hover text-center">
+                        <thead>
+                          <tr>
+                            <th scope="col">Producto</th>
+                            <th scope="col">Fecha publicacion</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col">Estock</th>
+                            <th scope="col">Accion</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr v-for="item in products">
+                            <td>{{ item.name }}</td>
+                            <td>{{ item.created_at }}</td>
+                            <td>
+                              <div v-if="item.is_active == 1">
+                                <span class="badge badge-success">Activo</span>
+                              </div>
+                              <div v-else>
+                                <span class="badge badge-danger">Inactivo</span>
+                              </div>
+                            </td>
+                            <td>{{ item.inventary_min }}</td>
+                            <td>
+                              <button type="button" name="button" class="btn btn-danger btn-sm" title="Eliminar"><i class="fas fa-trash"></i></button>
+                              <button type="button" name="button" class="btn btn-warning btn-sm" title="Editar"><i class="fas fa-pen"></i></button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <!-- end table -->
+                    </div>
+
+                    -
+                    <div class="tab-pane fade" id="product" role="tabpanel" aria-labelledby="task">
+
+                      <div class="card">
+                        <div class="card-body">
+                          <div class="col-md-6">
+                            <form @submit="CheckFormProducts" method="post" novalidate="true">
+                              <div class="form-group">
+                                <label for="">Nombre</label>
+                                <input v-model="name_product"  type="text" placeholder="Titulo tarea" maxlength="60" name="title_task" class="form-control" id="exampleInputEmail1" required aria-describedby="emailHelp">
+                              </div>
+                              <div class="form-group">
+                                <label for="">Descripcion</label>
+                                <textarea name="description_product" class="form-control" placeholder="Descripcion" rows="2" cols="4"></textarea>
+                              </div>
+                              <!-- 3input en la misma linea -->
+                              <div class="row">
+
+                                <div class="col-md-4">
+                                  <div class="form-group">
+                                    <label for="">cantidad</label>
+                                    <input type="inventary_min_product" min="1" name="date_task" v-model="date_task"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                  </div>
+                                </div>
+                                <div class="col-md-4">
+                                  <div class="form-group">
+                                    <label for="">precio compra </label>
+                                    <input type="price_in_product"  min="1" name="date_end_task" v-model="date_end_task"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                  </div>
+                                </div>
+                                <div class="col-md-4">
+                                  <div class="form-group">
+                                    <label for="">precio venta </label>
+                                    <input type="numer" min="1" name="price_out_prouct" v-model="price_out_prouct"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                  </div>
+                                </div>
+
+                              </div>
+                              <!-- end 3 input -->
+
+                              <div class="form-group">
+                                <label for="">precio venta </label>
+                                <select class="browser-default custom-select" >
+                                  <option v-for="item in categorys"  value="item.id">{{ item.name }}</option>
+                                </select>
+                              </div>
+
+                              <div class="form-group">
+                                <label for="">imagen </label>
+                                <input type="text" name="imagen_product" v-model="imagen_product"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                              </div>
+                              <button type="submit" class="btn btn-dark"  name="button">Grabar</button>
+                            </form>
                           </div>
-                          <div v-else>
-                            <span class="badge badge-danger">Inactivo</span>
-                          </div>
-                        </td>
-                        <td>{{ item.inventary_min }}</td>
-                        <td>
-                          <button type="button" name="button" class="btn btn-danger btn-sm" title="Eliminar"><i class="fas fa-trash"></i></button>
-                          <button type="button" name="button" class="btn btn-warning btn-sm" title="Editar"><i class="fas fa-pen"></i></button>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+                        </div>
+
+
+                      </div>
+
+                    </div>
+
+
+
+
+                  </div>
+                  <!-- end contenido tabs -->
+
                 </div>
               </div>
             </div>
@@ -169,7 +250,7 @@
                         </div>
                       </div>
 
-                      
+
                     </div>
                   </div>
                 </div>
@@ -476,21 +557,107 @@
                 </div>
                 <div class="mt-1 mb-4 d-flex justify-content-end">
 
+                  <ul class="nav" id="myTab" role="tablist">
+                    <li class="nav-item">
+                      <a class="btn btn-sm btn-dark" id="home-tab" data-toggle="tab" href="#Categorias" role="tab" aria-controls="home"
+                      aria-selected="true">Categorias</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="btn btn-sm btn-dark" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
+                      aria-selected="false">Banners</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="btn btn-sm btn-dark" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
+                      aria-selected="false">Redes sociales</a>
+                    </li>
+                  </ul>
 
                 </div>
+
+                <div class="tab-content" id="myTabContent">
+                  <div class="tab-pane fade show active" id="Categorias" role="tabpanel" aria-labelledby="home-tab">
+
+
+                    <div class="row">
+
+                      <div class="col-md-6">
+                        <div class="card">
+                          <form @submit="CheckFormCategory" method="post" novalidate="true">
+                            <div class="card-body">
+
+                              <p v-if="errors.length">
+                                <b>Por favor corriga los siguientes erroes:</b>
+                                <ul>
+                                  <li v-for="error in errors" class="text-danger">{{ error }}</li>
+                                </ul>
+                              </p>
+
+                              <div class="form-group">
+                                <label for="">nombre</label>
+                                <input type="text" min="1" name="name_category" v-model="name_category" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                              </div>
+                              <div class="form-group">
+                                <label for="">Descripcion</label>
+                                <textarea name="description_category" v-model="description_category" class="form-control" rows="2" cols="4"></textarea>
+                              </div>
+                              <input type="submit" class="btn btn-dark" name="grabar" value="Grabar">
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="card">
+                          <div class="card-body">
+                            <table class="table">
+                              <thead>
+                                <tr>
+                                  <th scope="col">Categoria</th>
+                                  <th scope="col">Descripcion</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr v-for="item in categorys">
+                                  <td>{{ item.name }}</td>
+                                  <td>{{ item.description }}</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+
+
+                  </div>
+                  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">Food truck fixie
+                    locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit,
+                    blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee.
+                    Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum
+                    PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit. Keytar helvetica VHS
+                    salvia yr, vero magna velit sapiente labore stumptown. Vegan fanny pack odio cillum wes anderson 8-bit,
+                    sustainable jean shorts beard ut DIY ethical culpa terry richardson biodiesel. Art party scenester
+                    stumptown, tumblr butcher vero sint qui sapiente accusamus tattooed echo park.</div>
+                    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">Etsy mixtape
+                      wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack
+                      lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone skateboard
+                      locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings gentrify
+                      squid 8-bit cred pitchfork. Williamsburg banh mi whatever gluten-free, carles pitchfork biodiesel fixie
+                      etsy retro mlkshk vice blog. Scenester cred you probably haven't heard of them, vinyl craft beer blog
+                      stumptown. Pitchfork sustainable tofu synth chambray yr.</div>
+                    </div>
+
+                  </div>
+                </div>
+
               </div>
-            </div>
 
 
+            </div><!--end tabs-->
 
-          </div>
-
-
+          </main>
         </div>
+      </div>
 
-      </main>
     </div>
-  </div>
-
-</div>
-<?php require_once RUTA_APP . '/vistas/inc/footer.php';?>
+    <?php require_once RUTA_APP . '/vistas/inc/footer.php';?>

@@ -16,7 +16,7 @@ var app = new Vue({
     details: {},
     clients: {},
     users: {},
-
+    categorys: {},
     chartclsData: {},
 
     id_msg: '',
@@ -29,6 +29,28 @@ var app = new Vue({
     titulo: '',
     tags: '',
     cuerpo: '',
+
+    // productos
+
+    name_product: '',
+    Descripcion: '',
+    price_in_product: '',
+    price_out_prouct: '',
+    category_product: '',
+
+    //task
+    date_task: '',
+    date_end_task: '',
+    imagen_product: '',
+    title_task: '',
+
+
+    //categorias
+    name_category: '',
+    description_category: '',
+
+    //titulos
+    title_tareas: '',
 
   },
   //--------------------------------------------------------------------------
@@ -43,14 +65,85 @@ var app = new Vue({
     this.ConsultaBlogs();
     this.ChartMsg();
     this.ChartCls();
+    this.ConsultarCategorias();
 
   },
 
   methods: {
 
+    GrabarCategoria: function(){
+      axios({
+        method: 'POST',
+        url: '/aleriaVue/pages/InsertCategory',
+        data: {
+          name: this.name_category,
+          description: this.description_category,
+        }
+
+      }).then(function (response) {
+        // handle success
+        if(response.data == true){
+          swal("Exito al grabar!","se ha guardado un nuevo registro", "success");
+        }else{
+          swal("Error al grabar!","por favor intentelo mas tarde", "warning");
+        }
+        console.log(response.data);
+      }).catch(function (error) {
+        console.log(error);
+      });
+
+      this.name_category = '';
+      this.description_category = '';
+
+      //refresca la tabla
+
+    },
+
+    ConsultarCategorias: function(){
+      capturador = this;
+      axios.get('/aleriaVue/pages/SelectCategorys', {
+      }).then(function (response) {
+        capturador.categorys = response.data;
+      });
+    },
+
     editarBlog: function() {},
 
     eliminarBlog: function() {},
+
+    GrabarProcutos: function(){
+
+      axios({
+        method: 'POST',
+        url: '/app/pagina/newBlog',
+        data: {
+          titulo: this.titulo,
+          cuerpo: this.cuerpo,
+          tags: this.tags,
+        }
+
+      }).then(function (response) {
+        // handle success
+        if(response.data == true){
+          swal("Post publicado!","se ha creado un nuevo post", "success");
+        }else{
+          swal("Error al publicar post!","asdas", "warning");
+        }
+
+      }).catch(function (error) {
+        console.log(error);
+      });
+
+      this.titulo = '';
+      this.cuerpo = '';
+      this.tags = '';
+      //cierra el Modal
+      $('#post').modal('hide');
+      //refresca la tabla
+      this.ConsultaBlogs();
+
+
+    },
 
     GrabarBlog: function() {
 
@@ -265,6 +358,8 @@ var app = new Vue({
       window.location.replace(url);
     },
 
+
+    // validaciones de formularios
     checkForm: function (e){
       this.errors = [];
 
@@ -281,6 +376,49 @@ var app = new Vue({
       e.preventDefault();
     },
 
+    CheckFormProducts: function(e){
+      this.errors = [];
+
+      if (!this.name_product) {
+        this.errors.push('El nombre es obligatorio.');
+      } else if (!this.validEmail(this.email_msg)) {
+        this.errors.push('El correo electrónico debe ser válido.');
+      }
+
+      if (!this.errors.length) {
+        this.GrabarMensaje();
+      }
+
+      e.preventDefault();
+    },
+
+    CheckFormCategory: function(e){
+
+      this.errors = [];
+
+      if (!this.name_category) {
+        this.errors.push('El nombre es obligatorio.');
+      } else if (!this.description_category)  {
+        this.errors.push('La descripcion es obligatoria.');
+      }
+
+      if (!this.errors.length) {
+        this.GrabarCategoria();
+      }
+
+      this.ConsultarCategorias();
+      e.preventDefault();
+
+    },
+
+    //funciones secundarias
+    cambiar_titulo: function(){
+
+
+
+    },
+
+    // externas
     validEmail: function (email){
       var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(email);
