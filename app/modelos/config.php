@@ -139,13 +139,38 @@ class config{
       }else{
         return json_encode(false);
       }
-      
+
     } catch (\Exception $e) {
       echo $e;
     }
 
 
   }
+
+  public function InsertNuevaTarea($datos){
+    try {
+      //consulta sql
+      $this->bd->query("INSERT INTO task (title, descript, date_start, date_end, id_user) VALUES (:title, :descript, :date_start, :date_end, :id_user)");
+      //valores de consulta
+      $this->bd->bind(':title', $datos['title']);
+      $this->bd->bind(':descript', $datos['descript']);
+      $this->bd->bind(':date_start', $datos['date_start']);
+      $this->bd->bind(':date_end', $datos['date_end']);
+      $this->bd->bind(':id_user', $datos['id_user']);
+      //valores a ingresar
+      //ejecutar consulta
+      if($this->bd->execute()){
+        return json_encode(true);
+      }else{
+        return json_encode(false);
+      }
+
+    } catch (\Exception $e) {
+      echo $e;
+    }
+  }
+
+
 
 }
 ?>

@@ -29,6 +29,8 @@ class pages extends control{
 
     $this->vista('pages/detalle');
   }
+
+
   /*--------------------------------------------------------
   funciones insert --update deleted
   --------------------------------------------------------*/
@@ -58,8 +60,38 @@ class pages extends control{
     }
   }
 
+  public function InsertTask(){
 
-  //-- productos
+    $data = json_decode(file_get_contents("php://input"), true);
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+      $formNuevaTask = [
+        'title' => $data['title'],
+        'descript' => $data['descript'],
+        'date_start' => $data['date_start'],
+        'date_end' => $data['date_end'],
+        'id_user' => $data['id_user'],
+      ];
+      //ejecyta la insercion
+      if($this->ConfigModelo->InsertNuevaTarea($formNuevaTask) == true){
+        echo json_encode(true);
+      }else{
+        echo json_encode(false);
+      }
+
+    }else{
+
+      $formNuevaTask = [
+        'title' => '',
+        'descript' => '',
+        'date_start' =>'',
+        'date_end' => '',
+        'id_user' => '',
+      ];
+
+    }
+  }
+
   public function InsertProducto(){
 
     $data = json_decode(file_get_contents("php://input"), true);
@@ -148,6 +180,11 @@ class pages extends control{
     echo json_encode($categorys);
   }
 
+  public function SelectTask(){
+    $tasks = $this->ConfigModelo->select('select', 'task', '', '', '', '');
+    echo json_encode($tasks);
+  }
+  
   public function Mail(){
     $data = json_decode(file_get_contents("php://input"), true);
 
@@ -197,7 +234,7 @@ class pages extends control{
 
       }
     }else{
-      echo "404 lo rompiste tonto culiao";
+      echo "404";
     }
   }
 
@@ -207,9 +244,8 @@ class pages extends control{
   public function chartCls(){
     $clients = $this->ConfigModelo->select('groupby','person', '', '', 'id','created_at');
     echo json_encode($clients);
-
-
   }
+
 
   /*--------------------------------------------------------
   funciones bases --logout --errorpage

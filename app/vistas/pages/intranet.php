@@ -1,7 +1,9 @@
 <?php require_once RUTA_APP . '/vistas/inc/header.php'; ?>
 <div id="app">
   <div class="container-fluid">
+
     <div class="row">
+
 
       <!-- sidebar -->
       <nav id="sidebarMenu" class="col-md-2 z-depth-3 d-none d-md-block bg-light sidebar">
@@ -22,6 +24,37 @@
       <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4 mt-3 py-5">
 
         <div class="tab-content mt-2">
+
+          <!-- cabecera -->
+          <div class="content-header">
+            <div class="container-fluid">
+              <div class="row mb-2">
+                <div class="col-sm-6">
+                  <h1 class="m-0 text-dark">Aada</h1>
+
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                  <ol class="float-sm-right">
+                    <a href="#" class="btn btn-dark btn-sm"><i class="fas fa-home"></i></a>
+                    <!-- Basic dropdown -->
+                    <a class="btn btn-dark btn-sm mr-4" type="button" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false"><i class="fas fa-comment-alt"></i></a>
+
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item" href="#">Action</a>
+                      <a class="dropdown-item" href="#">Another action</a>
+                      <a class="dropdown-item" href="#">Something else here</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="#">Separated link</a>
+                    </div>
+                    <!-- Basic dropdown -->
+                  </ol>
+                </div><!-- /.col -->
+              </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+          </div>
+          <!-- end cabecera -->
+
 
           <!-- ventas -->
           <div class="tab-pane fade shadow" id="ventas" role="tabpanel" aria-labelledby="producto">
@@ -95,7 +128,6 @@
                       <!-- end table -->
                     </div>
 
-                    -
                     <div class="tab-pane fade" id="product" role="tabpanel" aria-labelledby="task">
 
                       <div class="card">
@@ -116,19 +148,19 @@
                                 <div class="col-md-4">
                                   <div class="form-group">
                                     <label for="">cantidad</label>
-                                    <input type="inventary_min_product" min="1" name="date_task" v-model="date_task"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                    <input type="number" min="1" name="" v-model="inventary_min_product"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                                   </div>
                                 </div>
                                 <div class="col-md-4">
                                   <div class="form-group">
                                     <label for="">precio compra </label>
-                                    <input type="price_in_product"  min="1" name="date_end_task" v-model="date_end_task"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                    <input type="number"  min="1" name="date_end_task" v-model="date_end_task"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                                   </div>
                                 </div>
                                 <div class="col-md-4">
                                   <div class="form-group">
                                     <label for="">precio venta </label>
-                                    <input type="numer" min="1" name="price_out_prouct" v-model="price_out_prouct"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                    <input type="number" min="1" name="price_out_prouct" v-model="price_out_prouct"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                                   </div>
                                 </div>
 
@@ -155,9 +187,6 @@
                       </div>
 
                     </div>
-
-
-
 
                   </div>
                   <!-- end contenido tabs -->
@@ -190,10 +219,10 @@
                     <div class="mt-1 mb-4 d-flex justify-content-end">
                       <ul class="nav" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
-                          <button type="button" title="Agregar" class="btn btn-dark" data-target="#task" id="" data-toggle="tab" href="#tasl" role="tab" aria-selected="true" ><i class="fas fa-plus"></i></button>
+                          <button type="button" title="Agregar" class="btn btn-dark" data-target="#task"  data-toggle="tab" href="#tasl" role="tab" aria-selected="true" ><i class="fas fa-plus"></i></button>
                         </li>
                         <li class="nav-item" role="presentation">
-                          <button type="button" title="Listado de tareas" class="btn btn-dark" data-target="#list" id="" data-toggle="tab" href="#list" role="tab" aria-selected="true" ><i class="far fa-list-alt"></i></button>
+                          <button type="button" title="Listado de tareas" class="btn btn-dark" data-target="#list_task" data-toggle="tab" href="#list_task" role="tab" aria-selected="true" ><i class="far fa-list-alt"></i></button>
                         </li>
                       </ul>
                     </div>
@@ -203,23 +232,28 @@
                 <!-- contenido de el tab -->
 
                 <div class="tab-content" id="myTabContent">
-                  <div class="tab-pane fade show active" id="list" role="tabpanel" aria-labelledby="profile-tab">
+                  <div class="tab-pane fade show active" id="list_task" role="tabpanel" aria-labelledby="list">
                     <ul class="list-group">
-                      <li class="list-group-item">
+                      <li class="list-group-item mt-2 shadow" v-for="item in tasks">
 
-                        <div class="d-flex flex-row-reverse bd-highlight">
-                          <a href="" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></a>
-                          <a href="" class="btn btn-sm btn-warning"><i class="fas fa-pen"></i></a>
+                        <div class="row">
+                          <div class="col-md-8">
+                            <div class="mt-1 mb-4 d-flex justify-content-start">
+                              <h5>{{ item.title }}</h5>
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="mt-1 mb-4 d-flex justify-content-end">
+                              <a href="" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></a>
+                              <a href="" class="btn btn-sm btn-warning"><i class="fas fa-pen"></i></a>
+                            </div>
+                          </div>
                         </div>
 
-                        Cras justo odio
-
+                        <p> {{ item.descript }} </p>
+                        <small>{{ item.date_end }}</small>
 
                       </li>
-                      <li class="list-group-item">Dapibus ac facilisis in</li>
-                      <li class="list-group-item">Morbi leo risus</li>
-                      <li class="list-group-item">Porta ac consectetur ac</li>
-                      <li class="list-group-item">Vestibulum at eros</li>
                     </ul>
                   </div>
                   <div class="tab-pane fade" id="task" role="tabpanel" aria-labelledby="task">
@@ -228,22 +262,26 @@
 
                         <h3>agregar tareas</h3>
                         <div class="col-md-6">
-                          <form id="app" @submit="checkForm" method="post" novalidate="true">
+                          <form  @submit="CheckFormTask" method="post" novalidate="true">
                             <div class="form-group">
                               <label for="">Titulo</label>
                               <input v-model="title_task"  type="text" placeholder="Titulo tarea" maxlength="60" name="title_task" class="form-control" id="exampleInputEmail1" required aria-describedby="emailHelp">
                             </div>
                             <div class="form-group">
                               <label for="">Descripcion</label>
-                              <input v-model="subjet_msg"  type="text" placeholder="Descripcion tareas" maxlength="400" name="description_task" class="form-control" id="exampleInputEmail1" required aria-describedby="emailHelp">
+                              <input v-model="descript_task"  type="text" placeholder="Descripcion tareas" maxlength="400" name="descript_task" class="form-control" id="exampleInputEmail1" required aria-describedby="emailHelp">
                             </div>
                             <div class="form-group">
                               <label for="">Fecha de inicio</label>
-                              <input type="date" name="date_task" v-model="date_task"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                              <input type="date" name="date_start_task" v-model="date_start_task"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                             </div>
                             <div class="form-group">
                               <label for="">Fecha de termino</label>
                               <input type="date" name="date_end_task" v-model="date_end_task"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                            </div>
+                            <div class="form-group">
+                              <label for="">id usuario</label>
+                              <input type="text" name="id_user_task" v-model="id_user_task"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                             </div>
                             <button type="submit" class="btn btn-dark" name="button">Enviar</button>
                           </form>
@@ -278,7 +316,7 @@
                           <h5>Estadisticas Correos</h5>
                         </div>
                         <div class="card-body">
-                          <canvas id="ChartMsg"></canvas>
+                          <canvas id="ChartMsgs"></canvas>
                         </div>
                       </div>
                     </div>
@@ -403,18 +441,16 @@
           <div class="tab-pane fade shadow" id="usuarios" role="tabpanel" aria-labelledby="usuarios">
             <div class="card">
               <div class="card-body">
-
                 <div class="mt-1 mb-4 d-flex justify-content-between">
-                  <h3>Usuarios</h3>
+                  <h3>tareas</h3>
                 </div>
-
                 <!-- buscador con botones -->
                 <div class="row">
                   <div class="col-sm-6">
                     <div class="mt-1 mb-4 d-flex justify-content-start">
                       <div class="input-group mb-3">
                         <div class="input-group-prepend">
-                          <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
+                          <span class="input-group-text"><i class="fas fa-search"></i></span>
                         </div>
                         <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="Username">
                       </div>
@@ -422,41 +458,61 @@
                   </div>
                   <div class="col-sm-6">
                     <div class="mt-1 mb-4 d-flex justify-content-end">
-                      <button type="button" title="Agregar usuario" class="btn btn-dark mr-1" data-toggle="modal" data-target="#AgregarBanner"><i class="fas fa-plus"></i></button>
-                      <button type="button" title="Agregar permiso" class="btn btn-dark mr-1" data-toggle="modal" data-target="#AgregarBanner"><i class="fas fa-key"></i></button>
+                      <ul class="nav" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                          <button type="button" title="Agregar" class="btn btn-dark" data-target="#users"  data-toggle="tab" href="#users" role="tab" aria-selected="true" ><i class="fas fa-plus"></i></button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                          <button type="button" title="Listado de tareas" class="btn btn-dark" data-target="#list_user" data-toggle="tab" href="#list_user" role="tab" aria-selected="true" ><i class="far fa-list-alt"></i></button>
+                        </li>
+                      </ul>
                     </div>
                   </div>
                 </div>
-                <!-- end buscadores -->
+                <!-- end buscador con botones -->
+                <!-- contenido de el tab -->
 
-                <!-- card usuarios -->
-                <div class="container">
-                  <div class="row">
-                    <!-- for -->
-                    <div v-for="item in users">
-                      <div class="col-md-4 mb-1">
-                        <div class="card card-cascade mb-4 " width="100">
-                          <div class="view view-cascade overlay">
-                            <div class="mask rgba-white-slight"></div>
-                          </div>
-                          <div class="card-body card-body-cascade text-center">
-                            <h4 class="card-title"><strong>{{item.name}}</strong></h4>
-                            <div v-if="item.is_active == 0">
-                              <span class="badge badge-danger">Inactivo</span>
+                <div class="tab-content" id="myTabContent">
+                  <div class="tab-pane fade show active" id="list_user" role="tabpanel" aria-labelledby="list">
+                    usuarios
+                  </div>
+                  <div class="tab-pane fade" id="users" role="tabpanel" aria-labelledby="task">
+                    <div class="card">
+                      <div class="card-body">
+
+                        <h3>agregar usuario</h3>
+                        <div class="col-md-6">
+                          <form  @submit="CheckFormTask" method="post" novalidate="true">
+                            <div class="form-group">
+                              <label for="">Titulo</label>
+                              <input v-model="title_task"  type="text" placeholder="Titulo tarea" maxlength="60" name="title_task" class="form-control" id="exampleInputEmail1" required aria-describedby="emailHelp">
                             </div>
-                            <div v-else>
-                              <span class="badge badge-success">Activo</span>
+                            <div class="form-group">
+                              <label for="">Descripcion</label>
+                              <input v-model="descript_task"  type="text" placeholder="Descripcion tareas" maxlength="400" name="descript_task" class="form-control" id="exampleInputEmail1" required aria-describedby="emailHelp">
                             </div>
-                            <p class="card-text"><i class="far fa-envelope"></i> {{ item.email}}</p>
-                          </div>
+                            <div class="form-group">
+                              <label for="">Fecha de inicio</label>
+                              <input type="date" name="date_start_task" v-model="date_start_task"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                            </div>
+                            <div class="form-group">
+                              <label for="">Fecha de termino</label>
+                              <input type="date" name="date_end_task" v-model="date_end_task"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                            </div>
+                            <div class="form-group">
+                              <label for="">id usuario</label>
+                              <input type="text" name="id_user_task" v-model="id_user_task"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                            </div>
+                            <button type="submit" class="btn btn-dark" name="button">Enviar</button>
+                          </form>
                         </div>
                       </div>
-                    </div>
-                    <!-- end for -->
-                  </div>
-                  <!-- card clientes -->
-                </div>
 
+
+                    </div>
+                  </div>
+                </div>
+                <!-- end contenido tabs -->
               </div>
             </div>
           </div>
@@ -574,7 +630,7 @@
 
                 </div>
 
-                <div class="tab-content" id="myTabContent">
+                <div class="tab-content" id="TabConfigracion">
                   <div class="tab-pane fade show active" id="Categorias" role="tabpanel" aria-labelledby="home-tab">
 
 
@@ -625,39 +681,46 @@
                           </div>
                         </div>
                       </div>
+
                     </div>
 
 
 
                   </div>
-                  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">Food truck fixie
+                  <!-- end sub tab categorias -->
+                  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    Food truck fixie
                     locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit,
                     blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee.
                     Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum
                     PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit. Keytar helvetica VHS
                     salvia yr, vero magna velit sapiente labore stumptown. Vegan fanny pack odio cillum wes anderson 8-bit,
                     sustainable jean shorts beard ut DIY ethical culpa terry richardson biodiesel. Art party scenester
-                    stumptown, tumblr butcher vero sint qui sapiente accusamus tattooed echo park.</div>
-                    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">Etsy mixtape
-                      wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack
-                      lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone skateboard
-                      locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings gentrify
-                      squid 8-bit cred pitchfork. Williamsburg banh mi whatever gluten-free, carles pitchfork biodiesel fixie
-                      etsy retro mlkshk vice blog. Scenester cred you probably haven't heard of them, vinyl craft beer blog
-                      stumptown. Pitchfork sustainable tofu synth chambray yr.</div>
-                    </div>
-
+                    stumptown, tumblr butcher vero sint qui sapiente accusamus tattooed echo park.
+                  </div>
+                  <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                    Etsy mixtape
+                    wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack
+                    lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone skateboard
+                    locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings gentrify
+                    squid 8-bit cred pitchfork. Williamsburg banh mi whatever gluten-free, carles pitchfork biodiesel fixie
+                    etsy retro mlkshk vice blog. Scenester cred you probably haven't heard of them, vinyl craft beer blog
+                    stumptown. Pitchfork sustainable tofu synth chambray yr.
                   </div>
                 </div>
 
               </div>
+            </div><!--end card-->
+
+          </div>
 
 
-            </div><!--end tabs-->
+        </div><!--end tabs-->
 
-          </main>
-        </div>
-      </div>
+      </main>
+
 
     </div>
-    <?php require_once RUTA_APP . '/vistas/inc/footer.php';?>
+  </div>
+</div>
+<?php require_once RUTA_APP . '/vistas/inc/footer.php';?>

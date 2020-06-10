@@ -18,40 +18,42 @@ var app = new Vue({
     users: {},
     categorys: {},
     chartclsData: {},
+    tasks: {},
 
+    //mensajes
     id_msg: '',
     name_msg: '',
     email_msg: '',
     subjet_msg: '',
     content_msg: '',
 
+    // blog
     id_blog: '',
     titulo: '',
     tags: '',
     cuerpo: '',
 
     // productos
-
     name_product: '',
     Descripcion: '',
     price_in_product: '',
     price_out_prouct: '',
     category_product: '',
+    inventary_min_product: '',
 
     //task
-    date_task: '',
+    date_start_task: '',
     date_end_task: '',
     imagen_product: '',
     title_task: '',
-
+    descript_task: '',
+    id_user_task: '',
 
     //categorias
     name_category: '',
     description_category: '',
 
     //titulos
-    title_tareas: '',
-
   },
   //--------------------------------------------------------------------------
   // ejecuta funciones que se deben cargar automaticas como los select
@@ -66,10 +68,38 @@ var app = new Vue({
     this.ChartMsg();
     this.ChartCls();
     this.ConsultarCategorias();
-
+    this.ConsultarTask();
   },
 
   methods: {
+
+    GrabarMensaje: function(){
+
+      axios({
+        method: 'POST',
+        url: '/aleriaVue/pages/Mail',
+        data: {
+          name: this.name_msg,
+          email: this.email_msg,
+          subjet: this.subjet_msg,
+          content: this.content_msg,
+        }
+      }).then(function (response) {
+        // handle success
+        if (response.data === true) {
+          swal("Mensaje Enviado!","", "success");
+        }else {
+          swal("error!","", "warning");
+        }
+
+      });
+
+      this.name_msg = '';
+      this.email_msg = '';
+      this.subjet_msg = '';
+      this.content_msg = '';
+
+    },
 
     GrabarCategoria: function(){
       axios({
@@ -98,18 +128,6 @@ var app = new Vue({
       //refresca la tabla
 
     },
-
-    ConsultarCategorias: function(){
-      capturador = this;
-      axios.get('/aleriaVue/pages/SelectCategorys', {
-      }).then(function (response) {
-        capturador.categorys = response.data;
-      });
-    },
-
-    editarBlog: function() {},
-
-    eliminarBlog: function() {},
 
     GrabarProcutos: function(){
 
@@ -145,6 +163,40 @@ var app = new Vue({
 
     },
 
+    GrabarTarea: function(){
+
+      axios({
+        method: 'POST',
+        url: '/aleriaVue/pages/InsertTask',
+        data: {
+
+          title: this.title_task,
+          descript: this.descript_task,
+          date_start: this.date_start_task,
+          date_end: this.date_end_task,
+          id_user: this.id_user_task,
+
+        }
+
+      }).then(function (response) {
+        // handle success
+        if(response.data == true){
+          swal("Tarea Creada!","se ha registrado una nueva tarea", "success");
+        }else{
+          swal("Error al publicar la tarea!","por favor intentelo mas tarde", "warning");
+        }
+
+      }).catch(function (error) {
+        console.log(error);
+      });
+
+      this.title_task = '';
+      this.descript_task = '';
+      this.date_start_task = '';
+      this.date_end_task_end = '';
+      this.id_user_task = '';
+    },
+
     GrabarBlog: function() {
 
       axios({
@@ -178,6 +230,22 @@ var app = new Vue({
 
     },
 
+    ConsultarTask: function() {
+      capturador = this;
+      axios.get('/aleriaVue/pages/SelectTask', {
+      }).then(function (response) {
+        capturador.tasks = response.data;
+      });
+    },
+
+    ConsultarCategorias: function(){
+      capturador = this;
+      axios.get('/aleriaVue/pages/SelectCategorys', {
+      }).then(function (response) {
+        capturador.categorys = response.data;
+      });
+    },
+
     ConsultarProducts: function(){
       capturador = this;
       axios.get('/aleriaVue/pages/SelectProduct', {
@@ -200,34 +268,6 @@ var app = new Vue({
       }).then(function (response) {
         capturador.BlogPublicados = response.data;
       });
-    },
-
-    GrabarMensaje: function(){
-
-      axios({
-        method: 'POST',
-        url: '/aleriaVue/pages/Mail',
-        data: {
-          name: this.name_msg,
-          email: this.email_msg,
-          subjet: this.subjet_msg,
-          content: this.content_msg,
-        }
-      }).then(function (response) {
-        // handle success
-        if (response.data === true) {
-          swal("Mensaje Enviado!","", "success");
-        }else {
-          swal("error!","", "warning");
-        }
-
-      });
-
-      this.name_msg = '';
-      this.email_msg = '';
-      this.subjet_msg = '';
-      this.content_msg = '';
-
     },
 
     ConsultarMensajes: function(){
@@ -282,19 +322,19 @@ var app = new Vue({
 
     ChartMsg: function(){
 
-      var ctx = document.getElementById('ChartMsg').getContext('2d');
+      var ctx = document.getElementById('ChartMsgs').getContext('2d');
       var chart = new Chart(ctx, {
         // The type of chart we want to create
         type: 'line',
 
         // The data for our dataset
         data: {
-          labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sept', 'Oct', 'Nov', 'Dic'],
+          labels: ['Ene', 'Feb'],
           datasets: [{
             label: 'Tràfico de correos',
             backgroundColor: 'rgb(255, 99, 132)',
             borderColor: 'rgb(255, 99, 132)',
-            data: [0, 10, 5, 2, 20, 30, 45, 0, 0, 1, 4, 34]
+            data: [0, 10, 50]
           }]
         },
 
@@ -322,7 +362,7 @@ var app = new Vue({
 
         // The data for our dataset
         data: {
-          labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sept', 'Oct', 'Nov', 'Dic'],
+          labels: ['Ene', 'Feb', 'Mar', 'Abr'],
           datasets: [{
             label: 'Tràfico de clientes',
             backgroundColor: 'rgb(255, 99, 132)',
@@ -411,7 +451,25 @@ var app = new Vue({
 
     },
 
-    //funciones secundarias
+    CheckFormTask: function(e){
+
+      this.errors = [];
+
+      if (!this.title_task) {
+        this.errors.push('El titulo es obligatorio.');
+      } else if (!this.descript_task)  {
+        this.errors.push('La descripcion es obligatoria.');
+      }
+
+      //grabar
+      if (!this.errors.length) {
+        this.GrabarTarea();
+      }
+
+      e.preventDefault();
+
+    },
+
     cambiar_titulo: function(){
 
 
@@ -434,7 +492,7 @@ var app = new Vue({
           $('#myTab a[href="' + activeTab + '"]').tab('show');
         }
       });
-    }
+    },
 
 
   }//end methods
