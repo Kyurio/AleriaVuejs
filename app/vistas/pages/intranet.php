@@ -6,18 +6,7 @@
 
 
       <!-- sidebar -->
-      <nav id="sidebarMenu" class="col-md-2 z-depth-3 d-none d-md-block bg-light sidebar">
-        <ul class="nav flex-column nav-pills" id="myTab" role="tablist" aria-orientation="vertical">
-          <li> <a class="nav-link" id="v-pills-ventas-tab" data-toggle="tab" href="#ventas" role="tab" aria-controls="v-pills-home" aria-selected="true"><i class="fas fa-shopping-cart"></i> Ventas</a></li>
-          <li> <a class="nav-link" id="v-pills-banners-tab" data-toggle="tab" href="#blog" role="tab" aria-controls="v-pills-profile" aria-selected="false"><i class="fas fa-feather-alt"></i> Blog</a></li>
-          <li> <a class="nav-link" id="v-pills-mensajes-tab" data-toggle="tab" href="#mensajes" role="tab" aria-controls="v-pills-profile" aria-selected="false"><i class="fas fa-envelope"></i> Mensajes</a></li>
-          <li> <a class="nav-link" id="v-pills-usuarios-tab" data-toggle="tab" href="#usuarios" role="tab" aria-controls="v-pills-profile" aria-selected="false"><i class="fas fa-user"></i> Usuarios</a></li>
-          <li> <a class="nav-link" id="v-pills-tareas-tab" data-toggle="tab" href="#tareas" role="tab" aria-controls="v-pills-profile" aria-selected="false"><i class="fas fa-thumbtack"></i> Tareas</a></li>
-          <li> <a class="nav-link" id="v-pills-estadisticas-tab" data-toggle="tab" href="#estadisticas" role="tab" aria-controls="v-pills-settings" aria-selected="false"><i class="fas fa-chart-line"></i> Estadisticas</a></li>
-          <li> <a class="nav-link" id="v-pills-clientes-tab" data-toggle="tab" href="#clientes" role="tab" aria-controls="v-pills-settings" aria-selected="false"><i class="fas fa-handshake"></i></i> Clientes</a></li>
-          <li> <a class="nav-link" id="v-pills-configuracion-tab" data-toggle="tab" href="#configuracion" role="tab" aria-controls="v-pills-settings" aria-selected="false"><i class="fas fa-cog"></i> Configuraciones</a></li>
-        </ul>
-      </nav>
+      <?php require_once RUTA_APP . '/helpers/components/navbar.php' ?>
       <!-- end sidebar -->
 
 
@@ -26,45 +15,13 @@
         <div class="tab-content mt-2">
 
           <!-- cabecera -->
-          <div class="content-header">
-            <div class="container-fluid">
-              <div class="row mb-2">
-                <div class="col-sm-6">
-                  <h1 class="m-0 text-dark">Aada</h1>
-
-                </div><!-- /.col -->
-                <div class="col-sm-6">
-                  <ol class="float-sm-right">
-                    <a href="#" class="btn btn-dark btn-sm"><i class="fas fa-home"></i></a>
-                    <!-- Basic dropdown -->
-                    <a class="btn btn-dark btn-sm mr-4" type="button" data-toggle="dropdown" aria-haspopup="true"
-                    aria-expanded="false"><i class="fas fa-comment-alt"></i></a>
-
-                    <div class="dropdown-menu">
-                      <a class="dropdown-item" href="#">Action</a>
-                      <a class="dropdown-item" href="#">Another action</a>
-                      <a class="dropdown-item" href="#">Something else here</a>
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="#">Separated link</a>
-                    </div>
-                    <!-- Basic dropdown -->
-                  </ol>
-                </div><!-- /.col -->
-              </div><!-- /.row -->
-            </div><!-- /.container-fluid -->
-          </div>
+          <?php require_once RUTA_APP . '/helpers/components/cabecera.php' ?>
           <!-- end cabecera -->
-
 
           <!-- ventas -->
           <div class="tab-pane fade shadow" id="ventas" role="tabpanel" aria-labelledby="producto">
             <div class="card mb-4">
               <div class="card-body">
-
-                <div class="mt-1 mb-2 d-flex justify-content-start">
-                  <h3>Ventas</h3>
-                </div>
-
                 <!-- buscador con botones -->
                 <div class="row">
                   <div class="col-sm-6">
@@ -79,10 +36,10 @@
                     <div class="mt-1 mb-4 d-flex justify-content-end">
                       <ul class="nav" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
-                          <button type="button" title="Agregar" class="btn btn-dark" data-target="#product" id="" data-toggle="tab" href="#tasl" role="tab" aria-selected="true" ><i class="fas fa-plus"></i></button>
+                          <button type="button" title="Agregar" class="btn btn-sm btn-dark" data-target="#product" id="" data-toggle="tab" href="#tasl" role="tab" aria-selected="true" ><i class="fas fa-plus"></i></button>
                         </li>
                         <li class="nav-item" role="presentation">
-                          <button type="button" title="Listado" class="btn btn-dark" data-target="#list_product" id="" data-toggle="tab" href="#list" role="tab" aria-selected="true" ><i class="far fa-list-alt"></i></button>
+                          <button type="button" title="Listado" class="btn btn-sm btn-dark" data-target="#list_product" id="" data-toggle="tab" href="#list" role="tab" aria-selected="true" ><i class="far fa-list-alt"></i></button>
                         </li>
                       </ul>
                     </div>
@@ -130,64 +87,57 @@
 
                     <div class="tab-pane fade" id="product" role="tabpanel" aria-labelledby="task">
 
-                      <div class="card">
-                        <div class="card-body">
-                          <div class="col-md-6">
-                            <form @submit="CheckFormProducts" method="post" novalidate="true">
+                      <div class="col-md-6">
+                        <form @submit="CheckFormProducts" method="post" novalidate="true">
+                          <div class="form-group">
+                            <label for="">Nombre</label>
+                            <input v-model="name_product"  type="text" placeholder="Titulo tarea" maxlength="60" name="title_task" class="form-control" id="exampleInputEmail1" required aria-describedby="emailHelp">
+                          </div>
+                          <div class="form-group">
+                            <label for="">Descripcion</label>
+                            <textarea name="description_product" class="form-control" placeholder="Descripcion" rows="2" cols="4"></textarea>
+                          </div>
+                          <!-- 3input en la misma linea -->
+                          <div class="row">
+
+                            <div class="col-md-4">
                               <div class="form-group">
-                                <label for="">Nombre</label>
-                                <input v-model="name_product"  type="text" placeholder="Titulo tarea" maxlength="60" name="title_task" class="form-control" id="exampleInputEmail1" required aria-describedby="emailHelp">
+                                <label for="">cantidad</label>
+                                <input type="number" min="1" name="" v-model="inventary_min_product"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                               </div>
+                            </div>
+                            <div class="col-md-4">
                               <div class="form-group">
-                                <label for="">Descripcion</label>
-                                <textarea name="description_product" class="form-control" placeholder="Descripcion" rows="2" cols="4"></textarea>
+                                <label for="">precio compra </label>
+                                <input type="number"  min="1" name="date_end_task" v-model="date_end_task"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                               </div>
-                              <!-- 3input en la misma linea -->
-                              <div class="row">
-
-                                <div class="col-md-4">
-                                  <div class="form-group">
-                                    <label for="">cantidad</label>
-                                    <input type="number" min="1" name="" v-model="inventary_min_product"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                                  </div>
-                                </div>
-                                <div class="col-md-4">
-                                  <div class="form-group">
-                                    <label for="">precio compra </label>
-                                    <input type="number"  min="1" name="date_end_task" v-model="date_end_task"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                                  </div>
-                                </div>
-                                <div class="col-md-4">
-                                  <div class="form-group">
-                                    <label for="">precio venta </label>
-                                    <input type="number" min="1" name="price_out_prouct" v-model="price_out_prouct"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                                  </div>
-                                </div>
-
-                              </div>
-                              <!-- end 3 input -->
-
+                            </div>
+                            <div class="col-md-4">
                               <div class="form-group">
                                 <label for="">precio venta </label>
-                                <select class="browser-default custom-select" >
-                                  <option v-for="item in categorys"  value="item.id">{{ item.name }}</option>
-                                </select>
+                                <input type="number" min="1" name="price_out_prouct" v-model="price_out_prouct"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                               </div>
+                            </div>
 
-                              <div class="form-group">
-                                <label for="">imagen </label>
-                                <input type="text" name="imagen_product" v-model="imagen_product"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                              </div>
-                              <button type="submit" class="btn btn-dark"  name="button">Grabar</button>
-                            </form>
                           </div>
-                        </div>
+                          <!-- end 3 input -->
 
+                          <div class="form-group">
+                            <label for="">precio venta </label>
+                            <select class="browser-default custom-select" >
+                              <option v-for="item in categorys"  value="item.id">{{ item.name }}</option>
+                            </select>
+                          </div>
+
+                          <div class="form-group">
+                            <label for="">imagen </label>
+                            <input type="text" name="imagen_product" v-model="imagen_product"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                          </div>
+                          <button type="submit" class="btn btn-sm btn-dark"  name="button">Grabar</button>
+                        </form>
 
                       </div>
-
                     </div>
-
                   </div>
                   <!-- end contenido tabs -->
 
@@ -200,9 +150,6 @@
           <div class="tab-pane fade shadow" id="tareas" role="tabpanel" aria-labelledby="tareas">
             <div class="card">
               <div class="card-body">
-                <div class="mt-1 mb-4 d-flex justify-content-between">
-                  <h3>tareas</h3>
-                </div>
                 <!-- buscador con botones -->
                 <div class="row">
                   <div class="col-sm-6">
@@ -219,10 +166,10 @@
                     <div class="mt-1 mb-4 d-flex justify-content-end">
                       <ul class="nav" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
-                          <button type="button" title="Agregar" class="btn btn-dark" data-target="#task"  data-toggle="tab" href="#tasl" role="tab" aria-selected="true" ><i class="fas fa-plus"></i></button>
+                          <button type="button" title="Agregar" class="btn btn-sm btn-dark" data-target="#task"  data-toggle="tab" href="#tasl" role="tab" aria-selected="true" ><i class="fas fa-plus"></i></button>
                         </li>
                         <li class="nav-item" role="presentation">
-                          <button type="button" title="Listado de tareas" class="btn btn-dark" data-target="#list_task" data-toggle="tab" href="#list_task" role="tab" aria-selected="true" ><i class="far fa-list-alt"></i></button>
+                          <button type="button" title="Listado de tareas" class="btn btn-sm btn-dark" data-target="#list_task" data-toggle="tab" href="#list_task" role="tab" aria-selected="true" ><i class="far fa-list-alt"></i></button>
                         </li>
                       </ul>
                     </div>
@@ -283,7 +230,7 @@
                               <label for="">id usuario</label>
                               <input type="text" name="id_user_task" v-model="id_user_task"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                             </div>
-                            <button type="submit" class="btn btn-dark" name="button">Enviar</button>
+                            <button type="submit" class="btn btn-sm btn-dark" name="button">Enviar</button>
                           </form>
                         </div>
                       </div>
@@ -302,7 +249,6 @@
             <div class="card">
               <div class="card-body">
                 <div class="mt-1 mb-4 d-flex justify-content-between">
-                  <h3>Estadisticas</h3>
                   <button type="button" title="Agregar tareas" class="btn btn-sm btn-dark" data-toggle="modal" data-target="#AgregarProducto"><i class="fas fa-plus"></i></button>
                 </div>
 
@@ -344,9 +290,7 @@
 
             <div class="card">
               <div class="card-body">
-                <div class="mt-1 mb-4 d-flex justify-content-start">
-                  <h3>Blog</h3>
-                </div>
+
 
                 <!-- buscador con botones -->
                 <div class="row">
@@ -362,7 +306,7 @@
                   </div>
                   <div class="col-sm-6">
                     <div class="mt-1 mb-4 d-flex justify-content-end">
-                      <button type="button" title="Agregar" class="btn btn-dark" data-toggle="modal" data-target="#AgregarProducto"><i class="fas fa-plus"></i></button>
+                      <button type="button" title="Agregar" class="btn btn-sm btn-dark" data-toggle="modal" data-target="#AgregarProducto"><i class="fas fa-plus"></i></button>
                     </div>
                   </div>
                 </div>
@@ -397,9 +341,7 @@
           <div class="tab-pane fade shadow" id="mensajes" role="tabpanel" aria-labelledby="mensajes">
             <div class="card shadow">
               <div class="card-body">
-                <div class="d-flex justify-content-between">
-                  <h3>Mensajes</h3>
-                </div>
+
 
                 <!-- buscador con botones -->
                 <div class="row">
@@ -437,13 +379,11 @@
             </div>
           </div>
 
-          <!-- usuarios -->
+          <!-- ususarios -->
           <div class="tab-pane fade shadow" id="usuarios" role="tabpanel" aria-labelledby="usuarios">
             <div class="card">
               <div class="card-body">
-                <div class="mt-1 mb-4 d-flex justify-content-between">
-                  <h3>tareas</h3>
-                </div>
+
                 <!-- buscador con botones -->
                 <div class="row">
                   <div class="col-sm-6">
@@ -460,10 +400,10 @@
                     <div class="mt-1 mb-4 d-flex justify-content-end">
                       <ul class="nav" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
-                          <button type="button" title="Agregar" class="btn btn-dark" data-target="#users"  data-toggle="tab" href="#users" role="tab" aria-selected="true" ><i class="fas fa-plus"></i></button>
+                          <button type="button" title="Agregar" class="btn btn-sm btn-dark" data-target="#users"  data-toggle="tab" href="#users" role="tab" aria-selected="true" ><i class="fas fa-plus"></i></button>
                         </li>
                         <li class="nav-item" role="presentation">
-                          <button type="button" title="Listado de tareas" class="btn btn-dark" data-target="#list_user" data-toggle="tab" href="#list_user" role="tab" aria-selected="true" ><i class="far fa-list-alt"></i></button>
+                          <button type="button" title="Listado de tareas" class="btn btn-sm btn-dark" data-target="#list_user" data-toggle="tab" href="#list_user" role="tab" aria-selected="true" ><i class="far fa-list-alt"></i></button>
                         </li>
                       </ul>
                     </div>
@@ -503,7 +443,7 @@
                               <label for="">id usuario</label>
                               <input type="text" name="id_user_task" v-model="id_user_task"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                             </div>
-                            <button type="submit" class="btn btn-dark" name="button">Enviar</button>
+                            <button type="submit" class="btn btn-sm btn-dark" name="button">Enviar</button>
                           </form>
                         </div>
                       </div>
@@ -521,9 +461,7 @@
           <div class="tab-pane fade shadow" id="clientes" role="tabpanel" aria-labelledby="clientes">
             <div class="card">
               <div class="card-body">
-                <div class=" d-flex justify-content-between">
-                  <h3>Clientes</h3>
-                </div>
+
                 <!-- buscador con botones -->
                 <div class="row">
                   <div class="col-sm-6">
@@ -538,9 +476,9 @@
                   </div>
                   <div class="col-sm-6">
                     <div class="mt-1 mb-4 d-flex justify-content-end">
-                      <button type="button" title="Agregar" class="btn btn-dark mr-1" data-toggle="modal" data-target="#AgregarBanner"><i class="fas fa-plus"></i></button>
-                      <button type="button" title="Enviar Correo" class="btn btn-dark mr-1" data-toggle="modal" data-target="#AgregarBanner"><i class="fas fa-envelope"></i></button>
-                      <button type="button" title="Estadisticas" class="btn btn-dark mr-1" data-toggle="modal" data-target="#AgregarBanner"><i class="far fa-chart-bar"></i></button>
+                      <button type="button" title="Agregar" class="btn btn-sm btn-dark mr-1" data-toggle="modal" data-target="#AgregarBanner"><i class="fas fa-plus"></i></button>
+                      <button type="button" title="Enviar Correo" class="btn btn-sm btn-dark mr-1" data-toggle="modal" data-target="#AgregarBanner"><i class="fas fa-envelope"></i></button>
+                      <button type="button" title="Estadisticas" class="btn btn-sm btn-dark mr-1" data-toggle="modal" data-target="#AgregarBanner"><i class="far fa-chart-bar"></i></button>
                     </div>
                   </div>
                 </div>
@@ -555,10 +493,10 @@
                           <div class="card card-cascade mb-4 py-4" >
                             <div class="view view-cascade overlay">
                               <div class="d-flex justify-content-end">
-                                <button type="button" class="btn btn-sm ">
+                                <button type="button" class="btn btn-danger btn-sm ">
                                   <i class="fas fa-trash"></i>
                                 </button>
-                                <button type="button" class="btn btn-sm ">
+                                <button type="button" class="btn btn-warning btn-sm ">
                                   <i class="fas fa-pen"></i>
                                 </button>
                               </div>
@@ -608,9 +546,6 @@
 
             <div class="card">
               <div class="card-body">
-                <div class="d-flex justify-content-between">
-                  <h3>configuracion</h3>
-                </div>
                 <div class="mt-1 mb-4 d-flex justify-content-end">
 
                   <ul class="nav" id="myTab" role="tablist">
@@ -637,49 +572,44 @@
                     <div class="row">
 
                       <div class="col-md-6">
-                        <div class="card">
-                          <form @submit="CheckFormCategory" method="post" novalidate="true">
-                            <div class="card-body">
-
-                              <p v-if="errors.length">
-                                <b>Por favor corriga los siguientes erroes:</b>
-                                <ul>
-                                  <li v-for="error in errors" class="text-danger">{{ error }}</li>
-                                </ul>
-                              </p>
-
-                              <div class="form-group">
-                                <label for="">nombre</label>
-                                <input type="text" min="1" name="name_category" v-model="name_category" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                              </div>
-                              <div class="form-group">
-                                <label for="">Descripcion</label>
-                                <textarea name="description_category" v-model="description_category" class="form-control" rows="2" cols="4"></textarea>
-                              </div>
-                              <input type="submit" class="btn btn-dark" name="grabar" value="Grabar">
-                            </div>
-                          </form>
-                        </div>
+                        <form @submit="CheckFormCategory" method="post" novalidate="true">
+                          <p v-if="errors.length">
+                            <b>Por favor corriga los siguientes erroes:</b>
+                            <ul>
+                              <li v-for="error in errors" class="text-danger">{{ error }}</li>
+                            </ul>
+                          </p>
+                          <div class="form-group">
+                            <label for="">nombre</label>
+                            <input type="text" min="1" name="name_category" v-model="name_category" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                          </div>
+                          <div class="form-group">
+                            <label for="">Descripcion</label>
+                            <textarea name="description_category" v-model="description_category" class="form-control" rows="2" cols="4"></textarea>
+                          </div>
+                          <input type="submit" class="btn btn-sm btn-dark" name="grabar" value="Grabar">
+                        </form>
                       </div>
                       <div class="col-md-6">
-                        <div class="card">
-                          <div class="card-body">
-                            <table class="table">
-                              <thead>
-                                <tr>
-                                  <th scope="col">Categoria</th>
-                                  <th scope="col">Descripcion</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                <tr v-for="item in categorys">
-                                  <td>{{ item.name }}</td>
-                                  <td>{{ item.description }}</td>
-                                </tr>
-                              </tbody>
-                            </table>
-                          </div>
-                        </div>
+                        <table class="table text-center">
+                          <thead>
+                            <tr>
+                              <th scope="col">Categoria</th>
+                              <th scope="col">Descripcion</th>
+                              <th scope="col">Accion</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr v-for="item in categorys">
+                              <td>{{ item.name }}</td>
+                              <td>{{ item.description }}</td>
+                              <td>
+                                <button type="button" class="btn btn-sm btn-danger" name="button"><i class="fas fa-trash"></i></button>
+                                <button type="button" class="btn btn-sm btn-warning" name="button"><i class="fas fa-pen"></i></button>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
 
                     </div>

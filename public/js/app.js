@@ -54,6 +54,7 @@ var app = new Vue({
     description_category: '',
 
     //titulos
+    title_tab: 'Dashboard',
   },
   //--------------------------------------------------------------------------
   // ejecuta funciones que se deben cargar automaticas como los select
@@ -492,6 +493,12 @@ var app = new Vue({
           $('#myTab a[href="' + activeTab + '"]').tab('show');
         }
       });
+    },
+
+
+
+    ChangeTitle: function(title){
+      this.title_tab = title;
     },
 
 
