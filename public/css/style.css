@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css?family=Abel&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata&display=swap');
 
 body{
-  font-family: 'Abel', sans-serif;
+  font-family: 'Inconsolata', monospace;
   background-color: #fff;
 }
 input, textarea{
