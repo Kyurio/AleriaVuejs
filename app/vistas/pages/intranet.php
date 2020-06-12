@@ -6,7 +6,7 @@
 
 
       <!-- sidebar -->
-      <?php require_once RUTA_APP . '/helpers/components/navbar.php' ?>
+      <?php require_once RUTA_APP . '/helpers/components/sidebar.php' ?>
       <!-- end sidebar -->
 
 
@@ -24,16 +24,16 @@
               <div class="card-body">
                 <!-- buscador con botones -->
                 <div class="row">
-                  <div class="col-sm-6">
-                    <div class="mt-1 mb-2 d-flex justify-content-start">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-search"></i></span>
+                  <div class="col-sm-5">
+                    <div class="mt-1 d-flex justify-content-start">
+                      <div class="md-form input-with-pre-icon">
+                        <i class="fas fa-search input-prefix"></i>
+                        <input type="text" id="buscador" placeholder="buscar" v-modelo="buscar" class="form-control">
                       </div>
-                      <input type="text" class="form-control search" placeholder="Username" aria-label="Username" aria-describedby="Username" >
                     </div>
                   </div>
-                  <div class="col-sm-6">
-                    <div class="mt-1 mb-4 d-flex justify-content-end">
+                  <div class="col-sm-7">
+                    <div class="mt-1 d-flex justify-content-end">
                       <ul class="nav" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
                           <button type="button" title="Agregar" class="btn btn-sm btn-dark" data-target="#product" id="" data-toggle="tab" href="#tasl" role="tab" aria-selected="true" ><i class="fas fa-plus"></i></button>
@@ -152,17 +152,15 @@
               <div class="card-body">
                 <!-- buscador con botones -->
                 <div class="row">
-                  <div class="col-sm-6">
-                    <div class="mt-1 mb-4 d-flex justify-content-start">
-                      <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text"><i class="fas fa-search"></i></span>
-                        </div>
-                        <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="Username">
+                  <div class="col-sm-5">
+                    <div class="mt-1 d-flex justify-content-start">
+                      <div class="md-form input-with-pre-icon">
+                        <i class="fas fa-search input-prefix"></i>
+                        <input type="text" id="buscador" placeholder="buscar" v-modelo="buscar" class="form-control">
                       </div>
                     </div>
                   </div>
-                  <div class="col-sm-6">
+                  <div class="col-sm-7">
                     <div class="mt-1 mb-4 d-flex justify-content-end">
                       <ul class="nav" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
@@ -294,17 +292,15 @@
 
                 <!-- buscador con botones -->
                 <div class="row">
-                  <div class="col-sm-6">
-                    <div class="mt-1 mb-4 d-flex justify-content-start">
-                      <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
-                        </div>
-                        <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="Username">
+                  <div class="col-sm-5">
+                    <div class="mt-1 d-flex justify-content-start">
+                      <div class="md-form input-with-pre-icon">
+                        <i class="fas fa-search input-prefix"></i>
+                        <input type="text" id="buscador" placeholder="buscar" v-modelo="buscar" class="form-control">
                       </div>
                     </div>
                   </div>
-                  <div class="col-sm-6">
+                  <div class="col-sm-7">
                     <div class="mt-1 mb-4 d-flex justify-content-end">
                       <button type="button" title="Agregar" class="btn btn-sm btn-dark" data-toggle="modal" data-target="#AgregarProducto"><i class="fas fa-plus"></i></button>
                     </div>
@@ -339,44 +335,42 @@
 
           <!-- mensajes -->
           <div class="tab-pane fade shadow" id="mensajes" role="tabpanel" aria-labelledby="mensajes">
-            <div class="card shadow">
+
+            <div class="card">
               <div class="card-body">
-
-
                 <!-- buscador con botones -->
                 <div class="row">
-                  <div class="col-sm-6">
-                    <div class="mt-1 mb-4 d-flex justify-content-start">
-                      <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
-                        </div>
-                        <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="Username">
+                  <div class="col-sm-5">
+                    <div class="mt-1 d-flex justify-content-start">
+                      <div class="md-form input-with-pre-icon">
+                        <i class="fas fa-search input-prefix"></i>
+                        <input type="text" id="buscador" placeholder="buscar" v-modelo="buscar" class="form-control">
                       </div>
                     </div>
                   </div>
                 </div>
                 <!-- end buscador con botones -->
 
-              </div>
-            </div>
-            <div v-for="item in msg">
-              <div class="card shadow mt-4 mb-4">
-                <div class="card-body">
-                  <div class="d-flex justify-content-between">
-                    <h3>de: {{item.Name}}</h3>
-                    <div class="d-flex flex-row-reverse bd-highlight">
-                      <button type="button" title="Eliminar" class="btn btn-sm btn-danger ml-1" ><i class="fas fa-trash"></i></button>
-                      <button type="button" title="Spam" class="btn btn-sm btn-warning ml-1" ><i class="fas fa-envelope-open"></i></button>
+                <div v-for="item in msg" class="card mt-3 py-3 mb-3">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                      <h5>de: {{item.Name}}</h5>
+                      <div class="d-flex flex-row-reverse bd-highlight">
+                        <button type="button" title="Eliminar" class="btn btn-sm btn-danger ml-1" ><i class="fas fa-trash"></i></button>
+                        <button type="button" title="Spam" class="btn btn-sm btn-warning ml-1" ><i class="fas fa-envelope-open"></i></button>
+                      </div>
                     </div>
-                  </div>
-                  <div class="mt-2">
-                    <h5>Asunto: {{item.Subjet}}</h5>
-                    <p>{{item.Content}}</p>
+                    <div class="mt-1">
+                      <h5>Asunto: {{item.Subjet}}</h5>
+                      <p>{{item.Content}}</p>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
+
+
+
           </div>
 
           <!-- ususarios -->
@@ -550,8 +544,12 @@
 
                   <ul class="nav" id="myTab" role="tablist">
                     <li class="nav-item">
-                      <a class="btn btn-sm btn-dark" id="home-tab" data-toggle="tab" href="#Categorias" role="tab" aria-controls="home"
+                      <a class="btn btn-sm btn-dark" id="categorias" data-toggle="tab" href="#Categorias" role="tab" aria-controls="categoria"
                       aria-selected="true">Categorias</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="btn btn-sm btn-dark" id="usuarios" data-toggle="tab" href="#Usuarios" role="tab" aria-controls="usuarios"
+                      aria-selected="true">Usuarios</a>
                     </li>
                     <li class="nav-item">
                       <a class="btn btn-sm btn-dark" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
@@ -566,31 +564,22 @@
                 </div>
 
                 <div class="tab-content" id="TabConfigracion">
+
                   <div class="tab-pane fade show active" id="Categorias" role="tabpanel" aria-labelledby="home-tab">
+                    <ul class="nav" id="myTab" role="tablist">
+                      <li class="nav-item">
+                        <a class="btn btn-sm btn-dark" id="home-tab" data-toggle="tab" href="#category" title="Agregar Categorias" role="tab" aria-controls="home"
+                        aria-selected="true"><i class="fas fa-plus"></i></a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="btn btn-sm btn-dark" id="profile-tab" data-toggle="tab"  title="Listado de Categorias" href="#list_category" role="tab" aria-controls="profile"
+                        aria-selected="false"><i class="fas fa-list"></i></a>
+                      </li>
+                    </ul>
+                    <div class="tab-content" id="">
 
+                      <div class="tab-pane fade show active" id="list_category" role="tabpanel" aria-labelledby="home-tab">
 
-                    <div class="row">
-
-                      <div class="col-md-6">
-                        <form @submit="CheckFormCategory" method="post" novalidate="true">
-                          <p v-if="errors.length">
-                            <b>Por favor corriga los siguientes erroes:</b>
-                            <ul>
-                              <li v-for="error in errors" class="text-danger">{{ error }}</li>
-                            </ul>
-                          </p>
-                          <div class="form-group">
-                            <label for="">nombre</label>
-                            <input type="text" min="1" name="name_category" v-model="name_category" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                          </div>
-                          <div class="form-group">
-                            <label for="">Descripcion</label>
-                            <textarea name="description_category" v-model="description_category" class="form-control" rows="2" cols="4"></textarea>
-                          </div>
-                          <input type="submit" class="btn btn-sm btn-dark" name="grabar" value="Grabar">
-                        </form>
-                      </div>
-                      <div class="col-md-6">
                         <table class="table text-center">
                           <thead>
                             <tr>
@@ -610,15 +599,34 @@
                             </tr>
                           </tbody>
                         </table>
+
+                      </div>
+                      <div class="tab-pane fade" id="category" role="tabpanel" aria-labelledby="profile-tab">
+                        <div class="col-md-6">
+                          <form @submit="CheckFormCategory" method="post" novalidate="true">
+                            <p v-if="errors.length">
+                              <b>Por favor corriga los siguientes erroes:</b>
+                              <ul>
+                                <li v-for="error in errors" class="text-danger">{{ error }}</li>
+                              </ul>
+                            </p>
+                            <div class="form-group">
+                              <label for="">nombre</label>
+                              <input type="text" min="1" name="name_category" v-model="name_category" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                            </div>
+                            <div class="form-group">
+                              <label for="">Descripcion</label>
+                              <textarea name="description_category" v-model="description_category" class="form-control" rows="2" cols="4"></textarea>
+                            </div>
+                            <input type="submit" class="btn btn-sm btn-dark" name="grabar" value="Grabar">
+                          </form>
+                        </div>
                       </div>
 
                     </div>
-
-
-
                   </div>
                   <!-- end sub tab categorias -->
-                  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                  <div class="tab-pane fade" id="Usuarios" role="tabpanel" aria-labelledby="profile-tab">
                     Food truck fixie
                     locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit,
                     blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee.
@@ -637,20 +645,21 @@
                     etsy retro mlkshk vice blog. Scenester cred you probably haven't heard of them, vinyl craft beer blog
                     stumptown. Pitchfork sustainable tofu synth chambray yr.
                   </div>
+
+
                 </div>
 
-              </div>
-            </div><!--end card-->
+              </div><!--end card-->
 
-          </div>
-
-
-        </div><!--end tabs-->
-
-      </main>
+            </div>
 
 
+          </div><!--end tabs-->
+
+        </main>
+
+
+      </div>
     </div>
   </div>
-</div>
-<?php require_once RUTA_APP . '/vistas/inc/footer.php';?>
+  <?php require_once RUTA_APP . '/vistas/inc/footer.php';?>

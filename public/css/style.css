@@ -10,34 +10,34 @@ input, textarea{
 
 
 btn-floating {
-    position: relative;
-    z-index: 1;
-    display: inline-block;
-    padding: 0;
-    margin: 10px;
-    overflow: hidden;
-    vertical-align: middle;
-    cursor: pointer;
-    border-radius: 50%;
-    -webkit-box-shadow: 0 5px 11px 0 rgba(0,0,0,0.18),0 4px 15px 0 rgba(0,0,0,0.15);
-    box-shadow: 0 5px 11px 0 rgba(0,0,0,0.18),0 4px 15px 0 rgba(0,0,0,0.15);
-    -webkit-transition: all .2s ease-in-out;
-    transition: all .2s ease-in-out;
-    width: 47px;
-    height: 47px;
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  padding: 0;
+  margin: 10px;
+  overflow: hidden;
+  vertical-align: middle;
+  cursor: pointer;
+  border-radius: 50%;
+  -webkit-box-shadow: 0 5px 11px 0 rgba(0,0,0,0.18),0 4px 15px 0 rgba(0,0,0,0.15);
+  box-shadow: 0 5px 11px 0 rgba(0,0,0,0.18),0 4px 15px 0 rgba(0,0,0,0.15);
+  -webkit-transition: all .2s ease-in-out;
+  transition: all .2s ease-in-out;
+  width: 47px;
+  height: 47px;
 }
 
 .btn-lg, .btn-group-lg > .btn {
-    padding: .5rem 1rem;
-    font-size: 1.25rem;
-    line-height: 1.5;
-    border-radius: .3rem;
+  padding: .5rem 1rem;
+  font-size: 1.25rem;
+  line-height: 1.5;
+  border-radius: .3rem;
 }
 button, [type="button"], [type="reset"], [type="submit"] {
-    -webkit-appearance: button;
+  -webkit-appearance: button;
 }
 [role="button"] {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .card-cascade{
@@ -46,10 +46,11 @@ button, [type="button"], [type="reset"], [type="submit"] {
 }
 
 .navbar{
-  background-color: #252525;
+  background-color: #292725 !important;
 }
 
 .sidebar {
+  background-color: #292725 !important;
   margin-top: 25px;
   min-height: 100vh;
   top: 0;
@@ -58,6 +59,7 @@ button, [type="button"], [type="reset"], [type="submit"] {
   z-index: 100; /* Behind the navbar */
   padding: 50px 0 0; /* Height of navbar */
   box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+
 }
 .sidebar .nav-link {
 
@@ -65,12 +67,10 @@ button, [type="button"], [type="reset"], [type="submit"] {
   color: #333;
 }
 .sidebar .nav-link {
-  margin: 10px 25px;
+  margin: 10px;
   color: #999;
 }
-.sidebar .nav-link:active {
-  background-color: none;
-}
+
 .sidebar-heading {
   font-size: .75rem;
   text-transform: uppercase;
