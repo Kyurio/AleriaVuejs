@@ -11,6 +11,8 @@
   <!-- Material Design Bootstrap -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.18.0/css/mdb.min.css" rel="stylesheet">
 
+
+
   <link rel="stylesheet" href="<?php echo RUTA_URL ?>public/css/style.css">
   <title><?php echo NOMBRE_SITIO  ?></title>
 </head>

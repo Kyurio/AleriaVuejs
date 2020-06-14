@@ -184,7 +184,7 @@ class pages extends control{
     $tasks = $this->ConfigModelo->select('select', 'task', '', '', '', '');
     echo json_encode($tasks);
   }
-  
+
   public function Mail(){
     $data = json_decode(file_get_contents("php://input"), true);
 

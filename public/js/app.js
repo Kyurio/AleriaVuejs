@@ -5,8 +5,6 @@ var app = new Vue({
   data: {
 
     errors: [],
-
-
     //--------------------------------------------------------------------------
     // mail send
     //--------------------------------------------------------------------------
@@ -18,7 +16,11 @@ var app = new Vue({
     users: {},
     categorys: {},
     chartclsData: {},
-    tasks: {},
+    tasks: [],
+    filterTasks: [],
+    filterClients: [],
+    filterMessages: [],
+    filterProducts: [],
 
     //mensajes
     id_msg: '',
@@ -49,12 +51,19 @@ var app = new Vue({
     descript_task: '',
     id_user_task: '',
 
+
     //categorias
     name_category: '',
     description_category: '',
 
     //titulos
     title_tab: 'Dashboard',
+
+    //Buscador
+    BusquedaTarea: '',
+    BusquedaCLiente: '',
+    BusquedaMensajes: '',
+    BusquedaProductos: '',
   },
   //--------------------------------------------------------------------------
   // ejecuta funciones que se deben cargar automaticas como los select
@@ -70,6 +79,42 @@ var app = new Vue({
     this.ChartCls();
     this.ConsultarCategorias();
     this.ConsultarTask();
+
+  },
+
+  computed:{
+    buscadorTareas:{
+      get(){
+        return this.BusquedaTarea
+      },
+      set(value){
+        value = value.toLowerCase();
+        this.filterTasks = this.tasks.filter(item => item.title.toLowerCase().indexOf(value) !== -1)
+        this.BusquedaTarea = value
+      }
+    },
+
+    buscadorClientes:{
+      get(){
+        return this.BusquedaCLiente
+      },
+      set(value){
+        value = value.toLowerCase();
+        this.filterClients = this.clients.filter(item => item.name.toLowerCase().indexOf(value) !== -1)
+        this.BusquedaCLiente = value
+      }
+    },
+    buscadorProductos: {
+      get(){
+        return this.BusquedaProductos
+      },
+      set(value){
+        value = value.toLowerCase();
+        this.filterProducts = this.products.filter(item => item.name.toLowerCase().indexOf(value) !== -1)
+        this.BusquedaProductos = value
+      }
+    }
+
   },
 
   methods: {
@@ -118,7 +163,7 @@ var app = new Vue({
         }else{
           swal("Error al grabar!","por favor intentelo mas tarde", "warning");
         }
-        console.log(response.data);
+        //console.log(response.data);
       }).catch(function (error) {
         console.log(error);
       });
@@ -236,6 +281,7 @@ var app = new Vue({
       axios.get('/aleriaVue/pages/SelectTask', {
       }).then(function (response) {
         capturador.tasks = response.data;
+        capturador.filterTasks = response.data;
       });
     },
 
@@ -252,6 +298,7 @@ var app = new Vue({
       axios.get('/aleriaVue/pages/SelectProduct', {
       }).then(function (response) {
         capturador.products = response.data;
+        capturador.filterProducts = response.data;
       });
     },
 
@@ -284,7 +331,8 @@ var app = new Vue({
       axios.get('/aleriaVue/pages/SelectClient', {
       }).then(function (response) {
         capturador.clients = response.data;
-        console.log(response.data);
+        capturador.filterClients = response.data;
+        //console.log(response.data);
       });
     },
 
@@ -352,7 +400,7 @@ var app = new Vue({
       axios.get('/aleriaVue/pages/chartCls', {
       }).then(function (response) {
         capturador.chartclsData = response.data;
-        console.log(response.data)
+        //console.log(response.data)
       });
 
 
@@ -398,7 +446,6 @@ var app = new Vue({
       var url = "/aleriaVue/pages/detalle/"+filtro;
       window.location.replace(url);
     },
-
 
     // validaciones de formularios
     checkForm: function (e){
@@ -471,11 +518,7 @@ var app = new Vue({
 
     },
 
-    cambiar_titulo: function(){
 
-
-
-    },
 
     // externas
     validEmail: function (email){
@@ -495,11 +538,23 @@ var app = new Vue({
       });
     },
 
-
-
     ChangeTitle: function(title){
       this.title_tab = title;
     },
+
+    BuscarTareas: function(){
+
+      itembuscado = this.buscador.toLowerCase();
+
+      for (var item of products) {
+        let nombreItem = item.name.toLowerCase();
+        if (nombreItem.indexOf(itembuscado)) {
+          this.products = item.name;
+        }
+      }
+
+    }
+
 
 
   }//end methods

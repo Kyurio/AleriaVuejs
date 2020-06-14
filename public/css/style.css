@@ -9,7 +9,7 @@ input, textarea{
 }
 
 
-btn-floating {
+.btn-floating {
   position: relative;
   z-index: 1;
   display: inline-block;
@@ -69,6 +69,10 @@ button, [type="button"], [type="reset"], [type="submit"] {
 .sidebar .nav-link {
   margin: 10px;
   color: #999;
+}
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: #fff;
+    background-color: inherit;
 }
 
 .sidebar-heading {

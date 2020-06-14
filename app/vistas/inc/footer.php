@@ -74,6 +74,5 @@
 <!-- config -->
 <script src="<?php echo RUTA_URL; ?>public/js/app.js"></script>
 
-
 </body>
 </html>

@@ -28,7 +28,7 @@
                     <div class="mt-1 d-flex justify-content-start">
                       <div class="md-form input-with-pre-icon">
                         <i class="fas fa-search input-prefix"></i>
-                        <input type="text" id="buscador" placeholder="buscar" v-modelo="buscar" class="form-control">
+                        <input type="text" id="buscador" placeholder="buscar"  class="form-control">
                       </div>
                     </div>
                   </div>
@@ -156,7 +156,7 @@
                     <div class="mt-1 d-flex justify-content-start">
                       <div class="md-form input-with-pre-icon">
                         <i class="fas fa-search input-prefix"></i>
-                        <input type="text" id="buscador" placeholder="buscar" v-modelo="buscar" class="form-control">
+                        <input type="text"  placeholder="buscar" v-model="buscadorTareas" class="form-control">
                       </div>
                     </div>
                   </div>
@@ -175,16 +175,15 @@
                 </div>
                 <!-- end buscador con botones -->
                 <!-- contenido de el tab -->
-
                 <div class="tab-content" id="myTabContent">
                   <div class="tab-pane fade show active" id="list_task" role="tabpanel" aria-labelledby="list">
-                    <ul class="list-group">
-                      <li class="list-group-item mt-2 shadow" v-for="item in tasks">
+                    <ul class="list list-group">
+                      <li class="list-group-item mt-2 shadow" v-for="(item, index) in filterTasks" :key="index">
 
                         <div class="row">
                           <div class="col-md-8">
                             <div class="mt-1 mb-4 d-flex justify-content-start">
-                              <h5>{{ item.title }}</h5>
+                              <h5 class="name">{{ item.title }}</h5>
                             </div>
                           </div>
                           <div class="col-md-4">
@@ -195,8 +194,8 @@
                           </div>
                         </div>
 
-                        <p> {{ item.descript }} </p>
-                        <small>{{ item.date_end }}</small>
+                        <p class="name">{{ item.descript }}</p>
+                        <small class="name">{{ item.date_end }}</small>
 
                       </li>
                     </ul>
@@ -296,7 +295,7 @@
                     <div class="mt-1 d-flex justify-content-start">
                       <div class="md-form input-with-pre-icon">
                         <i class="fas fa-search input-prefix"></i>
-                        <input type="text" id="buscador" placeholder="buscar" v-modelo="buscar" class="form-control">
+                        <input type="text" id="buscador" placeholder="buscar"  class="form-control">
                       </div>
                     </div>
                   </div>
@@ -344,7 +343,7 @@
                     <div class="mt-1 d-flex justify-content-start">
                       <div class="md-form input-with-pre-icon">
                         <i class="fas fa-search input-prefix"></i>
-                        <input type="text" id="buscador" placeholder="buscar" v-modelo="buscar" class="form-control">
+                        <input type="text" id="buscador" placeholder="buscar"  class="form-control">
                       </div>
                     </div>
                   </div>
@@ -458,17 +457,15 @@
 
                 <!-- buscador con botones -->
                 <div class="row">
-                  <div class="col-sm-6">
-                    <div class="mt-1 mb-4 d-flex justify-content-start">
-                      <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text"><i class="fas fa-search"></i></span>
-                        </div>
-                        <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="Username">
+                  <div class="col-sm-5">
+                    <div class="mt-1 d-flex justify-content-start">
+                      <div class="md-form input-with-pre-icon">
+                        <i class="fas fa-search input-prefix"></i>
+                        <input type="text"  placeholder="buscar..." v-model="buscadorClientes" class="form-control">
                       </div>
                     </div>
                   </div>
-                  <div class="col-sm-6">
+                  <div class="col-sm-7">
                     <div class="mt-1 mb-4 d-flex justify-content-end">
                       <button type="button" title="Agregar" class="btn btn-sm btn-dark mr-1" data-toggle="modal" data-target="#AgregarBanner"><i class="fas fa-plus"></i></button>
                       <button type="button" title="Enviar Correo" class="btn btn-sm btn-dark mr-1" data-toggle="modal" data-target="#AgregarBanner"><i class="fas fa-envelope"></i></button>
@@ -482,7 +479,7 @@
                 <div class="container">
                   <div class="d-flex justify-content-center py-5 mb-4 ">
                     <div class="row">
-                      <div v-for="item in clients">
+                      <div v-for="item in filterClients">
                         <div class="col-md-4">
                           <div class="card card-cascade mb-4 py-4" >
                             <div class="view view-cascade overlay">
@@ -529,6 +526,8 @@
                   </div>
                 </div>
                 <!-- end card -->
+
+
 
 
               </div>

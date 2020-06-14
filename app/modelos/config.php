@@ -81,6 +81,17 @@ class config{
   }
 
   /*----------------------------------------------------------------------------
+  contadro de registros
+  ----------------------------------------------------------------------------*/
+  public function counter($tabla){
+
+    $cantidadTablas = $tabla->rowCount();
+
+    return $cantidadTablas;
+
+  }
+
+  /*----------------------------------------------------------------------------
   consultas session -longin- longout -createacount
   ----------------------------------------------------------------------------*/
   public function login($datos){
