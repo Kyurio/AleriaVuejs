@@ -8,9 +8,9 @@
       <div class="col-sm-6">
         <ol class="float-sm-right">
 
-          <a href="#" class="btn btn-dark btn-sm"><i class="fas fa-home"></i></a>
+          <a href="#" class="btn btn-warning btn-sm"><i class="fas fa-home"></i></a>
           <!-- Basic dropdown -->
-          <a class="btn btn-dark btn-sm mr-4" type="button" data-toggle="dropdown" aria-haspopup="true"
+          <a class="btn btn-warning btn-sm mr-4" type="button" data-toggle="dropdown" aria-haspopup="true"
           aria-expanded="false"><i class="fas fa-comment-alt"></i></a>
 
           <div class="dropdown-menu">
@@ -27,5 +27,3 @@
     </div>
   </div>
 </div>
-
-<hr>

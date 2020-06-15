@@ -2,7 +2,7 @@
 <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
   <ul class="nav flex-column nav-pills" id="myTab" role="tablist" aria-orientation="vertical">
 
-    <li> <a class="nav-link" @click="ChangeTitle('Ventas')" id="v-pills-ventas-tab"      data-toggle="tab" href="#ventas" role="tab" aria-controls="v-pills-home" aria-selected="true"><i class="fas fa-shopping-cart"></i> Ventas</a></li>
+    <li> <a class="nav-link" @click="ChangeTitle('Ventas')" id="v-pills-ventas-tab"      data-toggle="tab" href="#ventas" role="tab" aria-controls="v-pills-home" aria-selected="true"><i class="fas fa-shopping-cart"></i> Productos</a></li>
     <li> <a class="nav-link" @click="ChangeTitle('Blog')" id="v-pills-blogs-tab"     data-toggle="tab" href="#blog" role="tab" aria-controls="v-pills-profile" aria-selected="false"><i class="fas fa-feather-alt"></i> Blog</a></li>
     <li> <a class="nav-link" @click="ChangeTitle('Mensajes')" id="v-pills-mensajes-tab"    data-toggle="tab" href="#mensajes" role="tab" aria-controls="v-pills-profile" aria-selected="false"><i class="fas fa-envelope"></i> Mensajes</a></li>
     <li> <a class="nav-link" @click="ChangeTitle('Usuarios')" id="v-pills-usuarios-tab"    data-toggle="tab" href="#usuarios" role="tab" aria-controls="v-pills-profile" aria-selected="false"><i class="fas fa-user"></i> Usuarios</a></li>

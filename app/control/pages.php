@@ -135,9 +135,9 @@ class pages extends control{
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
       $data = json_decode(file_get_contents("php://input"), true);
-      $id = $data['Id_producto'];
+      $id = $data['id_product'];
       //ejecyta la insercion
-      if($this->ConfigModelo->delete('producto', 'Id_producto', $id)){
+      if($this->ConfigModelo->delete('product', 'id', $id)){
         echo true;
       }else{
         echo false;

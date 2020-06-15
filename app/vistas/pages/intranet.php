@@ -18,7 +18,7 @@
           <?php require_once RUTA_APP . '/helpers/components/cabecera.php' ?>
           <!-- end cabecera -->
 
-          <!-- ventas -->
+          <!-- productos -->
           <div class="tab-pane fade shadow" id="ventas" role="tabpanel" aria-labelledby="producto">
             <div class="card mb-4">
               <div class="card-body">
@@ -52,43 +52,48 @@
                   <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="list_product" role="tabpanel" aria-labelledby="profile-tab">
                       <!-- table -->
-                      <table class="table table-hover text-center">
-                        <thead>
-                          <tr>
-                            <th scope="col">Producto</th>
-                            <th scope="col">Fecha publicacion</th>
-                            <th scope="col">Estado</th>
-                            <th scope="col">Estock</th>
-                            <th scope="col">Accion</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr v-for="item in products">
-                            <td>{{ item.name }}</td>
-                            <td>{{ item.created_at }}</td>
-                            <td>
-                              <div v-if="item.is_active == 1">
-                                <span class="badge badge-success">Activo</span>
-                              </div>
-                              <div v-else>
-                                <span class="badge badge-danger">Inactivo</span>
-                              </div>
-                            </td>
-                            <td>{{ item.inventary_min }}</td>
-                            <td>
-                              <button type="button" name="button" class="btn btn-danger btn-sm" title="Eliminar"><i class="fas fa-trash"></i></button>
-                              <button type="button" name="button" class="btn btn-warning btn-sm" title="Editar"><i class="fas fa-pen"></i></button>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
+                      <div id="demo">
+                        <table class="table table-hover text-center table-sm">
+                          <thead>
+                            <tr>
+                              <th scope="col">Producto</th>
+                              <th scope="col">Fecha publicacion</th>
+                              <th scope="col">Estado</th>
+                              <th scope="col">Estock</th>
+                              <th scope="col">Accion</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr v-for="item in products">
+                              <td>{{ item.name }}</td>
+                              <td>{{ item.created_at }}</td>
+                              <td>
+                                <div v-if="item.is_active == 1">
+                                  <span class="badge badge-success">Activo</span>
+                                </div>
+                                <div v-else>
+                                  <span class="badge badge-danger">Inactivo</span>
+                                </div>
+                              </td>
+                              <td>{{ item.inventary_min }}</td>
+                              <td>
+                                <button type="button" name="Eliminar" @click="EliminarProduct(item.id)" class="btn btn-danger btn-sm" title="Eliminar"><i class="fas fa-trash"></i></button>
+                                <button type="button" name="Editar" class="btn btn-warning btn-sm" title="Editar"><i class="fas fa-pen"></i></button>
+                                <button type="button" name="Desactivar" class="btn btn-info btn-sm" title="Desactivar"><i class="fas fa-ban"></i></button>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div id="dataContainer"></div>
+                    
                       <!-- end table -->
                     </div>
 
                     <div class="tab-pane fade" id="product" role="tabpanel" aria-labelledby="task">
 
                       <div class="col-md-6">
-                        <form @submit="CheckFormProducts" method="post" novalidate="true">
+                        <form @submit="CheckFormProducts" method="post" novalidate="true" enctype="multipart/form-data">
                           <div class="form-group">
                             <label for="">Nombre</label>
                             <input v-model="name_product"  type="text" placeholder="Titulo tarea" maxlength="60" name="title_task" class="form-control" id="exampleInputEmail1" required aria-describedby="emailHelp">
@@ -123,7 +128,7 @@
                           <!-- end 3 input -->
 
                           <div class="form-group">
-                            <label for="">precio venta </label>
+                            <label for="">categoria </label>
                             <select class="browser-default custom-select" >
                               <option v-for="item in categorys"  value="item.id">{{ item.name }}</option>
                             </select>
@@ -131,9 +136,13 @@
 
                           <div class="form-group">
                             <label for="">imagen </label>
-                            <input type="text" name="imagen_product" v-model="imagen_product"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                            <div class="custom-file">
+                              <input type="file" class="custom-file-input" id="customFileLang" lang="es">
+                              <label class="custom-file-label" for="customFileLang">Seleccionar Archivo</label>
+                            </div>
                           </div>
-                          <button type="submit" class="btn btn-sm btn-dark"  name="button">Grabar</button>
+
+                          <button type="submit" class="btn btn-sm btn-dark" @click="GrabarProcutos"  name="button">Grabar</button>
                         </form>
 
                       </div>
@@ -156,7 +165,7 @@
                     <div class="mt-1 d-flex justify-content-start">
                       <div class="md-form input-with-pre-icon">
                         <i class="fas fa-search input-prefix"></i>
-                        <input type="text"  placeholder="buscar" v-model="buscadorTareas" class="form-control">
+                        <input type="text"  placeholder="buscar..." v-model="buscadorProductos" class="form-control">
                       </div>
                     </div>
                   </div>

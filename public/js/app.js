@@ -79,10 +79,12 @@ var app = new Vue({
     this.ChartCls();
     this.ConsultarCategorias();
     this.ConsultarTask();
+    this.paginate();
 
   },
 
   computed:{
+
     buscadorTareas:{
       get(){
         return this.BusquedaTarea
@@ -104,6 +106,7 @@ var app = new Vue({
         this.BusquedaCLiente = value
       }
     },
+
     buscadorProductos: {
       get(){
         return this.BusquedaProductos
@@ -113,7 +116,7 @@ var app = new Vue({
         this.filterProducts = this.products.filter(item => item.name.toLowerCase().indexOf(value) !== -1)
         this.BusquedaProductos = value
       }
-    }
+    },
 
   },
 
@@ -179,11 +182,16 @@ var app = new Vue({
 
       axios({
         method: 'POST',
-        url: '/app/pagina/newBlog',
+        url: '/aleriaVue/pages/De',
         data: {
-          titulo: this.titulo,
-          cuerpo: this.cuerpo,
-          tags: this.tags,
+          name: this.name_product,
+          imagen: this.imagen_product,
+          description: this.description_product,
+          canridad: this.inventary_min_product,
+          precio_compra: this.price_in_product,
+          precio_venta: this.price_out_prouct
+
+
         }
 
       }).then(function (response) {
@@ -369,6 +377,39 @@ var app = new Vue({
       });
     },
 
+    EliminarProduct: function(id){
+      swal({
+        title: "¿Estas seguro de Eliminar el registro?",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+      .then((willDelete) => {
+        if (willDelete) {
+          //ejecuta la funcion
+          axios({
+            method: 'POST',
+            url: '/aleriaVue/pages/DeleteProducto',
+            data: {
+              id_product: id,
+            }
+          }).then(function (response) {
+            if(response.data == 1){
+              swal("Poof! Tu registro fue eliminado !", {
+                icon: "success",
+              });
+            }else {
+              swal("Error al eliminar el registro", {
+                icon: "warning",
+              });
+            }
+          });
+          this.ConsultarProducts();
+          //mensaje de elemento eleiminado
+        }
+      });
+    },
+
     ChartMsg: function(){
 
       var ctx = document.getElementById('ChartMsgs').getContext('2d');
@@ -518,8 +559,6 @@ var app = new Vue({
 
     },
 
-
-
     // externas
     validEmail: function (email){
       var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -542,19 +581,21 @@ var app = new Vue({
       this.title_tab = title;
     },
 
-    BuscarTareas: function(){
+    paginate: function(){
 
-      itembuscado = this.buscador.toLowerCase();
-
-      for (var item of products) {
-        let nombreItem = item.name.toLowerCase();
-        if (nombreItem.indexOf(itembuscado)) {
-          this.products = item.name;
+      $('#demo').pagination({
+        dataSource: [1, 2, 3, 4, 5, 6, 7, ... , 100],
+        pageSize: 5,
+        showPrevious: false,
+        showNext: false,
+        callback: function(data, pagination) {
+          // template method of yourself
+          var html = template(data);
+          dataContainer.html(html);
         }
-      }
+      })
 
-    }
-
+    },
 
 
   }//end methods

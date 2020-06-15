@@ -40,10 +40,6 @@ button, [type="button"], [type="reset"], [type="submit"] {
   cursor: pointer;
 }
 
-.card-cascade{
-  min-width: 300px;
-  min-height: 250px;
-}
 
 .navbar{
   background-color: #292725 !important;
