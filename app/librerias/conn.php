@@ -81,6 +81,7 @@ class conn{
 
   //obtener la cantidad de filas rowcount
   public function  rowCount(){
+    $this->execute();
     return $this->stmt->rowCount();
   }
 

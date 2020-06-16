@@ -1,3 +1,4 @@
+import test from '@/components/test'
 var app = new Vue({
 
 
@@ -59,6 +60,10 @@ var app = new Vue({
     //titulos
     title_tab: 'Dashboard',
 
+    //paginador
+    pages: 1,
+    totalPages: 1,
+    pageNumber: 0,
     //Buscador
     BusquedaTarea: '',
     BusquedaCLiente: '',
@@ -79,7 +84,6 @@ var app = new Vue({
     this.ChartCls();
     this.ConsultarCategorias();
     this.ConsultarTask();
-    this.paginate();
 
   },
 
@@ -581,21 +585,7 @@ var app = new Vue({
       this.title_tab = title;
     },
 
-    paginate: function(){
 
-      $('#demo').pagination({
-        dataSource: [1, 2, 3, 4, 5, 6, 7, ... , 100],
-        pageSize: 5,
-        showPrevious: false,
-        showNext: false,
-        callback: function(data, pagination) {
-          // template method of yourself
-          var html = template(data);
-          dataContainer.html(html);
-        }
-      })
-
-    },
 
 
   }//end methods

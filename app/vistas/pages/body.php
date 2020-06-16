@@ -15,7 +15,7 @@
 
       <div class="row">
         <div class="col-sm-3 mb-4" v-for="item in filterProducts">
-          <div class="card z-depth-1-half " >
+          <div class="card z-depth-1-half" >
             <div class="view overlay">
               <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20%28131%29.jpg" alt="Card image cap">
               <a><div class="mask rgba-white-slight"></div></a>
@@ -30,6 +30,12 @@
           </div>
         </div>
       </div>
+
+
+      <!-- paginador -->
+      
+      <!-- end paginador -->
+
     </div>
   </div>
 </div>

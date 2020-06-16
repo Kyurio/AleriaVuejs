@@ -16,6 +16,11 @@ class pages extends control{
     $this->vista('pages/inicio');
   }
 
+  public function blog(){
+
+    $this->vista('pages/blog');
+  }
+
   public function intranet(){
     $this->vista('pages/intranet');
   }
@@ -237,6 +242,14 @@ class pages extends control{
       echo "404";
     }
   }
+
+  public function RowCountProducts(){
+
+    $cantidad = $this->ConfigModelo->select('rowCount', 'product', '', '', '', '');
+    echo json_encode($cantidad);
+
+  }
+
 
   /*--------------------------------------------------------
   funciones chart

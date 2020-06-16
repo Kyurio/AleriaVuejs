@@ -32,6 +32,9 @@
           <a class="nav-link" href="<?php echo RUTA_URL ?>pages/contacto">Contacto</a>
         </li>
         <li class="nav-item">
+          <a class="nav-link" href="<?php echo RUTA_URL ?>pages/blog">Blog</a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link" href="<?php echo RUTA_URL ?>pages/">Pricing</a>
         </li>
       </ul>

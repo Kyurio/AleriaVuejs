@@ -29,6 +29,11 @@ class config{
         $this->bd->query("SELECT *, count($count)AS total FROM $tabla GROUP BY $groupby");
         return $this->bd->registros();
 
+        case "rowCount":
+        $this->bd->query("SELECT * FROM $tabla");
+        return $this->bd->rowCount();
+        break;
+        
         case "select":
         $this->bd->query("SELECT * FROM $tabla");
         return $this->bd->registros();

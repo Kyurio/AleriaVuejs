@@ -8,6 +8,10 @@ input, textarea{
   background-color: #f9fcfb !important;
 }
 
+.card-cascade{
+  min-width: 300px;
+  min-height: 250px;
+}
 
 .btn-floating {
   position: relative;

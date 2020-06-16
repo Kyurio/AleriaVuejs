@@ -71,9 +71,9 @@
 <!-- chartjs -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <!-- paginate -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.5/pagination.min.js"></script>
+<script src="https://unpkg.com/vuejs-paginate@latest"></script>
 <!-- config -->
-<script src="<?php echo RUTA_URL; ?>public/js/app.js"></script>
+<script src="<?php echo RUTA_URL; ?>public/js/app.vue"></script>
 
 </body>
 </html>
