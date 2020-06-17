@@ -1,7 +1,80 @@
-import test from '@/components/test'
+
+const pagination = Vue.component('pagination-control', {
+  template: '#pagination',
+  data() {
+    return {};
+  },
+  props: {
+    currentPage: {
+      default: 1,
+      required: true,
+    },
+    maxPages: {
+      type: Number,
+      default: 1,
+      required: true,
+    },
+  },
+});
+
+const userTable = Vue.component('user-table', {
+  template: '#user-table',
+  components: { 'pagination-control': pagination },
+  data() {
+    return {
+      baseUrl: 'https://reqres.in/api/users',
+      page: 1,
+      perPage: 4,
+      totalPages: 0,
+      users: [],
+      userCols: ['Id', 'Avatar', 'First Name', 'Last Name']
+    };
+  },
+  computed: {
+    resultIndexBeg() {
+      // Don't do this
+      return this.users.length > 0 ? this.users[0].id : 0;
+    },
+    resultIndexEnd() {
+      // Don't do this
+      return this.users.length > 0 ? this.users[this.users.length - 1].id : 0;
+    },
+  },
+  methods: {
+    getData() {
+      try {
+        fetch(`${this.baseUrl}?page=${this.page}&per_page=${this.perPage}`)
+        .then((response) => response.json())
+        .then((json) => {
+          this.totalPages = json.total_pages;
+          this.totalData = json.total;
+          this.users = json.data;
+        });
+      }
+      catch(err) {
+
+      }
+
+    },
+    changePage(page) {
+      this.page = page;
+    },
+  },
+  watch: {
+    page: {
+      immediate: true,
+      handler(newVal, oldVal) {
+        this.getData();
+      },
+    },
+  },
+});
+
+
+
+
+
 var app = new Vue({
-
-
   el: '#app',
   data: {
 
@@ -61,18 +134,22 @@ var app = new Vue({
     title_tab: 'Dashboard',
 
     //paginador
-    pages: 1,
-    totalPages: 1,
-    pageNumber: 0,
+    current_page: 1,
+    records_per_page: 5,
+
+
+
     //Buscador
     BusquedaTarea: '',
     BusquedaCLiente: '',
     BusquedaMensajes: '',
     BusquedaProductos: '',
   },
+
   //--------------------------------------------------------------------------
   // ejecuta funciones que se deben cargar automaticas como los select
   //--------------------------------------------------------------------------
+
   mounted: function(){
     this.mantenerTabs();
     this.ConsultarClients();
@@ -84,6 +161,11 @@ var app = new Vue({
     this.ChartCls();
     this.ConsultarCategorias();
     this.ConsultarTask();
+
+
+    ///testing pagination js
+
+    this.maginer();
 
   },
 
@@ -125,6 +207,16 @@ var app = new Vue({
   },
 
   methods: {
+
+    maginer: function(){
+
+      var monkeyList = new List('test-list', {
+        valueNames: ['name'],
+        page: 5,
+        pagination: true
+      });
+
+    },
 
     GrabarMensaje: function(){
 
@@ -584,6 +676,7 @@ var app = new Vue({
     ChangeTitle: function(title){
       this.title_tab = title;
     },
+
 
 
 

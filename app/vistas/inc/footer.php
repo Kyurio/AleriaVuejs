@@ -70,10 +70,8 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <!-- chartjs -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-<!-- paginate -->
-<script src="https://unpkg.com/vuejs-paginate@latest"></script>
 <!-- config -->
-<script src="<?php echo RUTA_URL; ?>public/js/app.vue"></script>
+<script src="<?php echo RUTA_URL; ?>public/js/app.js"></script>
 
 </body>
 </html>
