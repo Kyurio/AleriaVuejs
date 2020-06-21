@@ -1,16 +1,14 @@
-var app = new Vue({
-
-  el: '#index',
-
+var app3 = new Vue({
+  el: '#app-3',
   data: {
-    //Buscador
+    products: {},
     BusquedaProductos: '',
+    filterProducts: [],
   },
-
 
   mounted: function(){
 
-    this.pagination();
+    this.ConsultarProducts();
 
   },
 
@@ -31,16 +29,16 @@ var app = new Vue({
 
   methods: {
 
-    pagination: function(){
+    ConsultarProducts: function(){
+      capturador = this;
+      axios.get('/aleriaVue/pages/SelectProduct', {
 
-      var monkeyList = new List('test-list', {
-        valueNames: ['name'],
-        page: 3,
-        pagination: true
+      }).then(function (response) {
+        capturador.products = response.data;
+        capturador.filterProducts = response.data;
       });
-
     },
 
-  }//end methods
+  },
 
 })

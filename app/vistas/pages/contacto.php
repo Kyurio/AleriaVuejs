@@ -1,13 +1,13 @@
 <?php require_once RUTA_APP . '/vistas/inc/header.php'; ?>
 <main>
-  <div id="app">
+  <div id="app-2">
 
     <div class="container">
       <div class="mt-5 mb-5 py-5">
         <div class="row">
 
           <div class="col-sm-6">
-            <img src="<?php echo RUTA_URL ?>public/img/undraw_Login_v483.png" class="img-fluid" alt="">
+            <img src="<?php echo RUTA_URL ?>public/img/undraw_messages1_9ah2.png" class="img-fluid" alt="">
           </div>
 
           <div class="col-md-6">
@@ -20,7 +20,7 @@
                     <li v-for="error in errors" class="text-danger">{{ error }}</li>
                   </ul>
                 </p>
-                <form id="app" @submit="checkForm" method="post" novalidate="true">
+                <form id="app-2" @submit="checkForm" method="post" novalidate="true">
                   <div class="form-group">
                     <label for="">Nombre</label>
                     <input v-model="name_msg"  type="text" placeholder="Nombre" maxlength="60" name="name_msg" class="form-control" id="exampleInputEmail1" required aria-describedby="emailHelp">
@@ -50,8 +50,6 @@
 
   </div>
 </main>
-
-
-
-
 <?php require_once RUTA_APP . '/vistas/inc/footer.php';?>
+<!-- intranet -->
+<script src="<?php echo RUTA_URL; ?>public/js/message.js"></script>

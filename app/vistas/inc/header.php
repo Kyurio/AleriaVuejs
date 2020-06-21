@@ -37,7 +37,7 @@
           <a class="nav-link" href="<?php echo RUTA_URL ?>pages/blog">Blog</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="<?php echo RUTA_URL ?>pages/">Pricing</a>
+          <a class="nav-link" href="<?php echo RUTA_URL ?>pages/productos">Productos</a>
         </li>
       </ul>
     </div>

@@ -52,41 +52,41 @@
                   <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="list_product" role="tabpanel" aria-labelledby="profile-tab">
                       <!-- table -->
-                      <div id="demo">
-                        <table class="table table-hover text-center table-sm">
-                          <thead>
-                            <tr>
-                              <th scope="col">Producto</th>
-                              <th scope="col">Fecha publicacion</th>
-                              <th scope="col">Estado</th>
-                              <th scope="col">Estock</th>
-                              <th scope="col">Accion</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr v-for="item in products">
-                              <td>{{ item.name }}</td>
-                              <td>{{ item.created_at }}</td>
-                              <td>
-                                <div v-if="item.is_active == 1">
-                                  <span class="badge badge-success">Activo</span>
-                                </div>
-                                <div v-else>
-                                  <span class="badge badge-danger">Inactivo</span>
-                                </div>
-                              </td>
-                              <td>{{ item.inventary_min }}</td>
-                              <td>
-                                <button type="button" name="Eliminar" @click="EliminarProduct(item.id)" class="btn btn-danger btn-sm" title="Eliminar"><i class="fas fa-trash"></i></button>
-                                <button type="button" name="Editar" class="btn btn-warning btn-sm" title="Editar"><i class="fas fa-pen"></i></button>
-                                <button type="button" name="Desactivar" class="btn btn-info btn-sm" title="Desactivar"><i class="fas fa-ban"></i></button>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div id="dataContainer"></div>
-                    
+                      <table class="table table-hover text-center table-sm">
+                        <thead>
+                          <tr>
+                            <th scope="col">Producto</th>
+                            <th scope="col">Fecha publicacion</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col">Estock</th>
+                            <th scope="col">Accion</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr v-for="item in products">
+                            <td>{{ item.name }}</td>
+                            <td>{{ item.created_at }}</td>
+                            <td>
+                              <div v-if="item.is_active == 1">
+                                <span class="badge badge-success">Activo</span>
+                              </div>
+                              <div v-else>
+                                <span class="badge badge-danger">Inactivo</span>
+                              </div>
+                            </td>
+                            <td>{{ item.inventary_min }}</td>
+                            <td>
+                              <button type="button" name="Eliminar" @click="EliminarProduct(item.id)" class="btn btn-danger btn-sm" title="Eliminar"><i class="fas fa-trash"></i></button>
+                              <button type="button" name="Editar" class="btn btn-warning btn-sm" title="Editar"><i class="fas fa-pen"></i></button>
+                              <button type="button" name="Desactivar" class="btn btn-info btn-sm" title="Desactivar"><i class="fas fa-ban"></i></button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <!-- paginador -->
+                      <span class="left" id="total_reg"></span>
+                      <ul class="pagination pager" id="myPager"></ul>
+
                       <!-- end table -->
                     </div>
 
@@ -363,13 +363,16 @@
                   <div class="card-body">
                     <div class="d-flex justify-content-between">
                       <h5>de: {{item.Name}}</h5>
+
                       <div class="d-flex flex-row-reverse bd-highlight">
-                        <button type="button" title="Eliminar" class="btn btn-sm btn-danger ml-1" ><i class="fas fa-trash"></i></button>
-                        <button type="button" title="Spam" class="btn btn-sm btn-warning ml-1" ><i class="fas fa-envelope-open"></i></button>
+                        <button type="button" @click="EliminarMensaje(item.Id)" title="Eliminar" class="btn btn-sm btn-danger ml-1" ><i class="fas fa-trash"></i></button>
+                        <button type="button"  title="Spam" class="btn btn-sm btn-warning ml-1" ><i class="fas fa-envelope-open"></i></button>
+                        <button type="button"  title="Leido" class="btn btn-sm btn-info ml-1" ><i class="fas fa-envelope-open-text"></i></button>
                       </div>
                     </div>
-                    <div class="mt-1">
-                      <h5>Asunto: {{item.Subjet}}</h5>
+                    <p>{{item.Email}}</p>
+                    <div>
+                      <p>Asunto: {{item.Subjet}}</p>
                       <p>{{item.Content}}</p>
                     </div>
                   </div>
@@ -664,10 +667,16 @@
 
           </div><!--end tabs-->
 
-        </main>
+
+        </div>
+
+      </main>
 
 
-      </div>
+
     </div>
   </div>
   <?php require_once RUTA_APP . '/vistas/inc/footer.php';?>
+
+  <!-- intranet -->
+  <script src="<?php echo RUTA_URL; ?>public/js/app.js"></script>

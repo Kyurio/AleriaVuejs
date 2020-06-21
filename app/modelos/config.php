@@ -29,11 +29,15 @@ class config{
         $this->bd->query("SELECT *, count($count)AS total FROM $tabla GROUP BY $groupby");
         return $this->bd->registros();
 
+        case "countWhere":
+        $this->bd->query("SELECT *, count($count)AS total FROM $tabla WHERE $filtro = $condicion GROUP BY $groupby");
+        return $this->bd->registros();
+
         case "rowCount":
         $this->bd->query("SELECT * FROM $tabla");
         return $this->bd->rowCount();
         break;
-        
+
         case "select":
         $this->bd->query("SELECT * FROM $tabla");
         return $this->bd->registros();
@@ -53,10 +57,27 @@ class config{
   /*----------------------------------------------------------------------------
   consultas updates
   ----------------------------------------------------------------------------*/
-  public function update($tabla, $condicion, $datos){
+  public function update($option, $tabla, $ColumnaActualiza, $valor, $Filtro, $ValorFiltrado){
     try {
 
-      $this->bd->query("UPDATE  SET WHERE ");
+      switch ($option) {
+
+        case "NoWhere":
+        $this->bd->query("UPDATE $tabla SET $ColumnaActualiza = $valor");
+        return $this->bd->execute();
+        break;
+
+        case "Where":
+        $this->bd->query("UPDATE $tabla SET $ColumnaActualiza = $valor WHERE $Filtro = $ValorFiltrado");
+        return $this->bd->execute();
+        break;
+
+        default:
+        echo "default";
+        break;
+      }
+
+
 
     } catch (\Exception $e){
       header('location: ' . RUTA_URL . 'pages/error/500');
@@ -74,13 +95,15 @@ class config{
 
       //ejecutar consulta
       if($this->bd->execute()){
-        return true;
+        return json_encode(true);
       }else{
-        return false;
+        return json_encode(false);
       }
 
     } catch (\Exception $e) {
+
       header('location: ' . RUTA_URL . 'pages/error/500');
+
     }
 
   }
@@ -141,6 +164,17 @@ class config{
   /*----------------------------------------------------------------------------
   consultasperonsalizadas
   ----------------------------------------------------------------------- -----*/
+  public function MensajesLeidos(){
+    try {
+
+      $this->bd->query("UPDATE message SET State = 2 ");
+
+    } catch (\Exception $e){
+      header('location: ' . RUTA_URL . 'pages/error/500');
+    }
+
+  }
+
   public function InsertNuevaCategoria($datos){
     try {
       //consulta sql
@@ -186,7 +220,27 @@ class config{
     }
   }
 
+  public function InsertMail($datos){
+    try {
+      //consulta sql
+      $this->bd->query("INSERT INTO message (Name, Email, Subjet, Content, State) VALUES (:Name, :Email, :Subjet, :Content, :State)");
+      //valores de consulta
+      $this->bd->bind(':Name', $datos['name']);
+      $this->bd->bind(':Email', $datos['email']);
+      $this->bd->bind(':Subjet', $datos['subjet']);
+      $this->bd->bind(':Content', $datos['content']);
+      $this->bd->bind(':State', $datos['state']);
+      //valores a ingresar
+      //ejecutar consulta
+      if($this->bd->execute()){
+        return json_encode(true);
+      }else{
+        return json_encode(false);
+      }
 
+    } catch (\Exception $e) {
+      echo $e;
+    }
+  }
 
 }
-?>

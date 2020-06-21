@@ -8,6 +8,15 @@ input, textarea{
   background-color: #f9fcfb !important;
 }
 
+.navbar-badge {
+  font-size: .9rem;
+  font-weight: 300;
+  padding: 2px 4px;
+  position: absolute;
+  right: 5px;
+  top: 9px;
+}
+
 .card-cascade{
   min-width: 300px;
   min-height: 250px;

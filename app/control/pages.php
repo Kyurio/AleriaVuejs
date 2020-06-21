@@ -16,6 +16,11 @@ class pages extends control{
     $this->vista('pages/inicio');
   }
 
+  public function productos(){
+
+    $this->vista('pages/productos');
+  }
+
   public function blog(){
 
     $this->vista('pages/blog');
@@ -34,7 +39,6 @@ class pages extends control{
 
     $this->vista('pages/detalle');
   }
-
 
   /*--------------------------------------------------------
   funciones insert --update deleted
@@ -165,9 +169,70 @@ class pages extends control{
     echo json_encode($clients);
   }
 
+  public function Mail(){
+
+    $data = json_decode(file_get_contents("php://input"), true);
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+      $formMail = [
+        'name' => $data['name'],
+        'email' => $data['email'],
+        'subjet' => $data['subjet'],
+        'content' => $data['content'],
+        'state' => 1,
+      ];
+
+      //ejecyta la insercion
+      if($this->ConfigModelo->InsertMail($formMail)){
+        echo json_encode(true); //true
+      }else{
+        echo json_encode(false); //false
+      }
+
+    }else{
+
+      $formMail = [
+        'name' => '' ,
+        'email' => '',
+        'subjet' => '',
+        'content' => '',
+      ];
+
+    }
+  }
+
   public function SelectMail(){
     $mails = $this->ConfigModelo->select('select', 'message', '', '', '', '');
     echo json_encode($mails);
+  }
+
+  public function CounterMail(){
+
+    $CantidadMails = $this->ConfigModelo->select('countWhere', 'message', 'State', '1', 'Id', 'Id');
+    echo json_encode($CantidadMails);
+  }
+
+  public function DeleteMessage(){
+
+    $data = json_decode(file_get_contents("php://input"), true);
+    $id = $data['Id_mensajes'];
+
+    if($this->ConfigModelo->delete('message', 'Id', $id)){
+      echo json_encode(true);
+    }else{
+      echo json_encode(false);
+    }
+
+  }
+
+  public function MessagesRead(){
+
+    if($this->ConfigModelo->update('NoWhere', 'message', 'State', '2', '', '')){
+      echo json_encode(true);
+    }else{
+      echo json_encode(false);
+    }
+
   }
 
   public function SelectBlog(){
@@ -190,35 +255,7 @@ class pages extends control{
     echo json_encode($tasks);
   }
 
-  public function Mail(){
-    $data = json_decode(file_get_contents("php://input"), true);
 
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-      $formMail = [
-        'name' => $data['name'],
-        'email' => $data['email'],
-        'subjet' => $data['subjet'],
-        'content' => $data['content'],
-      ];
-
-      //ejecyta la insercion
-      if($this->ConfigModelo->InsertMail($formMail)){
-        echo json_encode(true); //true
-      }else{
-        echo json_encode(false); //false
-      }
-
-    }else{
-
-      $formMail = [
-        'name' => '' ,
-        'email' => '',
-        'subjet' => '',
-        'content' => '',
-      ];
-
-    }
-  }
 
   public function Details(){
 
@@ -243,12 +280,6 @@ class pages extends control{
     }
   }
 
-  public function RowCountProducts(){
-
-    $cantidad = $this->ConfigModelo->select('rowCount', 'product', '', '', '', '');
-    echo json_encode($cantidad);
-
-  }
 
 
   /*--------------------------------------------------------

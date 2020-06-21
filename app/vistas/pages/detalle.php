@@ -10,7 +10,6 @@
           <h1>{{ item.name }}</h1>
           <h3>{{item.price_min}}</h3>
           <p>{{ item.description }}</p>
-
         </div>
       </div>
 

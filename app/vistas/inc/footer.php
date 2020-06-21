@@ -1,6 +1,4 @@
 
-
-
 <footer class="footer mt-auto py-3 pt-4 page-footer font-small bg-dark text-light ">
   <div class="container">
     <div class="container-fluid text-center text-md-left">
@@ -48,7 +46,7 @@
     </div>
   </div>
   <div class="footer-copyright text-center py-3">© Copyright:
-    <a href="#" class="text-light"> </a>
+    <a href="#" class="text-light">{{TituloAPP}}</a>
   </div>
 </footer>
 
@@ -70,8 +68,6 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <!-- chartjs -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-<!-- config -->
-<script src="<?php echo RUTA_URL; ?>public/js/app.js"></script>
 
 </body>
 </html>

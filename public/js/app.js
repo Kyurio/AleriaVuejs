@@ -1,81 +1,8 @@
 
-const pagination = Vue.component('pagination-control', {
-  template: '#pagination',
-  data() {
-    return {};
-  },
-  props: {
-    currentPage: {
-      default: 1,
-      required: true,
-    },
-    maxPages: {
-      type: Number,
-      default: 1,
-      required: true,
-    },
-  },
-});
-
-const userTable = Vue.component('user-table', {
-  template: '#user-table',
-  components: { 'pagination-control': pagination },
-  data() {
-    return {
-      baseUrl: 'https://reqres.in/api/users',
-      page: 1,
-      perPage: 4,
-      totalPages: 0,
-      users: [],
-      userCols: ['Id', 'Avatar', 'First Name', 'Last Name']
-    };
-  },
-  computed: {
-    resultIndexBeg() {
-      // Don't do this
-      return this.users.length > 0 ? this.users[0].id : 0;
-    },
-    resultIndexEnd() {
-      // Don't do this
-      return this.users.length > 0 ? this.users[this.users.length - 1].id : 0;
-    },
-  },
-  methods: {
-    getData() {
-      try {
-        fetch(`${this.baseUrl}?page=${this.page}&per_page=${this.perPage}`)
-        .then((response) => response.json())
-        .then((json) => {
-          this.totalPages = json.total_pages;
-          this.totalData = json.total;
-          this.users = json.data;
-        });
-      }
-      catch(err) {
-
-      }
-
-    },
-    changePage(page) {
-      this.page = page;
-    },
-  },
-  watch: {
-    page: {
-      immediate: true,
-      handler(newVal, oldVal) {
-        this.getData();
-      },
-    },
-  },
-});
-
-
-
-
-
 var app = new Vue({
+
   el: '#app',
+
   data: {
 
     errors: [],
@@ -95,13 +22,6 @@ var app = new Vue({
     filterClients: [],
     filterMessages: [],
     filterProducts: [],
-
-    //mensajes
-    id_msg: '',
-    name_msg: '',
-    email_msg: '',
-    subjet_msg: '',
-    content_msg: '',
 
     // blog
     id_blog: '',
@@ -125,7 +45,6 @@ var app = new Vue({
     descript_task: '',
     id_user_task: '',
 
-
     //categorias
     name_category: '',
     description_category: '',
@@ -133,11 +52,11 @@ var app = new Vue({
     //titulos
     title_tab: 'Dashboard',
 
-    //paginador
-    current_page: 1,
-    records_per_page: 5,
+    //paginador productos
+    paginasProductos: '',
 
-
+    //cantidad de mensjaes-
+    CantidadMsg: 0,
 
     //Buscador
     BusquedaTarea: '',
@@ -146,12 +65,9 @@ var app = new Vue({
     BusquedaProductos: '',
   },
 
-  //--------------------------------------------------------------------------
-  // ejecuta funciones que se deben cargar automaticas como los select
-  //--------------------------------------------------------------------------
-
   mounted: function(){
     this.mantenerTabs();
+    this.MensajesNuevos();
     this.ConsultarClients();
     this.ConsultarProducts();
     this.ConsultarMensajes();
@@ -161,12 +77,6 @@ var app = new Vue({
     this.ChartCls();
     this.ConsultarCategorias();
     this.ConsultarTask();
-
-
-    ///testing pagination js
-
-    this.maginer();
-
   },
 
   computed:{
@@ -208,43 +118,6 @@ var app = new Vue({
 
   methods: {
 
-    maginer: function(){
-
-      var monkeyList = new List('test-list', {
-        valueNames: ['name'],
-        page: 5,
-        pagination: true
-      });
-
-    },
-
-    GrabarMensaje: function(){
-
-      axios({
-        method: 'POST',
-        url: '/aleriaVue/pages/Mail',
-        data: {
-          name: this.name_msg,
-          email: this.email_msg,
-          subjet: this.subjet_msg,
-          content: this.content_msg,
-        }
-      }).then(function (response) {
-        // handle success
-        if (response.data === true) {
-          swal("Mensaje Enviado!","", "success");
-        }else {
-          swal("error!","", "warning");
-        }
-
-      });
-
-      this.name_msg = '';
-      this.email_msg = '';
-      this.subjet_msg = '';
-      this.content_msg = '';
-
-    },
 
     GrabarCategoria: function(){
       axios({
@@ -423,21 +296,28 @@ var app = new Vue({
     },
 
     ConsultarMensajes: function(){
+
       capturador = this;
       axios.get('/aleriaVue/pages/SelectMail', {
       }).then(function (response) {
+        console.log(response.data);
         capturador.msg = response.data;
       });
     },
 
-    ConsultarClients: function(){
+    MensajesNuevos: function () {
       capturador = this;
-      axios.get('/aleriaVue/pages/SelectClient', {
+      axios.get('/aleriaVue/pages/CounterMail', {
       }).then(function (response) {
-        capturador.clients = response.data;
-        capturador.filterClients = response.data;
-        //console.log(response.data);
+        console.log(response.data);
+        capturador.CantidadMsg = response.data;
       });
+    },
+
+    MensajeSpam: function() {
+
+
+
     },
 
     EliminarMensaje: function(id){
@@ -452,18 +332,18 @@ var app = new Vue({
           //ejecuta la funcion
           axios({
             method: 'POST',
-            url: '/app/pagina/EliminarMensaje',
+            url: '/aleriaVue/pages/DeleteMessage',
             data: {
               Id_mensajes: id,
             }
           }).then(function (response) {
-            if(response.data == 1){
+            if(response.data === true){
               swal("Poof! Tu registro fue eliminado !", {
                 icon: "success",
               });
             }else {
               swal("Error al eliminar el registro", {
-                icon: "danger",
+                icon: "warning",
               });
             }
           });
@@ -472,6 +352,41 @@ var app = new Vue({
         }
       });
     },
+
+    MensajesLeidos: function(){
+
+      axios({
+        method: 'POST',
+        url: '/aleriaVue/pages/MessagesRead',
+        data: {
+
+        }
+      }).then(function (response) {
+        if(response.data === true){
+          swal("Poof! Tu registro fue eliminado !", {
+            icon: "success",
+          });
+        }else {
+          swal("Error al eliminar el registro", {
+            icon: "warning",
+          });
+        }
+      });
+
+    },
+
+
+    ConsultarClients: function(){
+      capturador = this;
+      axios.get('/aleriaVue/pages/SelectClient', {
+      }).then(function (response) {
+        capturador.clients = response.data;
+        capturador.filterClients = response.data;
+        //console.log(response.data);
+      });
+    },
+
+
 
     EliminarProduct: function(id){
       swal({
@@ -585,22 +500,6 @@ var app = new Vue({
     },
 
     // validaciones de formularios
-    checkForm: function (e){
-      this.errors = [];
-
-      if (!this.email_msg) {
-        this.errors.push('El correo electrónico es obligatorio.');
-      } else if (!this.validEmail(this.email_msg)) {
-        this.errors.push('El correo electrónico debe ser válido.');
-      }
-
-      if (!this.errors.length) {
-        this.GrabarMensaje();
-      }
-
-      e.preventDefault();
-    },
-
     CheckFormProducts: function(e){
       this.errors = [];
 
@@ -655,12 +554,6 @@ var app = new Vue({
 
     },
 
-    // externas
-    validEmail: function (email){
-      var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      return re.test(email);
-    },
-
     mantenerTabs: function(){
       $(document).ready(function(){
         $('a[data-toggle="tab"]').on('show.bs.tab', function(e) {
@@ -677,10 +570,7 @@ var app = new Vue({
       this.title_tab = title;
     },
 
+  }
 
-
-
-
-  }//end methods
 
 })
