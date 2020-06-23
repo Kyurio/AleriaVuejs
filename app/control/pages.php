@@ -1,48 +1,17 @@
 <?php
 
-class pages extends control{
+include (RUTA_APP."/control/routes.php");
+
+class pages extends routes{
 
 
   public function __construct(){
     //configuracion incial
     $this->ConfigModelo = $this->modelo('config');
     $this->SessionModelo = $this->modelo('session');
-  }
-  /*--------------------------------------------------------
-  paginas principales
-  --------------------------------------------------------*/
-  public function index(){
 
-    $this->vista('pages/inicio');
   }
 
-  public function productos(){
-
-    $this->vista('pages/productos');
-  }
-
-  public function blog(){
-
-    $this->vista('pages/blog');
-  }
-
-  public function intranet(){
-    $this->vista('pages/intranet');
-  }
-
-  public function contacto(){
-
-    $this->vista('pages/contacto');
-  }
-
-  public function detalle($id){
-
-    $this->vista('pages/detalle');
-  }
-
-  /*--------------------------------------------------------
-  funciones insert --update deleted
-  --------------------------------------------------------*/
   public function InsertCategory(){
 
     $data = json_decode(file_get_contents("php://input"), true);
@@ -202,13 +171,13 @@ class pages extends control{
   }
 
   public function SelectMail(){
-    $mails = $this->ConfigModelo->select('select', 'message', '', '', '', '');
+    $mails = $this->ConfigModelo->select('select', 'message', 'State', '2', '', '');
     echo json_encode($mails);
   }
 
   public function CounterMail(){
 
-    $CantidadMails = $this->ConfigModelo->select('countWhere', 'message', 'State', '1', 'Id', 'Id');
+    $CantidadMails = $this->ConfigModelo->select('rowCountWhere', 'message', 'State', '1', 'Id', 'Id');
     echo json_encode($CantidadMails);
   }
 
@@ -228,6 +197,20 @@ class pages extends control{
   public function MessagesRead(){
 
     if($this->ConfigModelo->update('NoWhere', 'message', 'State', '2', '', '')){
+      echo json_encode(true);
+    }else{
+      echo json_encode(false);
+    }
+
+
+  }
+
+  public function SpamMessage(){
+
+    $data = json_decode(file_get_contents("php://input"), true);
+    $id = $data['Id_mensajes'];
+
+    if($this->ConfigModelo->update('Where', 'message', 'State', '3', 'Id', $id)){
       echo json_encode(true);
     }else{
       echo json_encode(false);

@@ -57,12 +57,16 @@ var app = new Vue({
 
     //cantidad de mensjaes-
     CantidadMsg: 0,
+    id_msg: '',
 
     //Buscador
     BusquedaTarea: '',
     BusquedaCLiente: '',
     BusquedaMensajes: '',
     BusquedaProductos: '',
+
+
+
   },
 
   mounted: function(){
@@ -314,8 +318,29 @@ var app = new Vue({
       });
     },
 
-    MensajeSpam: function() {
+    MensajeSpam: function(id) {
 
+
+      axios({
+        method: 'POST',
+        url: '/aleriaVue/pages/SpamMessage',
+        data: {
+          Id_mensajes: id,
+        }
+      }).then(function (response) {
+        console.log(response.data);
+        if(response.data === true){
+          swal("Poof! Tu mensaje fue movido a la caperta de spam !", {
+            icon: "success",
+          });
+        }else {
+          swal("Error al mover el message a spam ", {
+            icon: "warning",
+          });
+        }
+      });
+      this.ConsultarMensajes();
+      //mensaje de elemento eleiminado
 
 
     },
@@ -361,17 +386,9 @@ var app = new Vue({
         data: {
 
         }
-      }).then(function (response) {
-        if(response.data === true){
-          swal("Poof! Tu registro fue eliminado !", {
-            icon: "success",
-          });
-        }else {
-          swal("Error al eliminar el registro", {
-            icon: "warning",
-          });
-        }
       });
+
+      this.MensajesNuevos();
 
     },
 
@@ -570,7 +587,7 @@ var app = new Vue({
       this.title_tab = title;
     },
 
-  }
+  },
 
 
 })

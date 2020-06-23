@@ -30,11 +30,16 @@ class config{
         return $this->bd->registros();
 
         case "countWhere":
-        $this->bd->query("SELECT *, count($count)AS total FROM $tabla WHERE $filtro = $condicion GROUP BY $groupby");
+        $this->bd->query("SELECT count($count)AS total FROM $tabla WHERE $filtro = $condicion GROUP BY $groupby");
         return $this->bd->registros();
 
         case "rowCount":
         $this->bd->query("SELECT * FROM $tabla");
+        return $this->bd->rowCount();
+        break;
+
+        case "rowCountWhere":
+        $this->bd->query("SELECT * FROM $tabla WHERE $condicion = $filtro");
         return $this->bd->rowCount();
         break;
 

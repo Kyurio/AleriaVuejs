@@ -324,7 +324,7 @@
                         <h3>de: {{item.Name}}</h3>
                         <div class="d-flex flex-row-reverse bd-highlight">
                           <button type="button" title="Eliminar" class="btn btn-sm btn-danger ml-1" ><i class="fas fa-trash"></i></button>
-                          <button type="button" title="Spam" class="btn btn-sm btn-warning ml-1" ><i class="fas fa-envelope-open"></i></button>
+                          <button type="button"  @click="MensajeSpam(item.Id)" title="Spam" class="btn btn-sm btn-warning ml-1" ><i class="fas fa-envelope-open"></i></button>
                         </div>
                       </div>
                       <div class="mt-2">
@@ -366,7 +366,7 @@
 
                       <div class="d-flex flex-row-reverse bd-highlight">
                         <button type="button" @click="EliminarMensaje(item.Id)" title="Eliminar" class="btn btn-sm btn-danger ml-1" ><i class="fas fa-trash"></i></button>
-                        <button type="button"  title="Spam" class="btn btn-sm btn-warning ml-1" ><i class="fas fa-envelope-open"></i></button>
+                        <button type="button" @click="MensajeSpam(item.Id)" title="Spam" class="btn btn-sm btn-warning ml-1" ><i class="fas fa-envelope-open"></i></button>
                         <button type="button"  title="Leido" class="btn btn-sm btn-info ml-1" ><i class="fas fa-envelope-open-text"></i></button>
                       </div>
                     </div>

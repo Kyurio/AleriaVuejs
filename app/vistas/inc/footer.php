@@ -46,7 +46,7 @@
     </div>
   </div>
   <div class="footer-copyright text-center py-3">© Copyright:
-    <a href="#" class="text-light">{{TituloAPP}}</a>
+    <a href="#" class="text-light"></a>
   </div>
 </footer>
 
