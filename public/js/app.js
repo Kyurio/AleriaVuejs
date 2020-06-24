@@ -325,8 +325,7 @@ var app = new Vue({
         method: 'POST',
         url: '/aleriaVue/pages/SpamMessage',
         data: {
-          Id_mensajes: id,
-        }
+         }
       }).then(function (response) {
         console.log(response.data);
         if(response.data === true){
@@ -392,7 +391,6 @@ var app = new Vue({
 
     },
 
-
     ConsultarClients: function(){
       capturador = this;
       axios.get('/aleriaVue/pages/SelectClient', {
@@ -402,8 +400,6 @@ var app = new Vue({
         //console.log(response.data);
       });
     },
-
-
 
     EliminarProduct: function(id){
       swal({

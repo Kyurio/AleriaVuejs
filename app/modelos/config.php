@@ -131,10 +131,11 @@ class config{
 
     try {
 
-      $this->bd->query("SELECT correo, pass, id_usuario FROM usuario WHERE correo=:correo AND pass=:pass ");
+      $this->bd->query("SELECT * FROM user WHERE email=:email AND password=:password ");
       //otorgar valores
-      $this->bd->bind(':correo', $datos['user']);
-      $this->bd->bind(':pass', $datos['Password']);
+      $this->bd->bind(':email', $datos['email']);
+      $this->bd->bind(':password', $datos['password']);
+      
       return $this->bd->registros();
 
     } catch (PDOException $e) {

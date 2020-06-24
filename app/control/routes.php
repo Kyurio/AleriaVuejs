@@ -18,6 +18,9 @@ class routes extends control{
   }
 
   public function intranet(){
+    if ($_SESSION) {
+      // code...
+    }
     $this->vista('pages/intranet');
   }
 
@@ -31,7 +34,7 @@ class routes extends control{
     $this->vista('pages/detalle');
   }
 
-  public function login(){
+  public function ingresar(){
 
     $this->vista('pages/login');
   }

@@ -238,8 +238,6 @@ class pages extends routes{
     echo json_encode($tasks);
   }
 
-
-
   public function Details(){
 
     $data = json_decode(file_get_contents("php://input"), true);
@@ -277,6 +275,38 @@ class pages extends routes{
   /*--------------------------------------------------------
   funciones bases --logout --errorpage
   --------------------------------------------------------*/
+  public function SessionStart(){
+
+    $data = json_decode(file_get_contents("php://input"), true);
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+      $formLogin = [
+        'email' => $data['mail'],
+        'password' => $data['pass'],
+      ];
+      //ejecyta la insercion
+      if($session = $this->ConfigModelo->login($formLogin) == true){
+
+        foreach ($session as $item) {
+          // code...
+        }
+
+
+        echo json_encode(true);
+      }else{
+        echo json_encode(false);
+      }
+
+    }else{
+
+      $formLogin = [
+        'mail' => '',
+        'pass' => '',
+      ];
+
+    }
+  }
+
   public function Logout(){
     $this->SessionModelo->out();
     $this->vista('pages/login');
