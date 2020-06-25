@@ -261,8 +261,6 @@ class pages extends routes{
     }
   }
 
-
-
   /*--------------------------------------------------------
   funciones chart
   --------------------------------------------------------*/
@@ -270,7 +268,6 @@ class pages extends routes{
     $clients = $this->ConfigModelo->select('groupby','person', '', '', 'id','created_at');
     echo json_encode($clients);
   }
-
 
   /*--------------------------------------------------------
   funciones bases --logout --errorpage
@@ -287,10 +284,7 @@ class pages extends routes{
       //ejecyta la insercion
       if($session = $this->ConfigModelo->login($formLogin) == true){
 
-        foreach ($session as $item) {
-          // code...
-        }
-
+        $this->SessionModelo->User('user',$session );
 
         echo json_encode(true);
       }else{

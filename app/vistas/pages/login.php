@@ -11,11 +11,15 @@
 
         <div class="col-md-4">
 
-          <form class="text-center border border-light p-5" action="#!">
+          <form class="text-center border border-light p-5" id="app-2" @submit="checkForm" method="post" novalidate="true">
+
             <p class="h4 mb-4">Sign in</p>
+            <ul>
+              <li v-for="error in errors" class="text-danger">{{ error }}</li>
+            </ul>
             <input v-model="email" type="email"  class="form-control mb-4" placeholder="E-mail">
             <input v-model="password" type="password"  class="form-control mb-4" placeholder="Password">
-            <button class="btn btn-info btn-block my-4" @click="StartSession"  type="submit">Sign in</button>
+            <button class="btn btn-info btn-block my-4" type="submit">Sign in</button>
             <p>Siguenos en nuestras redes sociales:</p>
             <a href="#" class="mx-2" role="button"><i class="fab fa-facebook-f light-blue-text"></i></a>
             <a href="#" class="mx-2" role="button"><i class="fab fa-twitter light-blue-text"></i></a>

@@ -18,10 +18,13 @@ class routes extends control{
   }
 
   public function intranet(){
-    if ($_SESSION) {
-      // code...
+
+    if(session_status() === PHP_SESSION_NONE){
+      $this->vista('pages/intranet');
+    }else {
+      $this->vista('pages/login');
     }
-    $this->vista('pages/intranet');
+
   }
 
   public function contacto(){

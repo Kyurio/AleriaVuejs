@@ -13,7 +13,7 @@ var app4 = new Vue({
 
     StartSession: function(){
 
-      console.log(this.email, this.password);
+      capturador = this;
 
       axios({
         method: 'POST',
@@ -25,14 +25,15 @@ var app4 = new Vue({
 
       }).then(function (response) {
         // handle success;
-        if(response.data == true){
+        console.log(response.data);
+        if(response.data === true){
 
-          location.href="/aleriaVue/pages/intranet";
+          //location.href="/aleriaVue/pages/intranet";
 
         }else{
 
-          this.errors.push('Los datos son incorrectos');
-          
+          capturador.errors.push('Los datos son incorrectos');
+
         }
         //console.log(response.data);
       }).catch(function (error) {
@@ -59,7 +60,7 @@ var app4 = new Vue({
       }
 
       if (!this.errors.length) {
-        this.GrabarMensaje();
+        this.StartSession();
       }
 
       e.preventDefault();
