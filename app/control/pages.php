@@ -133,9 +133,50 @@ class pages extends routes{
     echo json_encode($product);
   }
 
+  public function DeactivateProduct(){
+
+    $data = json_decode(file_get_contents("php://input"), true);
+
+    $State = $data['State'];
+    $id = $data['Id_product'];
+
+    if($this->ConfigModelo->update('Where', 'product', 'is_active', $State, 'Id', $id)){
+      echo json_encode(true);
+    }else{
+      echo json_encode(false);
+    }
+
+  }
+
+  public function ActiveProduct(){
+    $data = json_decode(file_get_contents("php://input"), true);
+
+    $State = $data['State'];
+    $id = $data['Id_product'];
+
+    if($this->ConfigModelo->update('Where', 'product', 'is_active', $State, 'Id', $id)){
+      echo json_encode(true);
+    }else{
+      echo json_encode(false);
+    }
+  }
+
   public function SelectClient(){
     $clients = $this->ConfigModelo->select('select', 'person', '', '', '', '');
     echo json_encode($clients);
+  }
+
+  public function DeleteClient(){
+
+    $data = json_decode(file_get_contents("php://input"), true);
+    $id = $data['id_cliente'];
+
+    if($this->ConfigModelo->delete('person', 'id', $id)){
+      echo json_encode(true);
+    }else{
+      echo json_encode(false);
+    }
+
   }
 
   public function Mail(){
@@ -276,34 +317,58 @@ class pages extends routes{
 
     $data = json_decode(file_get_contents("php://input"), true);
 
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-      $formLogin = [
-        'email' => $data['mail'],
-        'password' => $data['pass'],
-      ];
-      //ejecyta la insercion
-      if($session = $this->ConfigModelo->login($formLogin) == true){
+    $email =  $data['mail'];
+    $pass = $data['pass'];
 
-        $this->SessionModelo->User('user',$session );
+    if(!empty($_SESSION['Nombre_Usuario'])) {
 
-        echo json_encode(true);
-      }else{
-        echo json_encode(false);
-      }
+      $this->SessionModelo->out();
+      echo json_encode(false);
 
     }else{
 
-      $formLogin = [
-        'mail' => '',
-        'pass' => '',
-      ];
+      //validacion
+      if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
+        $datos = [
+          'password' => trim($pass),
+          'email'    => trim($email),
+        ];
+
+        if($user = $this->ConfigModelo->ValidarLogin($datos)){
+          //extrae los datos del usario logeado
+
+          foreach ($user as $item) {
+            $this->SessionModelo->User('Nombre_Usuario', trim($item->name));
+          }
+
+
+          echo json_encode(true);
+        }else{
+
+          echo json_encode(false);
+
+        }
+
+      }else{
+        $session = [
+          'Email' => '',
+          'Password' => '',
+        ];
+        $this->vista('pagina/login', $session);
+      }
     }
+
   }
 
   public function Logout(){
-    $this->SessionModelo->out();
-    $this->vista('pages/login');
+
+    if($this->SessionModelo->out()){
+      echo json_encode(true);
+    }else {
+      echo json_encode(false);
+    }
+
   }
 
   public function Error($code){

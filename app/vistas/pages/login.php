@@ -1,4 +1,9 @@
-<?php require_once RUTA_APP . '/vistas/inc/header.php'; ?>
+<?php
+
+  require_once RUTA_APP . '/vistas/inc/header.php';
+  $option = "login"
+
+?>
 <div id="app-4">
 
   <div class="container">
@@ -11,8 +16,7 @@
 
         <div class="col-md-4">
 
-          <form class="text-center border border-light p-5" id="app-2" @submit="checkForm" method="post" novalidate="true">
-
+          <form class="text-center border border-light p-5" id="app-4" @submit="checkForm" method="post" novalidate="true">
             <p class="h4 mb-4">Sign in</p>
             <ul>
               <li v-for="error in errors" class="text-danger">{{ error }}</li>
@@ -34,5 +38,3 @@
 
 </div>
 <?php require_once RUTA_APP . '/vistas/inc/footer.php';?>
-
-<script src="<?php echo RUTA_URL; ?>public/js/logs.js"></script>

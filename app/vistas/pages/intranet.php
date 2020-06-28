@@ -1,4 +1,10 @@
-<?php require_once RUTA_APP . '/vistas/inc/header.php'; ?>
+<?php
+
+require_once RUTA_APP . '/vistas/inc/header.php';
+$option = "intranet"
+
+
+?>
 <div id="app">
   <div class="container-fluid">
 
@@ -23,40 +29,45 @@
             <div class="card mb-4">
               <div class="card-body">
                 <!-- buscador con botones -->
+                <!-- buscador con botones -->
                 <div class="row">
                   <div class="col-sm-5">
                     <div class="mt-1 d-flex justify-content-start">
                       <div class="md-form input-with-pre-icon">
                         <i class="fas fa-search input-prefix"></i>
-                        <input type="text" id="buscador" placeholder="buscar"  class="form-control">
+                        <input type="text"  placeholder="buscar..." v-model="buscadorProductos" class="form-control">
                       </div>
                     </div>
                   </div>
                   <div class="col-sm-7">
-                    <div class="mt-1 d-flex justify-content-end">
+                    <div class="mt-1 mb-4 d-flex justify-content-end">
                       <ul class="nav" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
-                          <button type="button" title="Agregar" class="btn btn-sm btn-dark" data-target="#product" id="" data-toggle="tab" href="#tasl" role="tab" aria-selected="true" ><i class="fas fa-plus"></i></button>
+                          <button type="button" title="Agregar" class="btn btn-sm btn-dark" data-target="#product"  data-toggle="tab" href="#product" role="tab" aria-selected="true" ><i class="fas fa-plus"></i></button>
                         </li>
                         <li class="nav-item" role="presentation">
-                          <button type="button" title="Listado" class="btn btn-sm btn-dark" data-target="#list_product" id="" data-toggle="tab" href="#list" role="tab" aria-selected="true" ><i class="far fa-list-alt"></i></button>
+                          <button type="button" title="Listado de tareas" class="btn btn-sm btn-dark" data-target="#list_product" data-toggle="tab" href="#list_product" role="tab" aria-selected="true" ><i class="far fa-list-alt"></i></button>
                         </li>
                       </ul>
                     </div>
                   </div>
                 </div>
                 <!-- end buscador con botones -->
+                <!-- end buscador con botones -->
                 <div>
                   <!-- contenido de el tab -->
 
-                  <div class="tab-content" id="myTabContent">
+                  <div class="tab-content" id="productos">
                     <div class="tab-pane fade show active" id="list_product" role="tabpanel" aria-labelledby="profile-tab">
                       <!-- table -->
+
+
                       <table class="table table-hover text-center table-sm">
                         <thead>
                           <tr>
                             <th scope="col">Producto</th>
-                            <th scope="col">Fecha publicacion</th>
+                            <th scope="col">Precio compra</th>
+                            <th scope="col">Precio venta</th>
                             <th scope="col">Estado</th>
                             <th scope="col">Estock</th>
                             <th scope="col">Accion</th>
@@ -65,7 +76,8 @@
                         <tbody>
                           <tr v-for="item in products">
                             <td>{{ item.name }}</td>
-                            <td>{{ item.created_at }}</td>
+                            <td>${{ item.price_in }}</td>
+                            <td>${{ item.price_out }}</td>
                             <td>
                               <div v-if="item.is_active == 1">
                                 <span class="badge badge-success">Activo</span>
@@ -77,26 +89,26 @@
                             <td>{{ item.inventary_min }}</td>
                             <td>
                               <button type="button" name="Eliminar" @click="EliminarProduct(item.id)" class="btn btn-danger btn-sm" title="Eliminar"><i class="fas fa-trash"></i></button>
-                              <button type="button" name="Editar" class="btn btn-warning btn-sm" title="Editar"><i class="fas fa-pen"></i></button>
-                              <button type="button" name="Desactivar" class="btn btn-info btn-sm" title="Desactivar"><i class="fas fa-ban"></i></button>
+                              <button type="button" name="Editar"   ata-target="#product" data-toggle="modal" data-target="#edit_product" class="btn btn-warning btn-sm" title="Editar"><i class="fas fa-pen"></i></button>
+                              <button type="button" name="Desactivar" @click="DescativarPorductos(item.id)"  class="btn btn-info btn-sm" title="Desactivar" v-if="item.is_active == 1"><i class="fas fa-ban"></i></button>
+                                <button type="button" name="Desactivar" @click="ActivarPorductos(item.id)"  class="btn btn-success btn-sm" title="Activar" v-else><i class="fas fa-check"></i></button>
                             </td>
                           </tr>
                         </tbody>
                       </table>
-                      <!-- paginador -->
-                      <span class="left" id="total_reg"></span>
-                      <ul class="pagination pager" id="myPager"></ul>
 
                       <!-- end table -->
                     </div>
 
                     <div class="tab-pane fade" id="product" role="tabpanel" aria-labelledby="task">
-
+                      <h4>Agregar Productos</h4>
+                      <br>
                       <div class="col-md-6">
+                        <!-- agregar -->
                         <form @submit="CheckFormProducts" method="post" novalidate="true" enctype="multipart/form-data">
                           <div class="form-group">
                             <label for="">Nombre</label>
-                            <input v-model="name_product"  type="text" placeholder="Titulo tarea" maxlength="60" name="title_task" class="form-control" id="exampleInputEmail1" required aria-describedby="emailHelp">
+                            <input v-model="name_product"  type="text" placeholder="Titulo tarea" maxlength="60" name="title_task" class="form-control"  required aria-describedby="emailHelp">
                           </div>
                           <div class="form-group">
                             <label for="">Descripcion</label>
@@ -108,19 +120,19 @@
                             <div class="col-md-4">
                               <div class="form-group">
                                 <label for="">cantidad</label>
-                                <input type="number" min="1" name="" v-model="inventary_min_product"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                <input type="number" min="1" name="" v-model="inventary_min_product"  class="form-control" aria-describedby="emailHelp">
                               </div>
                             </div>
                             <div class="col-md-4">
                               <div class="form-group">
                                 <label for="">precio compra </label>
-                                <input type="number"  min="1" name="date_end_task" v-model="date_end_task"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                <input type="number"  min="1" name="date_end_task" v-model="date_end_task"  class="form-control"  aria-describedby="emailHelp">
                               </div>
                             </div>
                             <div class="col-md-4">
                               <div class="form-group">
                                 <label for="">precio venta </label>
-                                <input type="number" min="1" name="price_out_prouct" v-model="price_out_prouct"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                <input type="number" min="1" name="price_out_prouct" v-model="price_out_prouct"  class="form-control"  aria-describedby="emailHelp">
                               </div>
                             </div>
 
@@ -137,7 +149,7 @@
                           <div class="form-group">
                             <label for="">imagen </label>
                             <div class="custom-file">
-                              <input type="file" class="custom-file-input" id="customFileLang" lang="es">
+                              <input type="file"ref="image_product" v-on:change="GrabarProcutos"/>
                               <label class="custom-file-label" for="customFileLang">Seleccionar Archivo</label>
                             </div>
                           </div>
@@ -153,7 +165,78 @@
                 </div>
               </div>
             </div>
+
+            <!-- modal de edicion -->
+            <div class="modal fade" id="edit_product" tabindex="-1" role="dialog" aria-labelledby="edit_product" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Editar Producto</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="container-sm">
+                      <form @submit="CheckFormProducts" method="post" novalidate="true" enctype="multipart/form-data">
+                        <div class="form-group">
+                          <label for="">Nombre</label>
+                          <input v-model="name_product"  type="text" placeholder="Titulo tarea" maxlength="60" name="title_task" class="form-control" required aria-describedby="emailHelp">
+                        </div>
+                        <div class="form-group">
+                          <label for="">Descripcion</label>
+                          <textarea name="description_product" class="form-control" placeholder="Descripcion" rows="2" cols="4"></textarea>
+                        </div>
+                        <!-- 3input en la misma linea -->
+                        <div class="row">
+
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label for="">cantidad</label>
+                              <input type="number" min="1" name="" v-model="inventary_min_product"  class="form-control" aria-describedby="emailHelp">
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label for="">precio compra </label>
+                              <input type="number"  min="1" name="date_end_task" v-model="date_end_task"  class="form-control" aria-describedby="emailHelp">
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label for="">precio venta </label>
+                              <input type="number" min="1" name="price_out_prouct" v-model="price_out_prouct"  class="form-control" aria-describedby="emailHelp">
+                            </div>
+                          </div>
+
+                        </div>
+                        <!-- end 3 input -->
+
+                        <div class="form-group">
+                          <label for="">categoria </label>
+                          <select class="browser-default custom-select" >
+                            <option v-for="item in categorys"  value="item.id">{{ item.name }}</option>
+                          </select>
+                        </div>
+
+                        <div class="form-group">
+                          <label for="">imagen </label>
+                          <div class="custom-file">
+                            <input type="file" id="image_product" ref="image_product" v-on:change="GrabarProcutos"/>
+                            <label class="custom-file-label" for="customFileLang">Seleccionar Archivo</label>
+                          </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-sm btn-warning" @click="GrabarProcutos"  name="button">Editar</button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- end modal edicion -->
           </div>
+          <!-- end tabs products -->
 
           <!-- tareas -->
           <div class="tab-pane fade shadow" id="tareas" role="tabpanel" aria-labelledby="tareas">
@@ -218,23 +301,23 @@
                           <form  @submit="CheckFormTask" method="post" novalidate="true">
                             <div class="form-group">
                               <label for="">Titulo</label>
-                              <input v-model="title_task"  type="text" placeholder="Titulo tarea" maxlength="60" name="title_task" class="form-control" id="exampleInputEmail1" required aria-describedby="emailHelp">
+                              <input  type="text" v-model="title_task" placeholder="Titulo tarea" maxlength="60" name="title_task" class="form-control"  required aria-describedby="emailHelp">
                             </div>
                             <div class="form-group">
                               <label for="">Descripcion</label>
-                              <input v-model="descript_task"  type="text" placeholder="Descripcion tareas" maxlength="400" name="descript_task" class="form-control" id="exampleInputEmail1" required aria-describedby="emailHelp">
+                              <input type="text" placeholder="Descripcion tareas" v-model="descript_task"   maxlength="400" name="descript_task" class="form-control" required aria-describedby="emailHelp">
                             </div>
                             <div class="form-group">
                               <label for="">Fecha de inicio</label>
-                              <input type="date" name="date_start_task" v-model="date_start_task"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                              <input type="date" name="date_start_task" v-model="date_start_task"  class="form-control" aria-describedby="emailHelp">
                             </div>
                             <div class="form-group">
                               <label for="">Fecha de termino</label>
-                              <input type="date" name="date_end_task" v-model="date_end_task"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                              <input type="date" name="date_end_task" v-model="date_end_task"  class="form-control" aria-describedby="emailHelp">
                             </div>
                             <div class="form-group">
                               <label for="">id usuario</label>
-                              <input type="text" name="id_user_task" v-model="id_user_task"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                              <input type="text" name="id_user_task" v-model="id_user_task"  class="form-control"  aria-describedby="emailHelp">
                             </div>
                             <button type="submit" class="btn btn-sm btn-dark" name="button">Enviar</button>
                           </form>
@@ -249,6 +332,7 @@
               </div>
             </div>
           </div>
+          <!-- end tareas -->
 
           <!-- estadisticas -->
           <div class="tab-pane fade shadow" id="estadisticas" role="tabpanel" aria-labelledby="estadisticas">
@@ -304,7 +388,7 @@
                     <div class="mt-1 d-flex justify-content-start">
                       <div class="md-form input-with-pre-icon">
                         <i class="fas fa-search input-prefix"></i>
-                        <input type="text" id="buscador" placeholder="buscar"  class="form-control">
+                        <input type="text"  placeholder="buscar"  class="form-control">
                       </div>
                     </div>
                   </div>
@@ -352,7 +436,7 @@
                     <div class="mt-1 d-flex justify-content-start">
                       <div class="md-form input-with-pre-icon">
                         <i class="fas fa-search input-prefix"></i>
-                        <input type="text" id="buscador" placeholder="buscar"  class="form-control">
+                        <input type="text"  placeholder="buscar"  class="form-control">
                       </div>
                     </div>
                   </div>
@@ -430,23 +514,23 @@
                           <form  @submit="CheckFormTask" method="post" novalidate="true">
                             <div class="form-group">
                               <label for="">Titulo</label>
-                              <input v-model="title_task"  type="text" placeholder="Titulo tarea" maxlength="60" name="title_task" class="form-control" id="exampleInputEmail1" required aria-describedby="emailHelp">
+                              <input v-model="title_task"  type="text" placeholder="Titulo tarea" maxlength="60" name="title_task" class="form-control"  required aria-describedby="emailHelp">
                             </div>
                             <div class="form-group">
                               <label for="">Descripcion</label>
-                              <input v-model="descript_task"  type="text" placeholder="Descripcion tareas" maxlength="400" name="descript_task" class="form-control" id="exampleInputEmail1" required aria-describedby="emailHelp">
+                              <input v-model="descript_task"  type="text" placeholder="Descripcion tareas" maxlength="400" name="descript_task" class="form-control" required aria-describedby="emailHelp">
                             </div>
                             <div class="form-group">
                               <label for="">Fecha de inicio</label>
-                              <input type="date" name="date_start_task" v-model="date_start_task"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                              <input type="date" name="date_start_task" v-model="date_start_task"  class="form-control" aria-describedby="emailHelp">
                             </div>
                             <div class="form-group">
                               <label for="">Fecha de termino</label>
-                              <input type="date" name="date_end_task" v-model="date_end_task"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                              <input type="date" name="date_end_task" v-model="date_end_task"  class="form-control"  aria-describedby="emailHelp">
                             </div>
                             <div class="form-group">
                               <label for="">id usuario</label>
-                              <input type="text" name="id_user_task" v-model="id_user_task"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                              <input type="text" name="id_user_task" v-model="id_user_task"  class="form-control" aria-describedby="emailHelp">
                             </div>
                             <button type="submit" class="btn btn-sm btn-dark" name="button">Enviar</button>
                           </form>
@@ -496,7 +580,7 @@
                           <div class="card card-cascade mb-4 py-4" >
                             <div class="view view-cascade overlay">
                               <div class="d-flex justify-content-end">
-                                <button type="button" class="btn btn-danger btn-sm ">
+                                <button type="button" title="Eliminar" @click="EliminarClient(item.id)" class="btn btn-danger btn-sm ">
                                   <i class="fas fa-trash"></i>
                                 </button>
                                 <button type="button" class="btn btn-warning btn-sm ">
@@ -545,6 +629,7 @@
               </div>
             </div>
           </div>
+          <!-- end clientes -->
 
           <!-- Configuraciones -->
           <div class="tab-pane fade shadow" id="configuracion" role="tabpanel" aria-labelledby="configuracion">
@@ -613,7 +698,8 @@
 
                       </div>
                       <div class="tab-pane fade" id="category" role="tabpanel" aria-labelledby="profile-tab">
-                        <div class="col-md-6">
+                        <div class="col-md-6 mt-2">
+                          <h4>Crear Categoria</h4>
                           <form @submit="CheckFormCategory" method="post" novalidate="true">
                             <p v-if="errors.length">
                               <b>Por favor corriga los siguientes erroes:</b>
@@ -623,7 +709,7 @@
                             </p>
                             <div class="form-group">
                               <label for="">nombre</label>
-                              <input type="text" min="1" name="name_category" v-model="name_category" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                              <input type="text" min="1" name="name_category" v-model="name_category" class="form-control"  aria-describedby="emailHelp">
                             </div>
                             <div class="form-group">
                               <label for="">Descripcion</label>
@@ -676,7 +762,7 @@
 
     </div>
   </div>
-  <?php require_once RUTA_APP . '/vistas/inc/footer.php';?>
+</div>
 
-  <!-- intranet -->
-  <script src="<?php echo RUTA_URL; ?>public/js/app.js"></script>
+
+<?php require_once RUTA_APP . '/vistas/inc/footer.php';?>

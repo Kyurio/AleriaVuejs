@@ -1,4 +1,3 @@
-
 var app = new Vue({
 
   el: '#app',
@@ -36,6 +35,8 @@ var app = new Vue({
     price_out_prouct: '',
     category_product: '',
     inventary_min_product: '',
+    image_product: '',
+    edit_product: false,
 
     //task
     date_start_task: '',
@@ -83,7 +84,7 @@ var app = new Vue({
     this.ConsultarTask();
   },
 
-  computed:{
+  computed: {
 
     buscadorTareas:{
       get(){
@@ -115,6 +116,7 @@ var app = new Vue({
         value = value.toLowerCase();
         this.filterProducts = this.products.filter(item => item.name.toLowerCase().indexOf(value) !== -1)
         this.BusquedaProductos = value
+
       }
     },
 
@@ -151,20 +153,25 @@ var app = new Vue({
 
     },
 
+    /***************************************************************************
+    funciones productos
+    ***************************************************************************/
+
     GrabarProcutos: function(){
+
+
+      this.image_product = this.$refs.image_product.files[0];
 
       axios({
         method: 'POST',
         url: '/aleriaVue/pages/De',
         data: {
           name: this.name_product,
-          imagen: this.imagen_product,
+          imagen: this.image_product,
           description: this.description_product,
           canridad: this.inventary_min_product,
           precio_compra: this.price_in_product,
           precio_venta: this.price_out_prouct
-
-
         }
 
       }).then(function (response) {
@@ -179,9 +186,13 @@ var app = new Vue({
         console.log(error);
       });
 
-      this.titulo = '';
-      this.cuerpo = '';
-      this.tags = '';
+      this.name_product = "",
+      this.image_product = "",
+      this.description_product = "",
+      this.inventary_min_product= "",
+      this.price_in_product = "",
+      this.price_out_prouct = "",
+
       //cierra el Modal
       $('#post').modal('hide');
       //refresca la tabla
@@ -189,6 +200,82 @@ var app = new Vue({
 
 
     },
+
+    ConsultarProducts: function(){
+      capturador = this;
+      axios.get('/aleriaVue/pages/SelectProduct', {
+      }).then(function (response) {
+        capturador.products = response.data;
+        capturador.filterProducts = response.data;
+      });
+    },
+
+    DescativarPorductos: function(id){
+
+      axios({
+        method: 'POST',
+        url: '/aleriaVue/pages/DeactivateProduct',
+        data: {
+
+          State: 0,
+          Id_product: id,
+
+        }
+      }).then(function (response) {
+        if(response.data === true){
+          swal("Tu producto quedo desactivo", {
+            icon: "success",
+          });
+        }else {
+          swal("Error al desactivar el producto", {
+            icon: "warning",
+          });
+        }
+      });
+
+      this.ConsultarProducts();
+
+    },
+
+    EditarProtucts: function(id) {
+
+    },
+
+    ActiveEdition: function(){
+
+    },
+
+    ActivarPorductos: function(id){
+
+      axios({
+        method: 'POST',
+        url: '/aleriaVue/pages/ActiveProduct',
+        data: {
+
+          State: 1,
+          Id_product: id,
+
+        }
+      }).then(function (response) {
+        if(response.data === true){
+          swal("Tu producto quedo desactivo", {
+            icon: "success",
+          });
+        }else {
+          swal("Error al desactivar el producto", {
+            icon: "warning",
+          });
+        }
+      });
+
+      this.ConsultarProducts();
+
+    },
+
+
+    /***************************************************************************
+    funciones tareas
+    ***************************************************************************/
 
     GrabarTarea: function(){
 
@@ -274,14 +361,7 @@ var app = new Vue({
       });
     },
 
-    ConsultarProducts: function(){
-      capturador = this;
-      axios.get('/aleriaVue/pages/SelectProduct', {
-      }).then(function (response) {
-        capturador.products = response.data;
-        capturador.filterProducts = response.data;
-      });
-    },
+
 
     ConsultarUsers: function(){
       capturador = this;
@@ -304,7 +384,7 @@ var app = new Vue({
       capturador = this;
       axios.get('/aleriaVue/pages/SelectMail', {
       }).then(function (response) {
-        console.log(response.data);
+        //console.log(response.data);
         capturador.msg = response.data;
       });
     },
@@ -313,7 +393,7 @@ var app = new Vue({
       capturador = this;
       axios.get('/aleriaVue/pages/CounterMail', {
       }).then(function (response) {
-        console.log(response.data);
+        //console.log(response.data);
         capturador.CantidadMsg = response.data;
       });
     },
@@ -325,9 +405,9 @@ var app = new Vue({
         method: 'POST',
         url: '/aleriaVue/pages/SpamMessage',
         data: {
-         }
+        }
       }).then(function (response) {
-        console.log(response.data);
+        //console.log(response.data);
         if(response.data === true){
           swal("Poof! Tu mensaje fue movido a la caperta de spam !", {
             icon: "success",
@@ -391,6 +471,11 @@ var app = new Vue({
 
     },
 
+    /***************************************************************************
+    funciones tareas
+    ***************************************************************************/
+
+
     ConsultarClients: function(){
       capturador = this;
       axios.get('/aleriaVue/pages/SelectClient', {
@@ -400,6 +485,47 @@ var app = new Vue({
         //console.log(response.data);
       });
     },
+
+    EliminarClient: function(id){
+      swal({
+        title: "¿Estas seguro de Eliminar el cliente?",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+      .then((willDelete) => {
+        if (willDelete) {
+          //ejecuta la funcion
+          axios({
+            method: 'POST',
+            url: '/aleriaVue/pages/DeleteClient',
+            data: {
+              id_cliente: id,
+            }
+          }).then(function (response) {
+            console.log(response.data);
+            if(response.data == true){
+              swal("Poof! Tu cliente fue eliminado !", {
+                icon: "success",
+              });
+            }else {
+              swal("Error al eliminar el cliente", {
+                icon: "warning",
+              });
+            }
+          });
+          this.ConsultarClients();
+          //mensaje de elemento eleiminado
+        }
+      });
+    },
+
+
+
+
+
+
+
 
     EliminarProduct: function(id){
       swal({
@@ -512,7 +638,11 @@ var app = new Vue({
       window.location.replace(url);
     },
 
-    // validaciones de formularios
+
+    /***************************************************************************
+    validaciones de formularios
+    ***************************************************************************/
+
     CheckFormProducts: function(e){
       this.errors = [];
 
@@ -582,6 +712,17 @@ var app = new Vue({
     ChangeTitle: function(title){
       this.title_tab = title;
     },
+
+    /***************************************************************************
+    logout
+    ***************************************************************************/
+    LogOut: function(){
+      capturador = this;
+      axios.get('/aleriaVue/pages/Logout', {
+      }).then(function (response) {
+
+      });
+    }
 
   },
 

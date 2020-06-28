@@ -28,10 +28,12 @@ class config{
         case "count":
         $this->bd->query("SELECT *, count($count)AS total FROM $tabla GROUP BY $groupby");
         return $this->bd->registros();
+        break;
 
         case "countWhere":
         $this->bd->query("SELECT count($count)AS total FROM $tabla WHERE $filtro = $condicion GROUP BY $groupby");
         return $this->bd->registros();
+        break;
 
         case "rowCount":
         $this->bd->query("SELECT * FROM $tabla");
@@ -127,7 +129,7 @@ class config{
   /*----------------------------------------------------------------------------
   consultas session -longin- longout -createacount
   ----------------------------------------------------------------------------*/
-  public function login($datos){
+  public function ValidarLogin($datos){
 
     try {
 
@@ -135,7 +137,7 @@ class config{
       //otorgar valores
       $this->bd->bind(':email', $datos['email']);
       $this->bd->bind(':password', $datos['password']);
-      
+
       return $this->bd->registros();
 
     } catch (PDOException $e) {

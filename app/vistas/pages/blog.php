@@ -1,8 +1,11 @@
-<?php require_once RUTA_APP . '/vistas/inc/header.php'; ?>
+<?php
+
+  require_once RUTA_APP . '/vistas/inc/header.php';
+  $option ="blog"
+
+?>
 <div id="app">
   <main>
-
-
 
 
 </main>

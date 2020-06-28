@@ -1,4 +1,7 @@
-<?php require_once RUTA_APP . '/vistas/inc/header.php';?>
+<?php
+require_once RUTA_APP . '/vistas/inc/header.php';
+$option = "productos";
+?>
 <div id="app-3">
   <div class="container">
     <div class="mt-5 mb-5 py-5">
@@ -37,5 +40,3 @@
   </div>
 </div>
 <?php require_once RUTA_APP . '/vistas/inc/footer.php';?>
-<!-- produtcos -->
-<script src="<?php echo RUTA_URL; ?>public/js/items.js"></script>

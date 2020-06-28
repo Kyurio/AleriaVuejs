@@ -2,7 +2,7 @@
 
 Class session{
 
-  public function start_session(){
+  public function __construct(){
     session_start();
   }
 

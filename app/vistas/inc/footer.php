@@ -52,12 +52,9 @@
 
 
 
-<!-- vuejs -->
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
 <!-- popper -->
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<!-- axios -->
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 <!-- jsdelivr -->
@@ -68,6 +65,44 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <!-- chartjs -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<!-- vuejs -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<!-- axios -->
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+
+<?php
+switch ($option) {
+
+  case "login":
+  echo "<script src=". RUTA_URL ."public/js/logs.js></script>";
+  break;
+
+  case "blog":
+  echo "<script src=". RUTA_URL ."public/js/post.js></script>";
+  break;
+
+  case "intranet":
+  echo "<script src=". RUTA_URL ."public/js/app.js></script>";
+  break;
+
+  case "productos":
+  echo "<script src=". RUTA_URL ."public/js/items.js></script>";
+  break;
+
+  case "contacto":
+  echo "<script src=". RUTA_URL ."public/js/message.js></script>";
+  break;
+
+  default:
+  echo "default";
+  break;
+}
+
+
+?>
+
+
 
 </body>
 </html>

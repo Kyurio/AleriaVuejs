@@ -1,4 +1,9 @@
-<?php require_once RUTA_APP . '/vistas/inc/header.php'; ?>
+<?php
+
+  require_once RUTA_APP . '/vistas/inc/header.php';
+  $option = "contacto";
+
+?>
 <main>
   <div id="app-2">
 
@@ -51,5 +56,3 @@
   </div>
 </main>
 <?php require_once RUTA_APP . '/vistas/inc/footer.php';?>
-<!-- intranet -->
-<script src="<?php echo RUTA_URL; ?>public/js/message.js"></script>

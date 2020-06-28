@@ -2,6 +2,12 @@
 
 class routes extends control{
 
+  public function __construct(){
+
+    $this->SessionModelo = $this->modelo('session');
+
+  }
+
   public function index(){
 
     $this->vista('pages/inicio');
@@ -19,9 +25,9 @@ class routes extends control{
 
   public function intranet(){
 
-    if(session_status() === PHP_SESSION_NONE){
+    if (!empty($_SESSION['Nombre_Usuario'])) {
       $this->vista('pages/intranet');
-    }else {
+    }else{
       $this->vista('pages/login');
     }
 
