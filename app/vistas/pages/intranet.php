@@ -1,13 +1,11 @@
 <?php
 
 require_once RUTA_APP . '/vistas/inc/header.php';
-$option = "intranet"
-
+$option = "intranet";
 
 ?>
 <div id="app">
   <div class="container-fluid">
-
     <div class="row">
 
 
@@ -17,7 +15,6 @@ $option = "intranet"
 
 
       <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4 mt-3 py-5">
-
         <div class="tab-content mt-2">
 
           <!-- cabecera -->
@@ -33,7 +30,7 @@ $option = "intranet"
                 <div class="row">
                   <div class="col-sm-5">
                     <div class="mt-1 d-flex justify-content-start">
-                      <div class="md-form input-with-pre-icon">
+                      <div class="md-form input-with-pre-icon"  v-if="mostrar_buscador_producto === true">
                         <i class="fas fa-search input-prefix"></i>
                         <input type="text"  placeholder="buscar..." v-model="buscadorProductos" class="form-control">
                       </div>
@@ -43,26 +40,25 @@ $option = "intranet"
                     <div class="mt-1 mb-4 d-flex justify-content-end">
                       <ul class="nav" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
-                          <button type="button" title="Agregar" class="btn btn-sm btn-dark" data-target="#product"  data-toggle="tab" href="#product" role="tab" aria-selected="true" ><i class="fas fa-plus"></i></button>
+                          <button type="button" @click="NoMostrarBuscadorProductos" title="Agregar" class="btn btn-sm btn-dark" data-target="#product"  data-toggle="tab" href="#product" role="tab" aria-selected="true" ><i class="fas fa-plus"></i></button>
                         </li>
                         <li class="nav-item" role="presentation">
-                          <button type="button" title="Listado de tareas" class="btn btn-sm btn-dark" data-target="#list_product" data-toggle="tab" href="#list_product" role="tab" aria-selected="true" ><i class="far fa-list-alt"></i></button>
+                          <button type="button" @click="MostrarBuscadorProductos"  title="Listado de tareas" class="btn btn-sm btn-dark" data-target="#list_product" data-toggle="tab" href="#list_product" role="tab" aria-selected="true" ><i class="far fa-list-alt"></i></button>
                         </li>
                       </ul>
                     </div>
                   </div>
                 </div>
                 <!-- end buscador con botones -->
-                <!-- end buscador con botones -->
+
                 <div>
                   <!-- contenido de el tab -->
-
                   <div class="tab-content" id="productos">
                     <div class="tab-pane fade show active" id="list_product" role="tabpanel" aria-labelledby="profile-tab">
                       <!-- table -->
 
 
-                      <table class="table table-hover text-center table-sm">
+                      <table class="table table-hover text-center table-sm display" >
                         <thead>
                           <tr>
                             <th scope="col">Producto</th>
@@ -74,7 +70,7 @@ $option = "intranet"
                           </tr>
                         </thead>
                         <tbody>
-                          <tr v-for="item in products">
+                          <tr v-for="(item, index) in filterProducts" v-show="(pag - 1) * num_results <= index  && pag * num_results > index">
                             <td>{{ item.name }}</td>
                             <td>${{ item.price_in }}</td>
                             <td>${{ item.price_out }}</td>
@@ -89,30 +85,48 @@ $option = "intranet"
                             <td>{{ item.inventary_min }}</td>
                             <td>
                               <button type="button" name="Eliminar" @click="EliminarProduct(item.id)" class="btn btn-danger btn-sm" title="Eliminar"><i class="fas fa-trash"></i></button>
-                              <button type="button" name="Editar"   ata-target="#product" data-toggle="modal" data-target="#edit_product" class="btn btn-warning btn-sm" title="Editar"><i class="fas fa-pen"></i></button>
+                              <button type="button" name="Editar"   @click="EditarProtucts(item.id)" data-toggle="modal" data-target="#edit_product" class="btn btn-warning btn-sm" title="Editar"><i class="fas fa-pen"></i></button>
                               <button type="button" name="Desactivar" @click="DescativarPorductos(item.id)"  class="btn btn-info btn-sm" title="Desactivar" v-if="item.is_active == 1"><i class="fas fa-ban"></i></button>
-                                <button type="button" name="Desactivar" @click="ActivarPorductos(item.id)"  class="btn btn-success btn-sm" title="Activar" v-else><i class="fas fa-check"></i></button>
+                              <button type="button" name="Activar" @click="ActivarPorductos(item.id)"  class="btn btn-success btn-sm" title="Activar" v-else><i class="fas fa-check"></i></button>
                             </td>
                           </tr>
                         </tbody>
                       </table>
 
+                      <!-- paginador -->
+                      <nav aria-label="Page navigation" class="text-center">
+                        <ul class="pagination text-center">
+                          <li>
+                            <a class="mr-3" href="#" aria-label="Previous" v-show="pag != 1" @click.prevent="pag -= 1">
+                              <span aria-hidden="true"> anterior </span>
+                            </a>
+                          </li>
+                          <li>
+                            <a href="#" aria-label="Next" v-show="pag * num_results / filterProducts.length < 1" @click.prevent="pag += 1">
+                              <span aria-hidden="true"> siguiente </span>
+                            </a>
+                          </li>
+                        </ul>
+                      </nav>
+                      <!-- end paginador -->
                       <!-- end table -->
                     </div>
 
                     <div class="tab-pane fade" id="product" role="tabpanel" aria-labelledby="task">
                       <h4>Agregar Productos</h4>
                       <br>
+
+
                       <div class="col-md-6">
                         <!-- agregar -->
-                        <form @submit="CheckFormProducts" method="post" novalidate="true" enctype="multipart/form-data">
+                        <form method="post" enctype="multipart/form-data" action="<?php echo RUTA_URL ?>pages/InsertProducto">
                           <div class="form-group">
-                            <label for="">Nombre</label>
-                            <input v-model="name_product"  type="text" placeholder="Titulo tarea" maxlength="60" name="title_task" class="form-control"  required aria-describedby="emailHelp">
+                            <label for="name_product">Nombre</label>
+                            <input type="text" placeholder="Nombre del producto" maxlength="60" name="Nombre_Producto" class="form-control"  required>
                           </div>
                           <div class="form-group">
                             <label for="">Descripcion</label>
-                            <textarea name="description_product" class="form-control" placeholder="Descripcion" rows="2" cols="4"></textarea>
+                            <textarea class="form-control" placeholder="Descripcion" name="Descripcion_product" rows="2" cols="4"></textarea>
                           </div>
                           <!-- 3input en la misma linea -->
                           <div class="row">
@@ -120,19 +134,19 @@ $option = "intranet"
                             <div class="col-md-4">
                               <div class="form-group">
                                 <label for="">cantidad</label>
-                                <input type="number" min="1" name="" v-model="inventary_min_product"  class="form-control" aria-describedby="emailHelp">
+                                <input type="number" min="1" name="Inventary_min_product" class="form-control">
                               </div>
                             </div>
                             <div class="col-md-4">
                               <div class="form-group">
                                 <label for="">precio compra </label>
-                                <input type="number"  min="1" name="date_end_task" v-model="date_end_task"  class="form-control"  aria-describedby="emailHelp">
+                                <input type="number"  min="1" name="Valor_compra" class="form-control" >
                               </div>
                             </div>
                             <div class="col-md-4">
                               <div class="form-group">
                                 <label for="">precio venta </label>
-                                <input type="number" min="1" name="price_out_prouct" v-model="price_out_prouct"  class="form-control"  aria-describedby="emailHelp">
+                                <input type="number" min="1" name="Valor_venta" class="form-control" >
                               </div>
                             </div>
 
@@ -141,25 +155,23 @@ $option = "intranet"
 
                           <div class="form-group">
                             <label for="">categoria </label>
-                            <select class="browser-default custom-select" >
-                              <option v-for="item in categorys"  value="item.id">{{ item.name }}</option>
+                            <select class="browser-default custom-select" name="Category_product" >
+                              <option v-for="item in categorys"  v-bind:value="item.id">{{ item.name }}</option>
                             </select>
                           </div>
 
                           <div class="form-group">
                             <label for="">imagen </label>
-                            <div class="custom-file">
-                              <input type="file"ref="image_product" v-on:change="GrabarProcutos"/>
-                              <label class="custom-file-label" for="customFileLang">Seleccionar Archivo</label>
-                            </div>
+                            <input type="file" name="img_product" id="img_product">
                           </div>
 
-                          <button type="submit" class="btn btn-sm btn-dark" @click="GrabarProcutos"  name="button">Grabar</button>
+                          <button type="submit" class="btn btn-sm btn-dark" name="button">Grabar</button>
                         </form>
 
                       </div>
                     </div>
                   </div>
+
                   <!-- end contenido tabs -->
 
                 </div>
@@ -178,10 +190,10 @@ $option = "intranet"
                   </div>
                   <div class="modal-body">
                     <div class="container-sm">
-                      <form @submit="CheckFormProducts" method="post" novalidate="true" enctype="multipart/form-data">
+                      <form  method="post" novalidate="true" enctype="multipart/form-data">
                         <div class="form-group">
                           <label for="">Nombre</label>
-                          <input v-model="name_product"  type="text" placeholder="Titulo tarea" maxlength="60" name="title_task" class="form-control" required aria-describedby="emailHelp">
+                          <input  type="text" placeholder="Titulo tarea" maxlength="60" name="name_product" class="form-control" required aria-describedby="emailHelp">
                         </div>
                         <div class="form-group">
                           <label for="">Descripcion</label>
@@ -193,19 +205,19 @@ $option = "intranet"
                           <div class="col-md-4">
                             <div class="form-group">
                               <label for="">cantidad</label>
-                              <input type="number" min="1" name="" v-model="inventary_min_product"  class="form-control" aria-describedby="emailHelp">
+                              <input type="number" min="1" name="" class="form-control" aria-describedby="emailHelp">
                             </div>
                           </div>
                           <div class="col-md-4">
                             <div class="form-group">
                               <label for="">precio compra </label>
-                              <input type="number"  min="1" name="date_end_task" v-model="date_end_task"  class="form-control" aria-describedby="emailHelp">
+                              <input type="number"  min="1" name="date_end_task" class="form-control" aria-describedby="emailHelp">
                             </div>
                           </div>
                           <div class="col-md-4">
                             <div class="form-group">
                               <label for="">precio venta </label>
-                              <input type="number" min="1" name="price_out_prouct" v-model="price_out_prouct"  class="form-control" aria-describedby="emailHelp">
+                              <input type="number" min="1" name="price_out_prouct"  class="form-control" aria-describedby="emailHelp">
                             </div>
                           </div>
 
@@ -222,12 +234,12 @@ $option = "intranet"
                         <div class="form-group">
                           <label for="">imagen </label>
                           <div class="custom-file">
-                            <input type="file" id="image_product" ref="image_product" v-on:change="GrabarProcutos"/>
+                            <input type="file" id="image_product" ref="image_product">
                             <label class="custom-file-label" for="customFileLang">Seleccionar Archivo</label>
                           </div>
                         </div>
 
-                        <button type="submit" class="btn btn-sm btn-warning" @click="GrabarProcutos"  name="button">Editar</button>
+                        <button type="submit" class="btn btn-sm btn-warning"   name="button">Editar</button>
                       </form>
                     </div>
                   </div>
@@ -256,10 +268,10 @@ $option = "intranet"
                     <div class="mt-1 mb-4 d-flex justify-content-end">
                       <ul class="nav" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
-                          <button type="button" title="Agregar" class="btn btn-sm btn-dark" data-target="#task"  data-toggle="tab" href="#tasl" role="tab" aria-selected="true" ><i class="fas fa-plus"></i></button>
+                          <button type="button" @click="NoMostrarBucadorTareas" title="Agregar" class="btn btn-sm btn-dark" data-target="#task"  data-toggle="tab" href="#tasl" role="tab" aria-selected="true" ><i class="fas fa-plus"></i></button>
                         </li>
                         <li class="nav-item" role="presentation">
-                          <button type="button" title="Listado de tareas" class="btn btn-sm btn-dark" data-target="#list_task" data-toggle="tab" href="#list_task" role="tab" aria-selected="true" ><i class="far fa-list-alt"></i></button>
+                          <button type="button" @click="MostrarBuscadorTareas" title="Listado de tareas" class="btn btn-sm btn-dark" data-target="#list_task" data-toggle="tab" href="#list_task" role="tab" aria-selected="true" ><i class="far fa-list-alt"></i></button>
                         </li>
                       </ul>
                     </div>
@@ -269,9 +281,11 @@ $option = "intranet"
                 <!-- contenido de el tab -->
                 <div class="tab-content" id="myTabContent">
                   <div class="tab-pane fade show active" id="list_task" role="tabpanel" aria-labelledby="list">
-                    <ul class="list list-group">
-                      <li class="list-group-item mt-2 shadow" v-for="(item, index) in filterTasks" :key="index">
 
+                    <!-- tareas -->
+
+                    <ul class="list list-group">
+                      <li class="list-group-item mt-2 shadow" v-for="(item, index) in filterTasks" v-show="(pag - 1) * num_results_task <= index  && pag * num_results_task > index">
                         <div class="row">
                           <div class="col-md-8">
                             <div class="mt-1 mb-4 d-flex justify-content-start">
@@ -285,12 +299,30 @@ $option = "intranet"
                             </div>
                           </div>
                         </div>
-
                         <p class="name">{{ item.descript }}</p>
                         <small class="name">{{ item.date_end }}</small>
-
                       </li>
                     </ul>
+
+                    <!-- paginador -->
+                    <div class="mt-3">
+                      <nav aria-label="Page navigation" class="text-center">
+                        <ul class="pagination text-center">
+                          <li>
+                            <a class="mr-3" href="#" aria-label="Previous" v-show="pag != 1" @click.prevent="pag -= 1">
+                              <span aria-hidden="true"> anterior </span>
+                            </a>
+                          </li>
+                          <li>
+                            <a href="#" aria-label="Next" v-show="pag * num_results_task / filterTasks.length < 1" @click.prevent="pag += 1">
+                              <span aria-hidden="true"> siguiente </span>
+                            </a>
+                          </li>
+                        </ul>
+                      </nav>
+                    </div>
+                    <!-- end paginador -->
+
                   </div>
                   <div class="tab-pane fade" id="task" role="tabpanel" aria-labelledby="task">
                     <div class="card">
@@ -305,7 +337,7 @@ $option = "intranet"
                             </div>
                             <div class="form-group">
                               <label for="">Descripcion</label>
-                              <input type="text" placeholder="Descripcion tareas" v-model="descript_task"   maxlength="400" name="descript_task" class="form-control" required aria-describedby="emailHelp">
+                              <textarea name="name" placeholder="Descripcion tareas" v-model="descript_task"   maxlength="400" name="descript_task" class="form-control"  rows="4" cols="10"></textarea>
                             </div>
                             <div class="form-group">
                               <label for="">Fecha de inicio</label>
@@ -430,6 +462,7 @@ $option = "intranet"
 
             <div class="card">
               <div class="card-body">
+
                 <!-- buscador con botones -->
                 <div class="row">
                   <div class="col-sm-5">
@@ -444,7 +477,8 @@ $option = "intranet"
                 <!-- end buscador con botones -->
 
                 <div v-for="item in msg" class="card mt-3 py-3 mb-3">
-                  <div class="card-body">
+
+                  <div class="card-body" v-on:mouseover="MensajesLeidos(item.Id)" v-if="item.State == 1">
                     <div class="d-flex justify-content-between">
                       <h5>de: {{item.Name}}</h5>
 
@@ -460,7 +494,27 @@ $option = "intranet"
                       <p>{{item.Content}}</p>
                     </div>
                   </div>
+
+                  <div class="card-body "  v-on:mouseover="MensajesLeidos(item.Id)" v-else>
+                    <div class="d-flex justify-content-between">
+                      <h5>de: {{item.Name}}</h5>
+
+                      <div class="d-flex flex-row-reverse bd-highlight">
+                        <button type="button" @click="EliminarMensaje(item.Id)" title="Eliminar" class="btn btn-sm btn-danger ml-1" ><i class="fas fa-trash"></i></button>
+                        <button type="button" @click="MensajeSpam(item.Id)" title="Spam" class="btn btn-sm btn-warning ml-1" ><i class="fas fa-envelope-open"></i></button>
+                        <button type="button"  title="Leido" class="btn btn-sm btn-info ml-1" ><i class="fas fa-envelope-open-text"></i></button>
+                      </div>
+                    </div>
+                    <p>{{item.Email}}</p>
+                    <div>
+                      <p>Asunto: {{item.Subjet}}</p>
+                      <p>{{item.Content}}</p>
+                    </div>
+                  </div>
+
                 </div>
+
+
               </div>
             </div>
 
@@ -573,9 +627,10 @@ $option = "intranet"
 
                 <!-- card clientes -->
                 <div class="container">
-                  <div class="d-flex justify-content-center py-5 mb-4 ">
+                  <div class="d-flex justify-content-center py-5 mb-2 ">
                     <div class="row">
-                      <div v-for="item in filterClients">
+
+                      <div v-for="(item, index) in filterClients" v-show="(pag - 1) * num_results_clients <= index  && pag * num_results_clients > index">
                         <div class="col-md-4">
                           <div class="card card-cascade mb-4 py-4" >
                             <div class="view view-cascade overlay">
@@ -618,13 +673,28 @@ $option = "intranet"
                           </div>
                         </div>
                       </div>
+
                     </div>
                   </div>
+
+                  <!-- paginador -->
+                  <nav aria-label="Page navigation" class="text-center">
+                    <ul class="pagination text-center">
+                      <li>
+                        <a class="mr-3" href="#" aria-label="Previous" v-show="pag != 1" @click.prevent="pag -= 1">
+                          <span aria-hidden="true"> anterior </span>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#" aria-label="Next" v-show="pag * num_results_clients / filterClients.length < 1" @click.prevent="pag += 1">
+                          <span aria-hidden="true"> siguiente </span>
+                        </a>
+                      </li>
+                    </ul>
+                  </nav>
+                  <!-- end paginador -->
                 </div>
                 <!-- end card -->
-
-
-
 
               </div>
             </div>
@@ -685,7 +755,7 @@ $option = "intranet"
                             </tr>
                           </thead>
                           <tbody>
-                            <tr v-for="item in categorys">
+                            <tr v-for="(item, index) in categorys" v-show="(pag - 1) * num_results_category <= index  && pag * num_results_category > index">
                               <td>{{ item.name }}</td>
                               <td>{{ item.description }}</td>
                               <td>
@@ -695,6 +765,23 @@ $option = "intranet"
                             </tr>
                           </tbody>
                         </table>
+
+                        <!-- paginador -->
+                        <nav aria-label="Page navigation" class="text-center">
+                          <ul class="pagination text-center">
+                            <li>
+                              <a class="mr-3" href="#" aria-label="Previous" v-show="pag != 1" @click.prevent="pag -= 1">
+                                <span aria-hidden="true"> anterior </span>
+                              </a>
+                            </li>
+                            <li>
+                              <a href="#" aria-label="Next" v-show="pag * num_results_category / categorys.length < 1" @click.prevent="pag += 1">
+                                <span aria-hidden="true"> siguiente </span>
+                              </a>
+                            </li>
+                          </ul>
+                        </nav>
+                        <!-- end paginador -->
 
                       </div>
                       <div class="tab-pane fade" id="category" role="tabpanel" aria-labelledby="profile-tab">
@@ -755,7 +842,6 @@ $option = "intranet"
 
 
         </div>
-
       </main>
 
 
@@ -763,6 +849,4 @@ $option = "intranet"
     </div>
   </div>
 </div>
-
-
 <?php require_once RUTA_APP . '/vistas/inc/footer.php';?>

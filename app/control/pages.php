@@ -76,20 +76,21 @@ class pages extends routes{
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       $formNuevaVenta = [
-        'name_product' => $data['Nombre_Producto'],
-        'description_product' => $data['Fecha_Publicacion'],
-        'inventary_min_product' => $data['Descripcion'],
-        'price_in_product' => $data['Valor_Producto'],
-        'price_out_prouct' => $data['Valor_Oferta'],
+        'name_product' => trim($_POST['Nombre_Producto']),
+        'description_product' => trim($_POST['Descripcion_product']),
+        'inventary_min_product' => trim($_POST['Inventary_min_product']),
+        'price_in_product' => trim($_POST['Valor_compra']),
+        'price_out_prouct' => trim($_POST['Valor_venta']),
+        'categoriy_product' => trim($_POST['Category_product']),
         'is_active_product' => 1,
-        'categoriy_product' => date('Y-m-d'),
+        'imagen_product' => trim($_FILES['img_product']['name']),
       ];
 
       //ejecyta la insercion
       if($this->ConfigModelo->InsertNuevoProducto($formNuevaVenta)){
-        echo true;
+        redireccionar('pages/intranet?msg=true');
       }else{
-        echo false;
+        redireccionar('pages/intranet?msg=false');
       }
 
     }else{
@@ -159,6 +160,24 @@ class pages extends routes{
     }else{
       echo json_encode(false);
     }
+  }
+
+  public function ProductSelected(){
+
+    $data = json_decode(file_get_contents("php://input"), true);
+
+    $id = $data['Id_product'];
+
+    if($product = $this->ConfigModelo->select('select', 'product', 'id', $id, '', '')){
+
+      echo json_encode($product);
+
+    }else {
+
+      echo json_encode("producto no encontrado");
+
+    }
+
   }
 
   public function SelectClient(){
@@ -237,7 +256,10 @@ class pages extends routes{
 
   public function MessagesRead(){
 
-    if($this->ConfigModelo->update('NoWhere', 'message', 'State', '2', '', '')){
+    $data = json_decode(file_get_contents("php://input"), true);
+    $id = $data['Id_mensajes'];
+
+    if($this->ConfigModelo->update('Where', 'message', 'State', '2', 'Id', $id)){
       echo json_encode(true);
     }else{
       echo json_encode(false);

@@ -3,6 +3,14 @@ var app = new Vue({
   el: '#app',
 
   data: {
+    num_results_products_main: 3,
+    num_results_category: 5,
+    num_results_clients: 6,
+    num_results_task: 4,
+    num_results: 10,
+    pag: 1,
+
+
 
     errors: [],
     //--------------------------------------------------------------------------
@@ -11,6 +19,7 @@ var app = new Vue({
     msg: {},
     blogs: {},
     products: {},
+    product_selected: {},
     details: {},
     clients: {},
     users: {},
@@ -22,21 +31,10 @@ var app = new Vue({
     filterMessages: [],
     filterProducts: [],
 
-    // blog
-    id_blog: '',
-    titulo: '',
-    tags: '',
-    cuerpo: '',
 
-    // productos
-    name_product: '',
-    Descripcion: '',
-    price_in_product: '',
-    price_out_prouct: '',
-    category_product: '',
-    inventary_min_product: '',
-    image_product: '',
-    edit_product: false,
+    //product
+    mostrar_buscador_producto: true,
+
 
     //task
     date_start_task: '',
@@ -45,6 +43,8 @@ var app = new Vue({
     title_task: '',
     descript_task: '',
     id_user_task: '',
+    mostrar_buscador_task: true,
+
 
     //categorias
     name_category: '',
@@ -71,6 +71,7 @@ var app = new Vue({
   },
 
   mounted: function(){
+
     this.mantenerTabs();
     this.MensajesNuevos();
     this.ConsultarClients();
@@ -82,6 +83,7 @@ var app = new Vue({
     this.ChartCls();
     this.ConsultarCategorias();
     this.ConsultarTask();
+
   },
 
   computed: {
@@ -125,6 +127,34 @@ var app = new Vue({
   methods: {
 
 
+
+
+    NoMostrarBuscadorProductos: function(){
+      this.mostrar_buscador_producto = false;
+    },
+
+    MostrarBuscadorProductos: function(){
+      this.mostrar_buscador_producto = true;
+    },
+
+    NoMostrarBucadorTareas: function(){
+      this.mostrar_buscador_task = false;
+    },
+
+    MostrarBuscadorTareas: function(){
+      this.mostrar_buscador_task = true;
+    },
+    /***************************************************************************
+    alerts
+    ***************************************************************************/
+    alertProductos: function(){
+      swal("a la verga wey");
+
+    },
+    /***************************************************************************
+    funciones productos
+    ***************************************************************************/
+
     GrabarCategoria: function(){
       axios({
         method: 'POST',
@@ -153,53 +183,18 @@ var app = new Vue({
 
     },
 
+    ConsultarCategorias: function(){
+      capturador = this;
+      axios.get('/aleriaVue/pages/SelectCategorys', {
+      }).then(function (response) {
+        capturador.categorys = response.data;
+      });
+    },
+
+
     /***************************************************************************
     funciones productos
     ***************************************************************************/
-
-    GrabarProcutos: function(){
-
-
-      this.image_product = this.$refs.image_product.files[0];
-
-      axios({
-        method: 'POST',
-        url: '/aleriaVue/pages/De',
-        data: {
-          name: this.name_product,
-          imagen: this.image_product,
-          description: this.description_product,
-          canridad: this.inventary_min_product,
-          precio_compra: this.price_in_product,
-          precio_venta: this.price_out_prouct
-        }
-
-      }).then(function (response) {
-        // handle success
-        if(response.data == true){
-          swal("Post publicado!","se ha creado un nuevo post", "success");
-        }else{
-          swal("Error al publicar post!","asdas", "warning");
-        }
-
-      }).catch(function (error) {
-        console.log(error);
-      });
-
-      this.name_product = "",
-      this.image_product = "",
-      this.description_product = "",
-      this.inventary_min_product= "",
-      this.price_in_product = "",
-      this.price_out_prouct = "",
-
-      //cierra el Modal
-      $('#post').modal('hide');
-      //refresca la tabla
-      this.ConsultaBlogs();
-
-
-    },
 
     ConsultarProducts: function(){
       capturador = this;
@@ -239,9 +234,27 @@ var app = new Vue({
 
     EditarProtucts: function(id) {
 
-    },
+      axios({
+        method: 'POST',
+        url: '/aleriaVue/pages/ProductSelected',
+        data: {
 
-    ActiveEdition: function(){
+          Id_product: id,
+
+        }
+
+      }).then(function (response) {
+        // handle success
+        if(response.data){
+          capturador.product_selected = response.data;
+        }else{
+          swal("Error al publicar la tarea!","por favor intentelo mas tarde", "warning");
+        }
+
+      }).catch(function (error) {
+        console.log(error);
+      });
+
 
     },
 
@@ -309,6 +322,8 @@ var app = new Vue({
       this.date_start_task = '';
       this.date_end_task_end = '';
       this.id_user_task = '';
+
+      this.ConsultarTask();
     },
 
     GrabarBlog: function() {
@@ -353,15 +368,6 @@ var app = new Vue({
       });
     },
 
-    ConsultarCategorias: function(){
-      capturador = this;
-      axios.get('/aleriaVue/pages/SelectCategorys', {
-      }).then(function (response) {
-        capturador.categorys = response.data;
-      });
-    },
-
-
 
     ConsultarUsers: function(){
       capturador = this;
@@ -405,9 +411,10 @@ var app = new Vue({
         method: 'POST',
         url: '/aleriaVue/pages/SpamMessage',
         data: {
+          Id_mensajes: id,
         }
       }).then(function (response) {
-        //console.log(response.data);
+        console.log(response.data);
         if(response.data === true){
           swal("Poof! Tu mensaje fue movido a la caperta de spam !", {
             icon: "success",
@@ -457,13 +464,15 @@ var app = new Vue({
       });
     },
 
-    MensajesLeidos: function(){
+    MensajesLeidos: function(id){
+
+      console.log(id);
 
       axios({
         method: 'POST',
         url: '/aleriaVue/pages/MessagesRead',
         data: {
-
+          Id_mensajes: id,
         }
       });
 
@@ -519,13 +528,6 @@ var app = new Vue({
         }
       });
     },
-
-
-
-
-
-
-
 
     EliminarProduct: function(id){
       swal({
@@ -643,21 +645,6 @@ var app = new Vue({
     validaciones de formularios
     ***************************************************************************/
 
-    CheckFormProducts: function(e){
-      this.errors = [];
-
-      if (!this.name_product) {
-        this.errors.push('El nombre es obligatorio.');
-      } else if (!this.validEmail(this.email_msg)) {
-        this.errors.push('El correo electrónico debe ser válido.');
-      }
-
-      if (!this.errors.length) {
-        this.GrabarMensaje();
-      }
-
-      e.preventDefault();
-    },
 
     CheckFormCategory: function(e){
 

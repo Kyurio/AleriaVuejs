@@ -5,7 +5,7 @@
     <li> <a class="nav-link" @click="ChangeTitle('Ventas')" id="v-pills-ventas-tab"      data-toggle="tab" href="#ventas" role="tab" aria-controls="v-pills-home" aria-selected="true"><i class="fas fa-shopping-cart"></i> Productos</a></li>
     <li> <a class="nav-link" @click="ChangeTitle('Blog')" id="v-pills-blogs-tab"     data-toggle="tab" href="#blog" role="tab" aria-controls="v-pills-profile" aria-selected="false"><i class="fas fa-feather-alt"></i> Blog</a></li>
     <li>
-      <a class="nav-link" @click="ChangeTitle('Mensajes'), MensajesLeidos()" id="v-pills-mensajes-tab"    data-toggle="tab" href="#mensajes" role="tab" aria-controls="v-pills-profile" aria-selected="false"><i class="fas fa-envelope"></i> Mensajes
+      <a class="nav-link" @click="ChangeTitle('Mensajes')" id="v-pills-mensajes-tab"    data-toggle="tab" href="#mensajes" role="tab" aria-controls="v-pills-profile" aria-selected="false"><i class="fas fa-envelope"></i> Mensajes
         <span v-if="CantidadMsg > 0"  class="right badge badge-danger">{{ CantidadMsg }} Nuevo</span>
       </a>
     </li>

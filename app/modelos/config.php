@@ -251,4 +251,37 @@ class config{
     }
   }
 
+  public function InsertNuevoProducto($datos){
+
+
+    try {
+      //consulta sql
+      $this->bd->query("INSERT INTO product (image, name, description, inventary_min, price_in, price_out, category_id, is_active) VALUES (:image, :name, :description, :inventary_min, :price_in, :price_out, :category_id, :is_active)");
+      //valores de consulta
+      $this->bd->bind(':image', $datos['imagen_product']);
+      $this->bd->bind(':name', $datos['name_product']);
+      $this->bd->bind(':description', $datos['description_product']);
+      $this->bd->bind(':inventary_min', $datos['inventary_min_product']);
+      $this->bd->bind(':price_in', $datos['price_in_product']);
+      $this->bd->bind(':price_out', $datos['price_out_prouct']);
+      $this->bd->bind(':category_id', $datos['categoriy_product']);
+      $this->bd->bind(':is_active', $datos['is_active_product']);
+      //valores a ingresar
+
+      //ejecutar consulta
+      if($this->bd->execute()){
+
+      return true;
+
+      }else{
+
+        return false;
+
+      }
+
+    } catch (\Exception $e) {
+      echo $e;
+    }
+  }
+
 }

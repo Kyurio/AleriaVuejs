@@ -1,6 +1,8 @@
 var app3 = new Vue({
   el: '#app-3',
   data: {
+    num_results_products_main:24,
+    pag: 1,
     products: {},
     BusquedaProductos: '',
     filterProducts: [],
