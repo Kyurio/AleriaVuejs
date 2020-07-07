@@ -9,7 +9,7 @@
         <span v-if="CantidadMsg > 0"  class="right badge badge-danger">{{ CantidadMsg }} Nuevo</span>
       </a>
     </li>
-    <li> <a class="nav-link" @click="ChangeTitle('Usuarios')" id="v-pills-usuarios-tab"    data-toggle="tab" href="#usuarios" role="tab" aria-controls="v-pills-profile" aria-selected="false"><i class="fas fa-user"></i> Usuarios</a></li>
+    <!-- <li> <a class="nav-link" @click="ChangeTitle('Usuarios')" id="v-pills-usuarios-tab"    data-toggle="tab" href="#usuarios" role="tab" aria-controls="v-pills-profile" aria-selected="false"><i class="fas fa-user"></i> Usuarios</a></li> -->
     <li> <a class="nav-link" @click="ChangeTitle('Tareas')" id="v-pills-tareas-tab"      data-toggle="tab" href="#tareas" role="tab" aria-controls="v-pills-profile" aria-selected="false"><i class="fas fa-thumbtack"></i> Tareas</a></li>
     <li> <a class="nav-link" @click="ChangeTitle('Estadisticas')" id="v-pills-estadisticas-tab"  data-toggle="tab" href="#estadisticas" role="tab" aria-controls="v-pills-settings" aria-selected="false"><i class="fas fa-chart-line"></i> Estadisticas</a></li>
     <li> <a class="nav-link" @click="ChangeTitle('Clientes')" id="v-pills-clientes-tab"      data-toggle="tab" href="#clientes" role="tab" aria-controls="v-pills-settings" aria-selected="false"><i class="fas fa-handshake"></i></i> Clientes</a></li>

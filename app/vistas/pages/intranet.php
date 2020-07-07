@@ -21,11 +21,16 @@ $option = "intranet";
           <?php require_once RUTA_APP . '/helpers/components/cabecera.php' ?>
           <!-- end cabecera -->
 
+          <!-- clientes -->
+          <div class="tab-pane" id="dashboard" role="tabpanel" aria-labelledby="dashboard">
+            <h1>dashboard</h1>
+          </div>
+          <!-- end clientes -->
+
           <!-- productos -->
-          <div class="tab-pane fade shadow" id="ventas" role="tabpanel" aria-labelledby="producto">
+          <div class="tab-pane" id="ventas" role="tabpanel" aria-labelledby="producto">
             <div class="card mb-4">
               <div class="card-body">
-                <!-- buscador con botones -->
                 <!-- buscador con botones -->
                 <div class="row">
                   <div class="col-sm-5">
@@ -85,9 +90,82 @@ $option = "intranet";
                             <td>{{ item.inventary_min }}</td>
                             <td>
                               <button type="button" name="Eliminar" @click="EliminarProduct(item.id)" class="btn btn-danger btn-sm" title="Eliminar"><i class="fas fa-trash"></i></button>
-                              <button type="button" name="Editar"   @click="EditarProtucts(item.id)" data-toggle="modal" data-target="#edit_product" class="btn btn-warning btn-sm" title="Editar"><i class="fas fa-pen"></i></button>
+                              <button type="button" name="Editar"   @click="EditarProtucts(item.id)" data-toggle="modal" data-target="#(item.id)" class="btn btn-warning btn-sm" title="Editar"><i class="fas fa-pen"></i></button>
                               <button type="button" name="Desactivar" @click="DescativarPorductos(item.id)"  class="btn btn-info btn-sm" title="Desactivar" v-if="item.is_active == 1"><i class="fas fa-ban"></i></button>
                               <button type="button" name="Activar" @click="ActivarPorductos(item.id)"  class="btn btn-success btn-sm" title="Activar" v-else><i class="fas fa-check"></i></button>
+
+
+                              <!-- modal de edicion -->
+                              <div class="modal fade" id="(item.id)" tabindex="-1" role="dialog" aria-labelledby="edit_product" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title" id="exampleModalLabel">Editar Producto</h5>
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                    </div>
+                                    <div class="modal-body">
+                                      <div class="container-sm">
+                                        <form  method="post" novalidate="true" enctype="multipart/form-data">
+                                          <div class="form-group">
+                                            <label for="">Nombre</label>
+                                            <input  type="text" placeholder="Titulo tarea" maxlength="60" name="name_product" class="form-control" required aria-describedby="emailHelp">
+                                          </div>
+                                          <div class="form-group">
+                                            <label for="">Descripcion</label>
+                                            <textarea name="description_product" class="form-control" placeholder="Descripcion" rows="2" cols="4"></textarea>
+                                          </div>
+                                          <!-- 3input en la misma linea -->
+                                          <div class="row">
+
+                                            <div class="col-md-4">
+                                              <div class="form-group">
+                                                <label for="">cantidad</label>
+                                                <input type="number" min="1" name="" class="form-control" aria-describedby="emailHelp">
+                                              </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                              <div class="form-group">
+                                                <label for="">precio compra </label>
+                                                <input type="number"  min="1" name="date_end_task" class="form-control" aria-describedby="emailHelp">
+                                              </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                              <div class="form-group">
+                                                <label for="">precio venta </label>
+                                                <input type="number" min="1" name="price_out_prouct"  class="form-control" aria-describedby="emailHelp">
+                                              </div>
+                                            </div>
+
+                                          </div>
+                                          <!-- end 3 input -->
+
+                                          <div class="form-group">
+                                            <label for="">categoria </label>
+                                            <select class="browser-default custom-select" >
+                                              <option v-for="item in categorys"  value="item.id">{{ item.name }}</option>
+                                            </select>
+                                          </div>
+
+                                          <div class="form-group">
+                                            <label for="">imagen </label>
+                                            <div class="custom-file">
+                                              <input type="file" id="image_product" ref="image_product">
+                                              <label class="custom-file-label" for="customFileLang">Seleccionar Archivo</label>
+                                            </div>
+                                          </div>
+
+                                          <button type="submit" class="btn btn-sm btn-warning"   name="button">Editar</button>
+                                        </form>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <!-- end modal edicion -->
+
+
                             </td>
                           </tr>
                         </tbody>
@@ -177,81 +255,11 @@ $option = "intranet";
                 </div>
               </div>
             </div>
-
-            <!-- modal de edicion -->
-            <div class="modal fade" id="edit_product" tabindex="-1" role="dialog" aria-labelledby="edit_product" aria-hidden="true">
-              <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Editar Producto</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body">
-                    <div class="container-sm">
-                      <form  method="post" novalidate="true" enctype="multipart/form-data">
-                        <div class="form-group">
-                          <label for="">Nombre</label>
-                          <input  type="text" placeholder="Titulo tarea" maxlength="60" name="name_product" class="form-control" required aria-describedby="emailHelp">
-                        </div>
-                        <div class="form-group">
-                          <label for="">Descripcion</label>
-                          <textarea name="description_product" class="form-control" placeholder="Descripcion" rows="2" cols="4"></textarea>
-                        </div>
-                        <!-- 3input en la misma linea -->
-                        <div class="row">
-
-                          <div class="col-md-4">
-                            <div class="form-group">
-                              <label for="">cantidad</label>
-                              <input type="number" min="1" name="" class="form-control" aria-describedby="emailHelp">
-                            </div>
-                          </div>
-                          <div class="col-md-4">
-                            <div class="form-group">
-                              <label for="">precio compra </label>
-                              <input type="number"  min="1" name="date_end_task" class="form-control" aria-describedby="emailHelp">
-                            </div>
-                          </div>
-                          <div class="col-md-4">
-                            <div class="form-group">
-                              <label for="">precio venta </label>
-                              <input type="number" min="1" name="price_out_prouct"  class="form-control" aria-describedby="emailHelp">
-                            </div>
-                          </div>
-
-                        </div>
-                        <!-- end 3 input -->
-
-                        <div class="form-group">
-                          <label for="">categoria </label>
-                          <select class="browser-default custom-select" >
-                            <option v-for="item in categorys"  value="item.id">{{ item.name }}</option>
-                          </select>
-                        </div>
-
-                        <div class="form-group">
-                          <label for="">imagen </label>
-                          <div class="custom-file">
-                            <input type="file" id="image_product" ref="image_product">
-                            <label class="custom-file-label" for="customFileLang">Seleccionar Archivo</label>
-                          </div>
-                        </div>
-
-                        <button type="submit" class="btn btn-sm btn-warning"   name="button">Editar</button>
-                      </form>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- end modal edicion -->
           </div>
           <!-- end tabs products -->
 
           <!-- tareas -->
-          <div class="tab-pane fade shadow" id="tareas" role="tabpanel" aria-labelledby="tareas">
+          <div class="tab-pane" id="tareas" role="tabpanel" aria-labelledby="tareas">
             <div class="card">
               <div class="card-body">
                 <!-- buscador con botones -->
@@ -367,7 +375,7 @@ $option = "intranet";
           <!-- end tareas -->
 
           <!-- estadisticas -->
-          <div class="tab-pane fade shadow" id="estadisticas" role="tabpanel" aria-labelledby="estadisticas">
+          <div class="tab-pane" id="estadisticas" role="tabpanel" aria-labelledby="estadisticas">
             <div class="card">
               <div class="card-body">
                 <div class="mt-1 mb-4 d-flex justify-content-between">
@@ -408,57 +416,88 @@ $option = "intranet";
           </div>
 
           <!-- blogs -->
-          <div class="tab-pane fade shadow" id="blog" role="tabpanel" aria-labelledby="banners">
+          <div class="tab-pane" id="blog" role="tabpanel" aria-labelledby="banners">
 
-            <div class="card">
+            <div class="card mb-4">
               <div class="card-body">
-
-
                 <!-- buscador con botones -->
                 <div class="row">
                   <div class="col-sm-5">
                     <div class="mt-1 d-flex justify-content-start">
-                      <div class="md-form input-with-pre-icon">
+                      <div class="md-form input-with-pre-icon"  v-if="mostrar_buscador_blog === true">
                         <i class="fas fa-search input-prefix"></i>
-                        <input type="text"  placeholder="buscar"  class="form-control">
+                        <input type="text"  placeholder="buscar..." v-model="buscadorProductos" class="form-control">
                       </div>
                     </div>
                   </div>
                   <div class="col-sm-7">
                     <div class="mt-1 mb-4 d-flex justify-content-end">
-                      <button type="button" title="Agregar" class="btn btn-sm btn-dark" data-toggle="modal" data-target="#AgregarProducto"><i class="fas fa-plus"></i></button>
+                      <ul class="nav" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                          <button type="button" @click="NoMostrarBuscadorBlog" title="Agregar" class="btn btn-sm btn-dark" data-target="#blogAdd"  data-toggle="tab" href="#blogAdd" role="tab" aria-selected="true" ><i class="fas fa-plus"></i></button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                          <button type="button" @click="MostrarBuscadorBlog"  title="Listado de tareas" class="btn btn-sm btn-dark" data-target="#list_post" data-toggle="tab" href="#list_post" role="tab" aria-selected="true" ><i class="far fa-list-alt"></i></button>
+                        </li>
+                      </ul>
                     </div>
                   </div>
                 </div>
                 <!-- end buscador con botones -->
 
-                <!-- blog -->
-                <div v-for="item in blogs">
-                  <div class="card shadow mt-4 mb-4">
-                    <div class="card-body">
-                      <div class="d-flex justify-content-between">
-                        <h3>de: {{item.Name}}</h3>
-                        <div class="d-flex flex-row-reverse bd-highlight">
-                          <button type="button" title="Eliminar" class="btn btn-sm btn-danger ml-1" ><i class="fas fa-trash"></i></button>
-                          <button type="button"  @click="MensajeSpam(item.Id)" title="Spam" class="btn btn-sm btn-warning ml-1" ><i class="fas fa-envelope-open"></i></button>
-                        </div>
-                      </div>
-                      <div class="mt-2">
-                        <h5>Asunto: {{item.Subjet}}</h5>
-                        <p>{{item.Content}}</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <!-- end blog -->
+                <div>
+                  <!-- contenido de el tab -->
+                  <div class="tab-content" id="posts">
+                    <div class="tab-pane fade show active" id="list_post" role="tabpanel" aria-labelledby="list_blog">
+                      <!-- table -->
 
+
+                      lista de post
+
+
+                      <!-- end table -->
+                    </div>
+
+                    <div class="tab-pane" id="blogAdd" role="tabpanel" aria-labelledby="blog">
+                      <h4>Agregar Post</h4>
+                      <br>
+
+
+                      <!-- agregar -->
+                      <form @submit="CheckFormPost" method="post" novalidate="true" >
+                        <p v-if="errors.length">
+                          <b>Por favor corriga los siguientes erroes:</b>
+                          <ul>
+                            <li v-for="error in errors" class="text-danger">{{ error }}</li>
+                          </ul>
+                        </p>
+                        <div class="form-group">
+                          <label for="name_product">Titulo</label>
+                          <input type="text" placeholder="Titulo del post" maxlength="60" v-model="title_post" name="title_post" class="form-control"  required>
+                        </div>
+                        <div class="form-group">
+                          <label for="name_product">Descripcion</label>
+                          <textarea name="description_post" id="editor" v-model="description_post" rows="8" cols="80"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-sm btn-dark" name="button">Grabar</button>
+                        <button @click="GrabarPost" class="btn btn-sm btn-dark" name="button">Grabar</button>
+                      </form>
+                      <!-- end agregar -->
+
+                    </div>
+
+                  </div>
+
+                  <!-- end contenido tabs -->
+
+                </div>
               </div>
             </div>
 
           </div>
 
           <!-- mensajes -->
-          <div class="tab-pane fade shadow" id="mensajes" role="tabpanel" aria-labelledby="mensajes">
+          <div class="tab-pane" id="mensajes" role="tabpanel" aria-labelledby="mensajes">
 
             <div class="card">
               <div class="card-body">
@@ -523,7 +562,7 @@ $option = "intranet";
           </div>
 
           <!-- ususarios -->
-          <div class="tab-pane fade shadow" id="usuarios" role="tabpanel" aria-labelledby="usuarios">
+          <div class="tab-pane" id="usuarios" role="tabpanel" aria-labelledby="usuarios">
             <div class="card">
               <div class="card-body">
 
@@ -601,7 +640,7 @@ $option = "intranet";
           </div>
 
           <!-- clientes -->
-          <div class="tab-pane fade shadow" id="clientes" role="tabpanel" aria-labelledby="clientes">
+          <div class="tab-pane" id="clientes" role="tabpanel" aria-labelledby="clientes">
             <div class="card">
               <div class="card-body">
 
@@ -702,7 +741,7 @@ $option = "intranet";
           <!-- end clientes -->
 
           <!-- Configuraciones -->
-          <div class="tab-pane fade shadow" id="configuracion" role="tabpanel" aria-labelledby="configuracion">
+          <div class="tab-pane" id="configuracion" role="tabpanel" aria-labelledby="configuracion">
 
             <div class="card">
               <div class="card-body">
@@ -732,6 +771,9 @@ $option = "intranet";
                 <div class="tab-content" id="TabConfigracion">
 
                   <div class="tab-pane fade show active" id="Categorias" role="tabpanel" aria-labelledby="home-tab">
+
+
+
                     <ul class="nav" id="myTab" role="tablist">
                       <li class="nav-item">
                         <a class="btn btn-sm btn-dark" id="home-tab" data-toggle="tab" href="#category" title="Agregar Categorias" role="tab" aria-controls="home"
@@ -743,9 +785,10 @@ $option = "intranet";
                       </li>
                     </ul>
                     <div class="tab-content" id="">
-
                       <div class="tab-pane fade show active" id="list_category" role="tabpanel" aria-labelledby="home-tab">
-
+                        <div class="mt-1 mb-1 py-1">
+                          <h4>Listado de categorias</h4>
+                        </div>
                         <table class="table text-center">
                           <thead>
                             <tr>

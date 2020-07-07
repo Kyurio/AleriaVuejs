@@ -253,7 +253,6 @@ class config{
 
   public function InsertNuevoProducto($datos){
 
-
     try {
       //consulta sql
       $this->bd->query("INSERT INTO product (image, name, description, inventary_min, price_in, price_out, category_id, is_active) VALUES (:image, :name, :description, :inventary_min, :price_in, :price_out, :category_id, :is_active)");
@@ -271,7 +270,7 @@ class config{
       //ejecutar consulta
       if($this->bd->execute()){
 
-      return true;
+        return true;
 
       }else{
 
@@ -282,6 +281,29 @@ class config{
     } catch (\Exception $e) {
       echo $e;
     }
+  }
+
+  public function InsertNuevoPost($datos){
+
+    try {
+      //consulta sql
+      $this->bd->query("INSERT INTO post (titulo, descripcion ) VALUES (:title_post, :description_post)");
+      //valores de consulta
+      $this->bd->bind(':title_post', $datos['title_post']);
+      $this->bd->bind(':description_post', $datos['description_post']);
+      //valores a ingresar
+
+      //ejecutar consulta
+      if($this->bd->execute()){
+        return true;
+      }else{
+        return false;
+      }
+
+    } catch (\Exception $e) {
+      echo $e;
+    }
+
   }
 
 }

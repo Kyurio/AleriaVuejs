@@ -6,7 +6,8 @@
       </div>
       <div class="col-sm-6">
         <div class="float-sm-right">
-          <a href="#" class="btn btn-warning btn-sm" title="Home"><i class="fas fa-home"></i></a>
+
+          <a class="btn btn-warning btn-sm" @click="ChangeTitle('Dashboard')" id="v-pills-ventas-tab" data-toggle="tab" href="#dashboard" title="home" role="tab" aria-controls="v-pills-home" aria-selected="true"><i class="fas fa-home"></i></a>
           <a @click="LogOut" class="btn btn-danger btn-sm" title="Salir"><i class="fas fa-sign-out-alt"></i></a>
         </div>
       </div>

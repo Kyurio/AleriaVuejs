@@ -30,11 +30,15 @@ var app = new Vue({
     filterClients: [],
     filterMessages: [],
     filterProducts: [],
+    filterBlog: [],
 
+    //blog
+    mostrar_buscador_blog: true,
+    title_post: '',
+    description_post: '',
 
     //product
     mostrar_buscador_producto: true,
-
 
     //task
     date_start_task: '',
@@ -83,6 +87,7 @@ var app = new Vue({
     this.ChartCls();
     this.ConsultarCategorias();
     this.ConsultarTask();
+    this.editordetexto();
 
   },
 
@@ -126,8 +131,18 @@ var app = new Vue({
 
   methods: {
 
+    editordetexto: function(){
 
+      ClassicEditor
+      .create( document.querySelector( '#editor' ) )
+      .catch( error => {
+        console.error( error );
+      } );
 
+    },
+    /***************************************************************************
+    alerts
+    ***************************************************************************/
 
     NoMostrarBuscadorProductos: function(){
       this.mostrar_buscador_producto = false;
@@ -144,6 +159,15 @@ var app = new Vue({
     MostrarBuscadorTareas: function(){
       this.mostrar_buscador_task = true;
     },
+
+    MostrarBuscadorBlog: function(){
+      this.mostrar_buscador_blog = true;
+    },
+
+    NoMostrarBuscadorBlog: function(){
+      this.mostrar_buscador_blog = false;
+    },
+
     /***************************************************************************
     alerts
     ***************************************************************************/
@@ -368,7 +392,6 @@ var app = new Vue({
       });
     },
 
-
     ConsultarUsers: function(){
       capturador = this;
       axios.get('/aleriaVue/pages/SelectUser', {
@@ -479,239 +502,287 @@ var app = new Vue({
       this.MensajesNuevos();
 
     },
-
     /***************************************************************************
-    funciones tareas
+    funciones blog
     ***************************************************************************/
-
-
-    ConsultarClients: function(){
-      capturador = this;
-      axios.get('/aleriaVue/pages/SelectClient', {
-      }).then(function (response) {
-        capturador.clients = response.data;
-        capturador.filterClients = response.data;
-        //console.log(response.data);
-      });
-    },
-
-    EliminarClient: function(id){
-      swal({
-        title: "¿Estas seguro de Eliminar el cliente?",
-        icon: "warning",
-        buttons: true,
-        dangerMode: true,
-      })
-      .then((willDelete) => {
-        if (willDelete) {
-          //ejecuta la funcion
-          axios({
-            method: 'POST',
-            url: '/aleriaVue/pages/DeleteClient',
-            data: {
-              id_cliente: id,
-            }
-          }).then(function (response) {
-            console.log(response.data);
-            if(response.data == true){
-              swal("Poof! Tu cliente fue eliminado !", {
-                icon: "success",
-              });
-            }else {
-              swal("Error al eliminar el cliente", {
-                icon: "warning",
-              });
-            }
-          });
-          this.ConsultarClients();
-          //mensaje de elemento eleiminado
-        }
-      });
-    },
-
-    EliminarProduct: function(id){
-      swal({
-        title: "¿Estas seguro de Eliminar el registro?",
-        icon: "warning",
-        buttons: true,
-        dangerMode: true,
-      })
-      .then((willDelete) => {
-        if (willDelete) {
-          //ejecuta la funcion
-          axios({
-            method: 'POST',
-            url: '/aleriaVue/pages/DeleteProducto',
-            data: {
-              id_product: id,
-            }
-          }).then(function (response) {
-            if(response.data == 1){
-              swal("Poof! Tu registro fue eliminado !", {
-                icon: "success",
-              });
-            }else {
-              swal("Error al eliminar el registro", {
-                icon: "warning",
-              });
-            }
-          });
-          this.ConsultarProducts();
-          //mensaje de elemento eleiminado
-        }
-      });
-    },
-
-    ChartMsg: function(){
-
-      var ctx = document.getElementById('ChartMsgs').getContext('2d');
-      var chart = new Chart(ctx, {
-        // The type of chart we want to create
-        type: 'line',
-
-        // The data for our dataset
-        data: {
-          labels: ['Ene', 'Feb'],
-          datasets: [{
-            label: 'Tràfico de correos',
-            backgroundColor: 'rgb(255, 99, 132)',
-            borderColor: 'rgb(255, 99, 132)',
-            data: [0, 10, 50]
-          }]
-        },
-
-        // Configuration options go here
-        options: {}
-      });
-
-
-    },
-
-    ChartCls: function(){
-      //consulta los datos
-      capturador = this;
-      axios.get('/aleriaVue/pages/chartCls', {
-      }).then(function (response) {
-        capturador.chartclsData = response.data;
-        //console.log(response.data)
-      });
-
-
-      var ctx = document.getElementById('ChartCls').getContext('2d');
-      var chart = new Chart(ctx, {
-        // The type of chart we want to create
-        type: 'line',
-
-        // The data for our dataset
-        data: {
-          labels: ['Ene', 'Feb', 'Mar', 'Abr'],
-          datasets: [{
-            label: 'Tràfico de clientes',
-            backgroundColor: 'rgb(255, 99, 132)',
-            borderColor: 'rgb(255, 99, 132)',
-            data: [33,55,78,94]
-          }]
-        },
-
-        // Configuration options go here
-        options: {}
-      });
-
-    },
-
-    Detalle: function(id){
-
-      var filtro = id;
+    GrabarPost: function(){
       axios({
-        method: 'POST',
-        url: '/aleriaVue/pages/details',
+        method: 'post',
+        url: '/aleriaVue/pages/InsertPost',
         data: {
-          table: 'product',
-          id: this.filtro,
+
+          title_post: this.title_post,
+          description_post: this.description_post,
+
         }
 
       }).then(function (response) {
         // handle success
-        this.details = response.data;
-
-      });
-
-      var url = "/aleriaVue/pages/detalle/"+filtro;
-      window.location.replace(url);
-    },
-
-
-    /***************************************************************************
-    validaciones de formularios
-    ***************************************************************************/
-
-
-    CheckFormCategory: function(e){
-
-      this.errors = [];
-
-      if (!this.name_category) {
-        this.errors.push('El nombre es obligatorio.');
-      } else if (!this.description_category)  {
-        this.errors.push('La descripcion es obligatoria.');
-      }
-
-      if (!this.errors.length) {
-        this.GrabarCategoria();
-      }
-
-      this.ConsultarCategorias();
-      e.preventDefault();
-
-    },
-
-    CheckFormTask: function(e){
-
-      this.errors = [];
-
-      if (!this.title_task) {
-        this.errors.push('El titulo es obligatorio.');
-      } else if (!this.descript_task)  {
-        this.errors.push('La descripcion es obligatoria.');
-      }
-
-      //grabar
-      if (!this.errors.length) {
-        this.GrabarTarea();
-      }
-
-      e.preventDefault();
-
-    },
-
-    mantenerTabs: function(){
-      $(document).ready(function(){
-        $('a[data-toggle="tab"]').on('show.bs.tab', function(e) {
-          localStorage.setItem('activeTab', $(e.target).attr('href'));
-        });
-        var activeTab = localStorage.getItem('activeTab');
-        if(activeTab){
-          $('#myTab a[href="' + activeTab + '"]').tab('show');
+        if(response.data === true){
+          swal("post Creado!","se ha registrado un nuevo post", "success");
+        }else{
+          swal("Error al publicar el post!","por favor intentelo mas tarde", "warning");
         }
+
+      }).catch(function (error) {
+        console.log(error);
       });
-    },
 
-    ChangeTitle: function(title){
-      this.title_tab = title;
-    },
+      this.title_post = '';
+      this.description_post = '';
 
-    /***************************************************************************
-    logout
-    ***************************************************************************/
-    LogOut: function(){
-      capturador = this;
-      axios.get('/aleriaVue/pages/Logout', {
-      }).then(function (response) {
 
-      });
-    }
 
   },
+
+  /***************************************************************************
+  funciones tareas
+  ***************************************************************************/
+
+
+  ConsultarClients: function(){
+    capturador = this;
+    axios.get('/aleriaVue/pages/SelectClient', {
+    }).then(function (response) {
+      capturador.clients = response.data;
+      capturador.filterClients = response.data;
+      //console.log(response.data);
+    });
+  },
+
+  EliminarClient: function(id){
+    swal({
+      title: "¿Estas seguro de Eliminar el cliente?",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        //ejecuta la funcion
+        axios({
+          method: 'POST',
+          url: '/aleriaVue/pages/DeleteClient',
+          data: {
+            id_cliente: id,
+          }
+        }).then(function (response) {
+          console.log(response.data);
+          if(response.data == true){
+            swal("Poof! Tu cliente fue eliminado !", {
+              icon: "success",
+            });
+          }else {
+            swal("Error al eliminar el cliente", {
+              icon: "warning",
+            });
+          }
+        });
+        this.ConsultarClients();
+        //mensaje de elemento eleiminado
+      }
+    });
+  },
+
+  EliminarProduct: function(id){
+    swal({
+      title: "¿Estas seguro de Eliminar el registro?",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        //ejecuta la funcion
+        axios({
+          method: 'POST',
+          url: '/aleriaVue/pages/DeleteProducto',
+          data: {
+            id_product: id,
+          }
+        }).then(function (response) {
+          if(response.data == 1){
+            swal("Poof! Tu registro fue eliminado !", {
+              icon: "success",
+            });
+          }else {
+            swal("Error al eliminar el registro", {
+              icon: "warning",
+            });
+          }
+        });
+        this.ConsultarProducts();
+        //mensaje de elemento eleiminado
+      }
+    });
+  },
+
+  ChartMsg: function(){
+
+    var ctx = document.getElementById('ChartMsgs').getContext('2d');
+    var chart = new Chart(ctx, {
+      // The type of chart we want to create
+      type: 'line',
+
+      // The data for our dataset
+      data: {
+        labels: ['Ene', 'Feb'],
+        datasets: [{
+          label: 'Tràfico de correos',
+          backgroundColor: 'rgb(255, 99, 132)',
+          borderColor: 'rgb(255, 99, 132)',
+          data: [0, 10, 50]
+        }]
+      },
+
+      // Configuration options go here
+      options: {}
+    });
+
+
+  },
+
+  ChartCls: function(){
+    //consulta los datos
+    capturador = this;
+    axios.get('/aleriaVue/pages/chartCls', {
+    }).then(function (response) {
+      capturador.chartclsData = response.data;
+      //console.log(response.data)
+    });
+
+
+    var ctx = document.getElementById('ChartCls').getContext('2d');
+    var chart = new Chart(ctx, {
+      // The type of chart we want to create
+      type: 'line',
+
+      // The data for our dataset
+      data: {
+        labels: ['Ene', 'Feb', 'Mar', 'Abr'],
+        datasets: [{
+          label: 'Tràfico de clientes',
+          backgroundColor: 'rgb(255, 99, 132)',
+          borderColor: 'rgb(255, 99, 132)',
+          data: [33,55,78,94]
+        }]
+      },
+
+      // Configuration options go here
+      options: {}
+    });
+
+  },
+
+  Detalle: function(id){
+
+    var filtro = id;
+    axios({
+      method: 'POST',
+      url: '/aleriaVue/pages/details',
+      data: {
+        table: 'product',
+        id: this.filtro,
+      }
+
+    }).then(function (response) {
+      // handle success
+      this.details = response.data;
+
+    });
+
+    var url = "/aleriaVue/pages/detalle/"+filtro;
+    window.location.replace(url);
+  },
+
+
+  /***************************************************************************
+  validaciones de formularios
+  ***************************************************************************/
+  CheckFormPost: function(){
+    this.errors = [];
+
+    if (!this.title_post) {
+      this.errors.push('El titulo es obligatorio.');
+    } else if (!this.description_post)  {
+      this.errors.push('La descripcion es obligatoria.');
+    }
+
+    if (!this.errors.length) {
+      // this.GrabarPost();
+      console.log("grabar poss");
+    }
+
+    //this.ConsultarPost();
+    e.preventDefault();
+  },
+
+  CheckFormCategory: function(e){
+
+    this.errors = [];
+
+    if (!this.name_category) {
+      this.errors.push('El nombre es obligatorio.');
+    } else if (!this.description_category)  {
+      this.errors.push('La descripcion es obligatoria.');
+    }
+
+    if (!this.errors.length) {
+      this.GrabarCategoria();
+    }
+
+    this.ConsultarCategorias();
+    e.preventDefault();
+
+  },
+
+  CheckFormTask: function(e){
+
+    this.errors = [];
+
+    if (!this.title_task) {
+      this.errors.push('El titulo es obligatorio.');
+    } else if (!this.descript_task)  {
+      this.errors.push('La descripcion es obligatoria.');
+    }
+
+    //grabar
+    if (!this.errors.length) {
+      this.GrabarTarea();
+    }
+
+    e.preventDefault();
+
+  },
+
+  mantenerTabs: function(){
+    $(document).ready(function(){
+      $('a[data-toggle="tab"]').on('show.bs.tab', function(e) {
+        localStorage.setItem('activeTab', $(e.target).attr('href'));
+      });
+      var activeTab = localStorage.getItem('activeTab');
+      if(activeTab){
+        $('#myTab a[href="' + activeTab + '"]').tab('show');
+      }
+    });
+  },
+
+  ChangeTitle: function(title){
+    this.title_tab = title;
+  },
+
+  /***************************************************************************
+  logout
+  ***************************************************************************/
+  LogOut: function(){
+    capturador = this;
+    axios.get('/aleriaVue/pages/Logout', {
+    }).then(function (response) {
+
+    });
+  }
+
+},
 
 
 })

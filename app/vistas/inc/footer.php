@@ -68,7 +68,8 @@
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <!-- axios -->
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-
+<!-- editor text -->
+<script src="https://cdn.ckeditor.com/ckeditor5/20.0.0/classic/ckeditor.js"></script>
 
 
 <?php

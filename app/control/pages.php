@@ -12,6 +12,33 @@ class pages extends routes{
 
   }
 
+  public function InsertPost(){
+
+    $data = json_decode(file_get_contents("php://input"), true);
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+      $formNuevoPost = [
+        'title_post' => $data['title_post'],
+        'description_post' => $data['description_post'],
+      ];
+      //ejecyta la insercion
+      if($this->ConfigModelo->InsertNuevoPost($formNuevoPost)){
+        echo json_encode(true);
+      }else{
+        echo json_encode(false);
+      }
+
+    }else{
+
+      $formNuevoPost = [
+        'name_category' => '',
+        'description_category' => '',
+      ];
+
+    }
+
+  }
+
   public function InsertCategory(){
 
     $data = json_decode(file_get_contents("php://input"), true);
@@ -72,40 +99,69 @@ class pages extends routes{
 
   public function InsertProducto(){
 
-    $data = json_decode(file_get_contents("php://input"), true);
+    //$data = json_decode(file_get_contents("php://input"), true);
+    $imagen = $_FILES['img_product'];
+    $directorio = RUTA_URL.'public/img/produts/';
+    $archivo = $directorio . basename($imagen['name']);
+    $tipoArchivo = strtolower(pathinfo($archivo, PATHINFO_EXTENSION));
+    $size = getimagesize($imagen['tmp_name']);
+    if ($size) {
+      // Valida si imagen es menor a 10mb
+      $tamano = $imagen['size'];
+      if (!$tamano < 500) {
+        if ($tipoArchivo == 'jpg' || $tipoArchivo == 'png' || $tipoArchivo == 'jpeg' || $tipoArchivo == 'gif') {
+          if (!file_exists($archivo)) {
+            move_uploaded_file($imagen['tmp_name'], $archivo);
 
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-      $formNuevaVenta = [
-        'name_product' => trim($_POST['Nombre_Producto']),
-        'description_product' => trim($_POST['Descripcion_product']),
-        'inventary_min_product' => trim($_POST['Inventary_min_product']),
-        'price_in_product' => trim($_POST['Valor_compra']),
-        'price_out_prouct' => trim($_POST['Valor_venta']),
-        'categoriy_product' => trim($_POST['Category_product']),
-        'is_active_product' => 1,
-        'imagen_product' => trim($_FILES['img_product']['name']),
-      ];
+            echo "success, El archivo se subió correctamente";
 
-      //ejecyta la insercion
-      if($this->ConfigModelo->InsertNuevoProducto($formNuevaVenta)){
-        redireccionar('pages/intranet?msg=true');
-      }else{
-        redireccionar('pages/intranet?msg=false');
+          } else {
+            echo "error, Ya has subido anteriormente esa imagen";
+          }
+        } else {
+          echo "error, Solo se admite archivo jpg, jpeg, png, gif";
+        }
+      } else {
+        echo "error, El tamaño de la imagen debe de ser menor a 5mb";
       }
+    } else {
+      echo "error, El archivo no es una imagen";
+    }
 
-    }else{
+    if(!empty($archivo)){
 
-      $formNuevaVenta = [
-        'Nombre_Producto' => '',
-        'Fecha_Publicacion' => '',
-        'Descripcion' => '',
-        'Precio' => '',
-        'Oferta' => '',
-        'Estado' => '',
-        'Imagens' => '',
-        'Fecha_Creacion' => '',
-      ];
+      if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $formNuevaVenta = [
+          'name_product' => trim($_POST['Nombre_Producto']),
+          'description_product' => trim($_POST['Descripcion_product']),
+          'inventary_min_product' => trim($_POST['Inventary_min_product']),
+          'price_in_product' => trim($_POST['Valor_compra']),
+          'price_out_prouct' => trim($_POST['Valor_venta']),
+          'categoriy_product' => trim($_POST['Category_product']),
+          'is_active_product' => 1,
+          'imagen_product' => trim($archivo),
+        ];
 
+        //ejecyta la insercion
+        if($this->ConfigModelo->InsertNuevoProducto($formNuevaVenta)){
+          //redireccionar('pages/intranet?msg=true');
+        }else{
+          //redireccionar('pages/intranet?msg=false');
+        }
+
+      }else{
+
+        $formNuevaVenta = [
+          'Nombre_Producto' => '',
+          'Fecha_Publicacion' => '',
+          'Descripcion' => '',
+          'Precio' => '',
+          'Oferta' => '',
+          'Estado' => '',
+          'Imagens' => '',
+          'Fecha_Creacion' => '',
+        ];
+      }
     }
   }
 
