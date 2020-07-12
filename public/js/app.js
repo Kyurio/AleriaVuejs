@@ -3,6 +3,9 @@ var app = new Vue({
   el: '#app',
 
   data: {
+    //--------------------------------------------------------------------------
+    // paginadores
+    //--------------------------------------------------------------------------
     num_results_products_main: 3,
     num_results_category: 5,
     num_results_clients: 6,
@@ -19,6 +22,7 @@ var app = new Vue({
     msg: {},
     blogs: {},
     products: {},
+    ProductEdit: {},
     product_selected: {},
     details: {},
     clients: {},
@@ -26,6 +30,7 @@ var app = new Vue({
     categorys: {},
     chartclsData: {},
     tasks: [],
+
     filterTasks: [],
     filterClients: [],
     filterMessages: [],
@@ -39,6 +44,7 @@ var app = new Vue({
 
     //product
     mostrar_buscador_producto: true,
+
 
     //task
     date_start_task: '',
@@ -132,13 +138,14 @@ var app = new Vue({
   methods: {
 
     editordetexto: function(){
-
-      ClassicEditor
-      .create( document.querySelector( '#editor' ) )
-      .catch( error => {
-        console.error( error );
-      } );
-
+    /*
+          ClassicEditor
+          .create(
+             document.querySelector( '#editor' ) ).catch( error => {
+               console.error( error );
+             }
+            );
+    */
     },
     /***************************************************************************
     alerts
@@ -306,6 +313,27 @@ var app = new Vue({
       });
 
       this.ConsultarProducts();
+
+    },
+
+    AbrirModalEdicion: function(id){
+
+      capturador = this;
+
+      axios({
+        method: 'POST',
+        url: '/aleriaVue/pages/SelectProductUnit',
+        data: {
+
+          Id_product: id,
+
+        }
+      }).then(function (response) {
+        console.log(response.data);
+        capturador.ProductEdit = response.data;
+          $("#edit_product").modal("show");
+      });
+
 
     },
 
@@ -699,23 +727,7 @@ var app = new Vue({
   /***************************************************************************
   validaciones de formularios
   ***************************************************************************/
-  CheckFormPost: function(){
-    this.errors = [];
 
-    if (!this.title_post) {
-      this.errors.push('El titulo es obligatorio.');
-    } else if (!this.description_post)  {
-      this.errors.push('La descripcion es obligatoria.');
-    }
-
-    if (!this.errors.length) {
-      // this.GrabarPost();
-      console.log("grabar poss");
-    }
-
-    //this.ConsultarPost();
-    e.preventDefault();
-  },
 
   CheckFormCategory: function(e){
 
@@ -732,6 +744,23 @@ var app = new Vue({
     }
 
     this.ConsultarCategorias();
+    e.preventDefault();
+
+  },
+
+  CheckFormBlog: function(e){
+
+    this.errors = [];
+
+    if (!this.title_post) {
+      this.errors.push('El titulo es obligatorio.');
+    } else if (!this.description_post)  {
+      this.errors.push('La descripcion es obligatoria.');
+    }
+
+    if (!this.errors.length) {
+      this.GrabarPost();
+    }
     e.preventDefault();
 
   },
@@ -770,6 +799,8 @@ var app = new Vue({
   ChangeTitle: function(title){
     this.title_tab = title;
   },
+
+
 
   /***************************************************************************
   logout

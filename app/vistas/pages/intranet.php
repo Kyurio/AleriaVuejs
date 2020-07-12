@@ -89,83 +89,10 @@ $option = "intranet";
                             </td>
                             <td>{{ item.inventary_min }}</td>
                             <td>
-                              <button type="button" name="Eliminar" @click="EliminarProduct(item.id)" class="btn btn-danger btn-sm" title="Eliminar"><i class="fas fa-trash"></i></button>
-                              <button type="button" name="Editar"   @click="EditarProtucts(item.id)" data-toggle="modal" data-target="#(item.id)" class="btn btn-warning btn-sm" title="Editar"><i class="fas fa-pen"></i></button>
+                              <button type="button" name="Eliminar"   @click="EliminarProduct(item.id)" class="btn btn-danger btn-sm" title="Eliminar"><i class="fas fa-trash"></i></button>
+                              <button type="button" name="Editar"     @click="AbrirModalEdicion(item.id)"  class="btn btn-warning btn-sm" title="Editar"  ><i class="fas fa-pen"></i></button>
                               <button type="button" name="Desactivar" @click="DescativarPorductos(item.id)"  class="btn btn-info btn-sm" title="Desactivar" v-if="item.is_active == 1"><i class="fas fa-ban"></i></button>
-                              <button type="button" name="Activar" @click="ActivarPorductos(item.id)"  class="btn btn-success btn-sm" title="Activar" v-else><i class="fas fa-check"></i></button>
-
-
-                              <!-- modal de edicion -->
-                              <div class="modal fade" id="(item.id)" tabindex="-1" role="dialog" aria-labelledby="edit_product" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                  <div class="modal-content">
-                                    <div class="modal-header">
-                                      <h5 class="modal-title" id="exampleModalLabel">Editar Producto</h5>
-                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                      </button>
-                                    </div>
-                                    <div class="modal-body">
-                                      <div class="container-sm">
-                                        <form  method="post" novalidate="true" enctype="multipart/form-data">
-                                          <div class="form-group">
-                                            <label for="">Nombre</label>
-                                            <input  type="text" placeholder="Titulo tarea" maxlength="60" name="name_product" class="form-control" required aria-describedby="emailHelp">
-                                          </div>
-                                          <div class="form-group">
-                                            <label for="">Descripcion</label>
-                                            <textarea name="description_product" class="form-control" placeholder="Descripcion" rows="2" cols="4"></textarea>
-                                          </div>
-                                          <!-- 3input en la misma linea -->
-                                          <div class="row">
-
-                                            <div class="col-md-4">
-                                              <div class="form-group">
-                                                <label for="">cantidad</label>
-                                                <input type="number" min="1" name="" class="form-control" aria-describedby="emailHelp">
-                                              </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                              <div class="form-group">
-                                                <label for="">precio compra </label>
-                                                <input type="number"  min="1" name="date_end_task" class="form-control" aria-describedby="emailHelp">
-                                              </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                              <div class="form-group">
-                                                <label for="">precio venta </label>
-                                                <input type="number" min="1" name="price_out_prouct"  class="form-control" aria-describedby="emailHelp">
-                                              </div>
-                                            </div>
-
-                                          </div>
-                                          <!-- end 3 input -->
-
-                                          <div class="form-group">
-                                            <label for="">categoria </label>
-                                            <select class="browser-default custom-select" >
-                                              <option v-for="item in categorys"  value="item.id">{{ item.name }}</option>
-                                            </select>
-                                          </div>
-
-                                          <div class="form-group">
-                                            <label for="">imagen </label>
-                                            <div class="custom-file">
-                                              <input type="file" id="image_product" ref="image_product">
-                                              <label class="custom-file-label" for="customFileLang">Seleccionar Archivo</label>
-                                            </div>
-                                          </div>
-
-                                          <button type="submit" class="btn btn-sm btn-warning"   name="button">Editar</button>
-                                        </form>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <!-- end modal edicion -->
-
-
+                              <button type="button" name="Activar"    @click="ActivarPorductos(item.id)"  class="btn btn-success btn-sm" title="Activar" v-else><i class="fas fa-check"></i></button>
                             </td>
                           </tr>
                         </tbody>
@@ -248,8 +175,79 @@ $option = "intranet";
 
                       </div>
                     </div>
-                  </div>
+                    </div>
 
+
+                    <!-- modal de edicion -->
+                    <div class="modal fade" id="edit_product" tabindex="-1" role="dialog" aria-labelledby="edit_product" aria-hidden="true" v-for="item in ProductEdit">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Editar Producto</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            <div class="container-sm">
+                              <form  method="post" novalidate="true" enctype="multipart/form-data">
+                                <div class="form-group">
+                                  <label for="">Nombre</label>
+                                  <input type="text" name="" v-bind:value="item.id">
+                                  <input  type="text" placeholder="Titulo tarea" maxlength="60"   v-bind:value="item.name" class="form-control" required aria-describedby="emailHelp">
+                                </div>
+                                <div class="form-group">
+                                  <label for="">Descripcion</label>
+                                  <textarea v-model="description_product" class="form-control" placeholder="Descripcion" rows="2" cols="4"> {{ item.description }} </textarea>
+                                </div>
+                                <!-- 3input en la misma linea -->
+                                <div class="row">
+
+                                  <div class="col-md-4">
+                                    <div class="form-group">
+                                      <label for="">cantidad</label>
+                                      <input type="number" min="1" name="" v-model="inventary_min_product" v-bind:value="item.inventary_min" class="form-control" aria-describedby="emailHelp">
+                                    </div>
+                                  </div>
+                                  <div class="col-md-4">
+                                    <div class="form-group">
+                                      <label for="">precio compra </label>
+                                      <input type="number"  min="1"  v-model="price_out_prouct" v-bind:value="item.price_in"  name="date_end_task" class="form-control" aria-describedby="emailHelp">
+                                    </div>
+                                  </div>
+                                  <div class="col-md-4">
+                                    <div class="form-group">
+                                      <label for="">precio venta </label>
+                                      <input type="number" min="1" v-model="price_out_prouct"  v-bind:value="item.price_out"  name="price_out_prouct"  class="form-control" aria-describedby="emailHelp">
+                                    </div>
+                                  </div>
+
+                                </div>
+                                <!-- end 3 input -->
+
+                                <div class="form-group">
+                                  <label for="">categoria </label>
+                                  <select class="browser-default custom-select" >
+                                    <option v-for="item in categorys" v-model="Category_product" v-bind:value="item.category"  value="item.id">{{ item.name }}</option>
+                                  </select>
+                                </div>
+
+                                <div class="form-group">
+                                  <label for="">imagen </label>
+                                  <div class="custom-file">
+                                    <input type="file">
+                                    <label class="custom-file-label"  v-bind:value="item.image" for="customFileLang">Seleccionar Archivo</label>
+                                  </div>
+                                </div>
+
+                                <button type="submit" class="btn btn-sm btn-warning"   name="button">Editar</button>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- end modal edicion -->
                   <!-- end contenido tabs -->
 
                 </div>
@@ -280,6 +278,9 @@ $option = "intranet";
                         </li>
                         <li class="nav-item" role="presentation">
                           <button type="button" @click="MostrarBuscadorTareas" title="Listado de tareas" class="btn btn-sm btn-dark" data-target="#list_task" data-toggle="tab" href="#list_task" role="tab" aria-selected="true" ><i class="far fa-list-alt"></i></button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                          <button type="button" @click="NoMostrarBucadorTareas" title="Estadisticas" class="btn btn-sm btn-dark" data-target="#charts_task" data-toggle="tab" href="#charts_task" role="tab" aria-selected="true" ><i class="far fa-chart-bar"></i></button>
                         </li>
                       </ul>
                     </div>
@@ -366,6 +367,15 @@ $option = "intranet";
 
 
                     </div>
+                  </div>
+                  <div class="tab-pane fade" id="charts_task" role="tabpanel" aria-labelledby="list">
+
+                    <!-- tareas -->
+
+                    <h3>estadisticas</h3>
+
+
+
                   </div>
                 </div>
                 <!-- end contenido tabs -->
@@ -464,7 +474,7 @@ $option = "intranet";
 
 
                       <!-- agregar -->
-                      <form @submit="CheckFormPost" method="post" novalidate="true" >
+                      <form @submit="CheckFormBlog" method="post" novalidate="true">
                         <p v-if="errors.length">
                           <b>Por favor corriga los siguientes erroes:</b>
                           <ul>
@@ -472,16 +482,16 @@ $option = "intranet";
                           </ul>
                         </p>
                         <div class="form-group">
-                          <label for="name_product">Titulo</label>
-                          <input type="text" placeholder="Titulo del post" maxlength="60" v-model="title_post" name="title_post" class="form-control"  required>
+                          <label for="">titulo</label>
+                          <input type="text" min="1" name="title_post" v-model="title_post" class="form-control"  aria-describedby="emailHelp">
                         </div>
                         <div class="form-group">
-                          <label for="name_product">Descripcion</label>
-                          <textarea name="description_post" id="editor" v-model="description_post" rows="8" cols="80"></textarea>
+                          <label for="">cuerpo</label>
+                          <textarea name="description_post" v-model="description_post" class="form-control" rows="2" cols="4"></textarea>
                         </div>
-                        <button type="submit" class="btn btn-sm btn-dark" name="button">Grabar</button>
-                        <button @click="GrabarPost" class="btn btn-sm btn-dark" name="button">Grabar</button>
+                        <input type="submit" class="btn btn-sm btn-dark" name="grabar" value="Grabar">
                       </form>
+
                       <!-- end agregar -->
 
                     </div>

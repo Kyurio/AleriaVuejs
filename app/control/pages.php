@@ -190,6 +190,34 @@ class pages extends routes{
     echo json_encode($product);
   }
 
+  public function SelectProductUnit(){
+
+    $data = json_decode(file_get_contents("php://input"), true);
+
+    $id = $data['Id_product'];
+
+    $product = $this->ConfigModelo->select('filtro', 'product', 'id', $id, '', '');
+    echo json_encode($product);
+  }
+
+  public function ActualizarProductos(){
+
+    $data = json_decode(file_get_contents("php://input"), true);
+
+
+    $formUpdateProduct= [
+      'id' => $data['Id_product'],
+      'name_product' => $data['Name_product'],
+      'Descripcion_product' => $data['Descripcion_product'],
+      ''
+
+    ];
+
+    $update = $this->ConfigModelo->UpdateProduct($formUpdateProduct);
+    echo json_encode($update);
+
+  }
+
   public function DeactivateProduct(){
 
     $data = json_decode(file_get_contents("php://input"), true);

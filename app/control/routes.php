@@ -38,11 +38,6 @@ class routes extends control{
     $this->vista('pages/contacto');
   }
 
-  public function detalle($id){
-
-    $this->vista('pages/detalle');
-  }
-
   public function ingresar(){
 
     $this->vista('pages/login');
