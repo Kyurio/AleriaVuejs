@@ -1,11 +1,40 @@
-@import url('https://fonts.googleapis.com/css2?family=Inconsolata&display=swap');
+@import url("https://fonts.googleapis.com/css?family=PT+Sans+Narrow&display=swap");
+@import url("https://fonts.googleapis.com/css?family=VT323&display=swap");
+
+
 
 body{
-  font-family: 'Inconsolata', monospace;
+
   background-color: #fff;
 }
-input, textarea{
-  background-color: #f9fcfb !important;
+
+
+/* poner el contenido a la izquierda */
+.contenido-izquierda-15rm{
+
+  margin-left: 15rem!important;
+
+}
+
+/* pone el texto de la pagina principal */
+.texto-principal{
+
+  padding-top: 15rem!important;
+
+}
+.text-pixel{
+
+  font-family:'VT323', monospace;
+  font-weight:100;
+}
+
+.h1-title{
+  font-size: 90px;
+}
+
+/* pone el div al 100% de la pantalla */
+.max-height{
+  height: 50rem;
 }
 
 .navbar-badge {
@@ -80,8 +109,8 @@ button, [type="button"], [type="reset"], [type="submit"] {
   color: #999;
 }
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-    color: #fff;
-    background-color: inherit;
+  color: #fff;
+  background-color: inherit;
 }
 
 .sidebar-heading {

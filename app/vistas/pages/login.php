@@ -7,8 +7,7 @@
 <div id="app-4">
 
   <div class="container">
-    <div class="mt-5 mb-5 py-5">
-
+    <div class="mt-5 py-5 max-height">
       <div class="row">
         <div class="col-md-8">
 

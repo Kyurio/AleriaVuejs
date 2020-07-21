@@ -45,9 +45,6 @@
       </div>
     </div>
   </div>
-  <div class="footer-copyright text-center py-3">© Copyright:
-    <a href="#" class="text-light"></a>
-  </div>
 </footer>
 
 
@@ -93,6 +90,10 @@ switch ($option) {
 
   case "contacto":
   echo "<script src=". RUTA_URL ."public/js/message.js></script>";
+  break;
+
+  case "home":
+  echo "";
   break;
 
   default:

@@ -48,7 +48,13 @@ $option = "intranet";
                           <button type="button" @click="NoMostrarBuscadorProductos" title="Agregar" class="btn btn-sm btn-dark" data-target="#product"  data-toggle="tab" href="#product" role="tab" aria-selected="true" ><i class="fas fa-plus"></i></button>
                         </li>
                         <li class="nav-item" role="presentation">
-                          <button type="button" @click="MostrarBuscadorProductos"  title="Listado de tareas" class="btn btn-sm btn-dark" data-target="#list_product" data-toggle="tab" href="#list_product" role="tab" aria-selected="true" ><i class="far fa-list-alt"></i></button>
+                          <button type="button" @click="MostrarBuscadorProductos"  title="Listado de productos" class="btn btn-sm btn-dark" data-target="#list_product" data-toggle="tab" href="#list_product" role="tab" aria-selected="true" ><i class="far fa-list-alt"></i></button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                          <button type="button" @click="NoMostrarBuscadorProductos"  title="Estadisticas" class="btn btn-sm btn-dark" data-target="#estadisticas_productos" data-toggle="tab" href="#estadisticas_productos" role="tab" aria-selected="true" ><i class="fas fa-chart-pie"></i></button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                          <button type="button" @click="NoMostrarBuscadorProductos"  title="Bodega" class="btn btn-sm btn-dark" data-target="#bodega" data-toggle="tab" href="#bodegas" role="tab" aria-selected="true" ><i class="fas fa-boxes"></i></button>
                         </li>
                       </ul>
                     </div>
@@ -56,201 +62,331 @@ $option = "intranet";
                 </div>
                 <!-- end buscador con botones -->
 
-                <div>
-                  <!-- contenido de el tab -->
-                  <div class="tab-content" id="productos">
-                    <div class="tab-pane fade show active" id="list_product" role="tabpanel" aria-labelledby="profile-tab">
-                      <!-- table -->
+                <!-- contenido de el tab -->
+                <div class="tab-content" id="productos">
+
+                  <div class="tab-pane fade show active" id="list_product" role="tabpanel" aria-labelledby="listado-productos-tab">
+                    <!-- table -->
 
 
-                      <table class="table table-hover text-center table-sm display" >
-                        <thead>
-                          <tr>
-                            <th scope="col">Producto</th>
-                            <th scope="col">Precio compra</th>
-                            <th scope="col">Precio venta</th>
-                            <th scope="col">Estado</th>
-                            <th scope="col">Estock</th>
-                            <th scope="col">Accion</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr v-for="(item, index) in filterProducts" v-show="(pag - 1) * num_results <= index  && pag * num_results > index">
-                            <td>{{ item.name }}</td>
-                            <td>${{ item.price_in }}</td>
-                            <td>${{ item.price_out }}</td>
-                            <td>
-                              <div v-if="item.is_active == 1">
-                                <span class="badge badge-success">Activo</span>
-                              </div>
-                              <div v-else>
-                                <span class="badge badge-danger">Inactivo</span>
-                              </div>
-                            </td>
-                            <td>{{ item.inventary_min }}</td>
-                            <td>
-                              <button type="button" name="Eliminar"   @click="EliminarProduct(item.id)" class="btn btn-danger btn-sm" title="Eliminar"><i class="fas fa-trash"></i></button>
-                              <button type="button" name="Editar"     @click="AbrirModalEdicion(item.id)"  class="btn btn-warning btn-sm" title="Editar"  ><i class="fas fa-pen"></i></button>
-                              <button type="button" name="Desactivar" @click="DescativarPorductos(item.id)"  class="btn btn-info btn-sm" title="Desactivar" v-if="item.is_active == 1"><i class="fas fa-ban"></i></button>
-                              <button type="button" name="Activar"    @click="ActivarPorductos(item.id)"  class="btn btn-success btn-sm" title="Activar" v-else><i class="fas fa-check"></i></button>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
+                    <table class="table table-hover text-center table-sm display" >
+                      <thead>
+                        <tr>
+                          <th scope="col">Producto</th>
+                          <th scope="col">Precio compra</th>
+                          <th scope="col">Precio venta</th>
+                          <th scope="col">Estado</th>
+                          <th scope="col">Estock</th>
+                          <th scope="col">Accion</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-for="(item, index) in filterProducts" v-show="(pag - 1) * num_results <= index  && pag * num_results > index">
+                          <td>{{ item.name }}</td>
+                          <td>${{ item.price_in }}</td>
+                          <td>${{ item.price_out }}</td>
+                          <td>
+                            <div v-if="item.is_active == 1">
+                              <span class="badge badge-success">Activo</span>
+                            </div>
+                            <div v-else>
+                              <span class="badge badge-danger">Inactivo</span>
+                            </div>
+                          </td>
+                          <td>{{ item.inventary_min }}</td>
+                          <td>
+                            <button type="button" name="Eliminar"   @click="EliminarProduct(item.id)" class="btn btn-danger btn-sm" title="Eliminar"><i class="fas fa-trash"></i></button>
+                            <button type="button" name="Editar"     @click="AbrirModalEdicion(item.id)"  class="btn btn-warning btn-sm" title="Editar"  ><i class="fas fa-pen"></i></button>
+                            <button type="button" name="Desactivar" @click="DescativarPorductos(item.id)"  class="btn btn-info btn-sm" title="Desactivar" v-if="item.is_active == 1"><i class="fas fa-ban"></i></button>
+                            <button type="button" name="Activar"    @click="ActivarPorductos(item.id)"  class="btn btn-success btn-sm" title="Activar" v-else><i class="fas fa-check"></i></button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
 
-                      <!-- paginador -->
-                      <nav aria-label="Page navigation" class="text-center">
-                        <ul class="pagination text-center">
-                          <li>
-                            <a class="mr-3" href="#" aria-label="Previous" v-show="pag != 1" @click.prevent="pag -= 1">
-                              <span aria-hidden="true"> anterior </span>
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#" aria-label="Next" v-show="pag * num_results / filterProducts.length < 1" @click.prevent="pag += 1">
-                              <span aria-hidden="true"> siguiente </span>
-                            </a>
-                          </li>
-                        </ul>
-                      </nav>
-                      <!-- end paginador -->
-                      <!-- end table -->
+                    <!-- paginador -->
+                    <nav aria-label="Page navigation" class="text-center">
+                      <ul class="pagination text-center">
+                        <li>
+                          <a class="mr-3" href="#" aria-label="Previous" v-show="pag != 1" @click.prevent="pag -= 1">
+                            <span aria-hidden="true"> anterior </span>
+                          </a>
+                        </li>
+                        <li>
+                          <a href="#" aria-label="Next" v-show="pag * num_results / filterProducts.length < 1" @click.prevent="pag += 1">
+                            <span aria-hidden="true"> siguiente </span>
+                          </a>
+                        </li>
+                      </ul>
+                    </nav>
+                    <!-- end paginador -->
+                    <!-- end table -->
+                  </div>
+
+                  <div class="tab-pane fade" id="product" role="tabpanel" aria-labelledby="productos-tab">
+                    <h4>Agregar Productos</h4>
+                    <br>
+
+
+                    <div class="col-md-6">
+                      <!-- agregar -->
+                      <form method="post" enctype="multipart/form-data" action="<?php echo RUTA_URL ?>pages/InsertProducto">
+                        <div class="form-group">
+                          <label for="name_product">Nombre</label>
+                          <input type="text" placeholder="Nombre del producto" maxlength="60" name="Nombre_Producto" class="form-control"  required>
+                        </div>
+                        <div class="form-group">
+                          <label for="">Descripcion</label>
+                          <textarea class="form-control" placeholder="Descripcion" name="Descripcion_product" rows="2" cols="4"></textarea>
+                        </div>
+                        <!-- 3input en la misma linea -->
+                        <div class="row">
+
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label for="">cantidad</label>
+                              <input type="number" min="1" name="Inventary_min_product" class="form-control">
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label for="">precio compra </label>
+                              <input type="number"  min="1" name="Valor_compra" class="form-control" >
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label for="">precio venta </label>
+                              <input type="number" min="1" name="Valor_venta" class="form-control" >
+                            </div>
+                          </div>
+
+                        </div>
+                        <!-- end 3 input -->
+
+                        <div class="form-group">
+                          <label for="">categoria </label>
+                          <select class="browser-default custom-select" name="Category_product" >
+                            <option v-for="item in categorys"  v-bind:value="item.id">{{ item.name }}</option>
+                          </select>
+                        </div>
+
+                        <div class="form-group">
+                          <label for="">imagen </label>
+                          <input type="file" name="img_product" id="img_product">
+                        </div>
+
+                        <button type="submit" class="btn btn-sm btn-dark" name="button">Grabar</button>
+                      </form>
+
                     </div>
+                  </div>
 
-                    <div class="tab-pane fade" id="product" role="tabpanel" aria-labelledby="task">
-                      <h4>Agregar Productos</h4>
-                      <br>
+                  <div class="tab-pane fade" id="estadisticas_productos" role="tabpanel" aria-labelledby="estadisticas_productos-tab">
+                    <!-- table -->
 
+                    <h1>estidisticas productos</h1>
 
+                    <!-- end table -->
+                  </div>
+
+                  <div class="tab-pane fade" id="bodega" role="tabpanel" aria-labelledby="bodega-tab">
+                    <!-- table -->
+
+                    <h1>bodega</h1>
+
+                    <div class="row">
                       <div class="col-md-6">
-                        <!-- agregar -->
-                        <form method="post" enctype="multipart/form-data" action="<?php echo RUTA_URL ?>pages/InsertProducto">
-                          <div class="form-group">
-                            <label for="name_product">Nombre</label>
-                            <input type="text" placeholder="Nombre del producto" maxlength="60" name="Nombre_Producto" class="form-control"  required>
-                          </div>
-                          <div class="form-group">
-                            <label for="">Descripcion</label>
-                            <textarea class="form-control" placeholder="Descripcion" name="Descripcion_product" rows="2" cols="4"></textarea>
-                          </div>
-                          <!-- 3input en la misma linea -->
-                          <div class="row">
 
-                            <div class="col-md-4">
-                              <div class="form-group">
-                                <label for="">cantidad</label>
-                                <input type="number" min="1" name="Inventary_min_product" class="form-control">
-                              </div>
-                            </div>
-                            <div class="col-md-4">
-                              <div class="form-group">
-                                <label for="">precio compra </label>
-                                <input type="number"  min="1" name="Valor_compra" class="form-control" >
-                              </div>
-                            </div>
-                            <div class="col-md-4">
-                              <div class="form-group">
-                                <label for="">precio venta </label>
-                                <input type="number" min="1" name="Valor_venta" class="form-control" >
-                              </div>
-                            </div>
+                        <p>productos entrada</p>
+                        <table class="table">
+                          <thead class="bg-danger">
+                            <tr>
+                              <th scope="col">#</th>
+                              <th scope="col">First</th>
+                              <th scope="col">Last</th>
+                              <th scope="col">Handle</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <th scope="row">1</th>
+                              <td>Mark</td>
+                              <td>Otto</td>
+                              <td>@mdo</td>
+                            </tr>
+                          </tbody>
+                        </table>
 
-                          </div>
-                          <!-- end 3 input -->
+                      </div>
+                      <div class="col-md-6">
 
-                          <div class="form-group">
-                            <label for="">categoria </label>
-                            <select class="browser-default custom-select" name="Category_product" >
-                              <option v-for="item in categorys"  v-bind:value="item.id">{{ item.name }}</option>
-                            </select>
-                          </div>
+                        <p>productos salida</p>
+                        <table class="table">
+                          <thead class="bg-info">
+                            <tr>
+                              <th scope="col">#</th>
+                              <th scope="col">First</th>
+                              <th scope="col">Last</th>
+                              <th scope="col">Handle</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <th scope="row">1</th>
+                              <td>Mark</td>
+                              <td>Otto</td>
+                              <td>@mdo</td>
+                            </tr>
+                          </tbody>
+                        </table>
 
-                          <div class="form-group">
-                            <label for="">imagen </label>
-                            <input type="file" name="img_product" id="img_product">
-                          </div>
-
-                          <button type="submit" class="btn btn-sm btn-dark" name="button">Grabar</button>
-                        </form>
 
                       </div>
                     </div>
-                    </div>
 
 
-                    <!-- modal de edicion -->
-                    <div class="modal fade" id="edit_product" tabindex="-1" role="dialog" aria-labelledby="edit_product" aria-hidden="true" v-for="item in ProductEdit">
-                      <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Editar Producto</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                            </button>
+
+                    <!-- end table -->
+                  </div>
+
+                </div>
+
+                <!-- tab estadisticas -->
+
+
+                <div class="tab-pane fade" id="product" role="tabpanel" aria-labelledby="task">
+                  <h4>Agregar Productos</h4>
+                  <br>
+                  <div class="col-md-6">
+                    <!-- agregar -->
+                    <form method="post" enctype="multipart/form-data" action="<?php echo RUTA_URL ?>pages/InsertProducto">
+                      <div class="form-group">
+                        <label for="name_product">Nombre</label>
+                        <input type="text" placeholder="Nombre del producto" maxlength="60" name="Nombre_Producto" class="form-control"  required>
+                      </div>
+                      <div class="form-group">
+                        <label for="">Descripcion</label>
+                        <textarea class="form-control" placeholder="Descripcion" name="Descripcion_product" rows="2" cols="4"></textarea>
+                      </div>
+                      <!-- 3input en la misma linea -->
+                      <div class="row">
+
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label for="">cantidad</label>
+                            <input type="number" min="1" name="Inventary_min_product" class="form-control">
                           </div>
-                          <div class="modal-body">
-                            <div class="container-sm">
-                              <form  method="post" novalidate="true" enctype="multipart/form-data">
-                                <div class="form-group">
-                                  <label for="">Nombre</label>
-                                  <input type="text" name="" v-bind:value="item.id">
-                                  <input  type="text" placeholder="Titulo tarea" maxlength="60"   v-bind:value="item.name" class="form-control" required aria-describedby="emailHelp">
-                                </div>
-                                <div class="form-group">
-                                  <label for="">Descripcion</label>
-                                  <textarea v-model="description_product" class="form-control" placeholder="Descripcion" rows="2" cols="4"> {{ item.description }} </textarea>
-                                </div>
-                                <!-- 3input en la misma linea -->
-                                <div class="row">
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label for="">precio compra </label>
+                            <input type="number"  min="1" name="Valor_compra" class="form-control" >
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label for="">precio venta </label>
+                            <input type="number" min="1" name="Valor_venta" class="form-control" >
+                          </div>
+                        </div>
 
-                                  <div class="col-md-4">
-                                    <div class="form-group">
-                                      <label for="">cantidad</label>
-                                      <input type="number" min="1" name="" v-model="inventary_min_product" v-bind:value="item.inventary_min" class="form-control" aria-describedby="emailHelp">
-                                    </div>
-                                  </div>
-                                  <div class="col-md-4">
-                                    <div class="form-group">
-                                      <label for="">precio compra </label>
-                                      <input type="number"  min="1"  v-model="price_out_prouct" v-bind:value="item.price_in"  name="date_end_task" class="form-control" aria-describedby="emailHelp">
-                                    </div>
-                                  </div>
-                                  <div class="col-md-4">
-                                    <div class="form-group">
-                                      <label for="">precio venta </label>
-                                      <input type="number" min="1" v-model="price_out_prouct"  v-bind:value="item.price_out"  name="price_out_prouct"  class="form-control" aria-describedby="emailHelp">
-                                    </div>
-                                  </div>
+                      </div>
+                      <!-- end 3 input -->
 
-                                </div>
-                                <!-- end 3 input -->
+                      <div class="form-group">
+                        <label for="">categoria </label>
+                        <select class="browser-default custom-select" name="Category_product" >
+                          <option v-for="item in categorys"  v-bind:value="item.id">{{ item.name }}</option>
+                        </select>
+                      </div>
 
-                                <div class="form-group">
-                                  <label for="">categoria </label>
-                                  <select class="browser-default custom-select" >
-                                    <option v-for="item in categorys" v-model="Category_product" v-bind:value="item.category"  value="item.id">{{ item.name }}</option>
-                                  </select>
-                                </div>
+                      <div class="form-group">
+                        <label for="">imagen </label>
+                        <input type="file" name="img_product" id="img_product">
+                      </div>
 
-                                <div class="form-group">
-                                  <label for="">imagen </label>
-                                  <div class="custom-file">
-                                    <input type="file">
-                                    <label class="custom-file-label"  v-bind:value="item.image" for="customFileLang">Seleccionar Archivo</label>
-                                  </div>
-                                </div>
+                      <button type="submit" class="btn btn-sm btn-dark" name="button">Grabar</button>
+                    </form>
 
-                                <button type="submit" class="btn btn-sm btn-warning"   name="button">Editar</button>
-                              </form>
+                  </div>
+                </div>
+
+
+
+                <!-- modal de edicion -->
+                <div class="modal fade" id="edit_product" tabindex="-1" role="dialog" aria-labelledby="edit_product" aria-hidden="true" v-for="item in ProductEdit">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Editar Producto</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <div class="container-sm">
+                          <form  method="post" novalidate="true" enctype="multipart/form-data">
+                            <div class="form-group">
+                              <label for="">Nombre</label>
+                              <input type="text" name="" v-bind:value="item.id">
+                              <input  type="text" placeholder="Titulo tarea" maxlength="60"   v-bind:value="item.name" class="form-control" required aria-describedby="emailHelp">
                             </div>
-                          </div>
+                            <div class="form-group">
+                              <label for="">Descripcion</label>
+                              <textarea v-model="description_product" class="form-control" placeholder="Descripcion" rows="2" cols="4"> {{ item.description }} </textarea>
+                            </div>
+                            <!-- 3input en la misma linea -->
+                            <div class="row">
+
+                              <div class="col-md-4">
+                                <div class="form-group">
+                                  <label for="">cantidad</label>
+                                  <input type="number" min="1" name="" v-model="inventary_min_product" v-bind:value="item.inventary_min" class="form-control" aria-describedby="emailHelp">
+                                </div>
+                              </div>
+                              <div class="col-md-4">
+                                <div class="form-group">
+                                  <label for="">precio compra </label>
+                                  <input type="number"  min="1"  v-model="price_out_prouct" v-bind:value="item.price_in"  name="date_end_task" class="form-control" aria-describedby="emailHelp">
+                                </div>
+                              </div>
+                              <div class="col-md-4">
+                                <div class="form-group">
+                                  <label for="">precio venta </label>
+                                  <input type="number" min="1" v-model="price_out_prouct"  v-bind:value="item.price_out"  name="price_out_prouct"  class="form-control" aria-describedby="emailHelp">
+                                </div>
+                              </div>
+
+                            </div>
+                            <!-- end 3 input -->
+
+                            <div class="form-group">
+                              <label for="">categoria </label>
+                              <select class="browser-default custom-select" >
+                                <option v-for="item in categorys" v-model="Category_product" v-bind:value="item.category"  value="item.id">{{ item.name }}</option>
+                              </select>
+                            </div>
+
+                            <div class="form-group">
+                              <label for="">imagen </label>
+                              <div class="custom-file">
+                                <input type="file">
+                                <label class="custom-file-label"  v-bind:value="item.image" for="customFileLang">Seleccionar Archivo</label>
+                              </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-sm btn-warning"   name="button">Editar</button>
+                          </form>
                         </div>
                       </div>
                     </div>
-                    <!-- end modal edicion -->
-                  <!-- end contenido tabs -->
-
+                  </div>
                 </div>
+                <!-- end modal edicion -->
+
+                <!-- end contenido tabs -->
+
               </div>
             </div>
           </div>
