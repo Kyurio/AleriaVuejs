@@ -444,6 +444,12 @@ $option = "intranet";
                             </div>
                           </div>
                         </div>
+
+                        <span v-if="item.State == 0 " class="badge badge-secondary">En Proceso</span>
+                        <span V-else-if="item.State == 1" class="badge badge-success">Terminado <i class="fas fa-check"></i></span>
+                        <span v-else-if="item.State == 2" class="badge badge-danger">Pausa <i class="fas fa-pause"></i></span>
+                        <span v-else-if="item.date_end < <?php echo date("Y-m-d"); ?>"  class="badge badge-warning">Retrasada <i class="fas fa-exclamation-triangle"></i></span>
+
                         <p class="name">{{ item.descript }}</p>
                         <small class="name">{{ item.date_end }}</small>
                       </li>

@@ -47,6 +47,7 @@ var app = new Vue({
 
 
     //task
+    CantidadTask: 0,
     date_start_task: '',
     date_end_task: '',
     imagen_product: '',

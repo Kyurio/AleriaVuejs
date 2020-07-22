@@ -36,6 +36,7 @@ var app3 = new Vue({
       axios.get('/aleriaVue/pages/SelectProduct', {
 
       }).then(function (response) {
+        console.log(response.data);
         capturador.products = response.data;
         capturador.filterProducts = response.data;
       });

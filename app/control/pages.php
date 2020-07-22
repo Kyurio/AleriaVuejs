@@ -18,7 +18,7 @@ class pages extends routes{
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       $formNuevoPost = [
-        'title_post' => $data['title_post'],
+        'title_post' => trim($data['title_post']),
         'description_post' => $data['description_post'],
       ];
       //ejecyta la insercion
